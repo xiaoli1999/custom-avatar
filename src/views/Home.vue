@@ -1,5 +1,6 @@
 <template>
     <div>首页</div>
+    <Test />
     <router-link to="/about">去关于我们</router-link>
     count数量 {{ count }} getters获取count {{ TestStore.getTestCount }}
     <button @click="add">点击增加数量</button> <button @click="adds">点击增加数量(action)</button> <button @click="reset">点击重置数量</button>
