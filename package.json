@@ -1,0 +1,61 @@
+{
+  "name": "blog",
+  "private": true,
+  "version": "0.0.0",
+  "author": {
+    "name": "xiaoli",
+    "email": "22708206@qq.com",
+    "url": "https://xiaoli.vip/"
+  },
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vue-tsc && vite build",
+    "preview": "vite preview",
+    "lint": "eslint src/**/*.{js,jsx,vue,ts,tsx} --fix",
+    "lint:css": "stylelint **/*.{vue,css,sass,scss,less} --fix",
+    "prepare": "husky install"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "nprogress": "^0.2.0",
+    "pinia": "^2.0.20",
+    "vue": "^3.2.41",
+    "vue-router": "^4.1.4"
+  },
+  "devDependencies": {
+    "@types/node": "^18.7.13",
+    "@typescript-eslint/eslint-plugin": "^5.42.1",
+    "@typescript-eslint/parser": "^5.42.1",
+    "@vitejs/plugin-vue": "^3.2.0",
+    "@vue/eslint-config-standard": "^8.0.1",
+    "eslint": "^8.27.0",
+    "eslint-plugin-vue": "^9.7.0",
+    "husky": "^8.0.0",
+    "less": "^4.1.3",
+    "lint-staged": "^13.0.3",
+    "postcss": "^8.4.19",
+    "postcss-html": "^1.5.0",
+    "postcss-less": "^6.0.0",
+    "stylelint": "^14.14.1",
+    "stylelint-config-recommended-less": "^1.0.4",
+    "stylelint-config-standard": "^29.0.0",
+    "stylelint-config-standard-vue": "^1.0.0",
+    "stylelint-less": "^1.0.6",
+    "stylelint-order": "^5.0.0",
+    "typescript": "^4.8.4",
+    "unplugin-vue-components": "^0.22.7",
+    "vite": "^3.2.3",
+    "vite-plugin-compression": "^0.5.1",
+    "vite-plugin-eslint": "^1.8.1",
+    "vue-tsc": "^1.0.9"
+  },
+  "lint-staged": {
+    "*.{js,vue}": [
+      "npm run lint"
+    ],
+    "*.{vue,css,sass,scss,less}": [
+      "npm run lint:css"
+    ]
+  }
+}
