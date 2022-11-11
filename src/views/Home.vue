@@ -7,17 +7,15 @@
 </template>
 
 <script lang="ts" setup>
-import {StateTree, storeToRefs} from 'pinia'
+import { StoreGeneric, storeToRefs } from 'pinia'
 import { testStore } from '@/store/test'
 
-const TestStore: StateTree = testStore()
-console.log(TestStore)
+const TestStore: StoreGeneric = testStore()
 const { count } = storeToRefs(TestStore)
 
 const add = () =>  (TestStore.count++)
 const adds = () =>  (TestStore.setCountAdd())
 const reset = () =>  (TestStore.$reset())
-
 
 </script>
 
