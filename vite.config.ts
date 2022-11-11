@@ -1,14 +1,14 @@
-import { defineConfig, loadEnv } from 'vite';
-import vue from '@vitejs/plugin-vue';
-import Components from 'unplugin-vue-components/vite';
-import viteCompression from 'vite-plugin-compression'; // 解决构建压缩
-import eslintPlugin from 'vite-plugin-eslint';
-import path from 'path';
+import { defineConfig, loadEnv } from 'vite'
+import vue from '@vitejs/plugin-vue'
+import Components from 'unplugin-vue-components/vite'
+import viteCompression from 'vite-plugin-compression' // 解决构建压缩
+import eslintPlugin from 'vite-plugin-eslint'
+import path from 'path'
 
 
 export default defineConfig(env => {
-    const root = process.cwd();
-    const envConfig = loadEnv(env.mode, root);
+    const root = process.cwd()
+    const envConfig = loadEnv(env.mode, root)
     return {
         plugins: [
             // basicSsl(),
@@ -66,7 +66,7 @@ export default defineConfig(env => {
             https: false,
             proxy: {
                 '/api': {
-                    target: envConfig.VITE_APP_BASE_API || 'https://inkinkme.com',
+                    target: envConfig.VITE_APP_BASE_API || 'https://blog.xiaoli.com',
                     changOrigin: true,
                     secure: false,
                     logLevel: 'error',
@@ -74,5 +74,5 @@ export default defineConfig(env => {
                 }
             }
         }
-    };
-});
+    }
+})
