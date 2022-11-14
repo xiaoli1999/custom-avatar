@@ -15,7 +15,6 @@ pnpm-lock.yaml
 components.d.ts
 
 # Editor directories and files
-.idea
 .vscode
 *.suo
 *.ntvs*
