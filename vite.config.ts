@@ -66,7 +66,7 @@ export default defineConfig(env => {
             https: false,
             proxy: {
                 '/api': {
-                    target: envConfig.VITE_APP_BASE_API || 'https://blog.xiaoli.com',
+                    target: envConfig.VITE_APP_BASE_API || 'https://www.xiaoli.vip',
                     changOrigin: true,
                     secure: false,
                     logLevel: 'error',
