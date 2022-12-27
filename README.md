@@ -1,5 +1,7 @@
 ## vue3模板
 
+> 拒绝白嫖，您的star就是我开源的动力，fork请先star。
+
 ### 技术栈
 ```javascript
 vue3 | vite | ts | vue-router | pinia | less
