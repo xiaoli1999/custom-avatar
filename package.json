@@ -20,12 +20,14 @@
   },
   "dependencies": {
     "element-plus": "^2.2.28",
+    "fabric": "^5.3.0",
     "nprogress": "^0.2.0",
     "vue": "^3.2.41"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
     "@commitlint/config-conventional": "^17.2.0",
+    "@types/fabric": "^4.5.15",
     "@types/node": "^18.7.13",
     "@typescript-eslint/eslint-plugin": "^5.42.1",
     "@typescript-eslint/parser": "^5.42.1",

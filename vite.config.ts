@@ -57,7 +57,7 @@ export default defineConfig(env => {
         },
         server: {
             open: false,
-            // host: '0.0.0.0',
+            host: '0.0.0.0',
             port: 1111,
             https: false,
             proxy: {
