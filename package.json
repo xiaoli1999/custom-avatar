@@ -19,6 +19,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "element-plus": "^2.2.28",
     "nprogress": "^0.2.0",
     "vue": "^3.2.41"
   },

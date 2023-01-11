@@ -1,5 +1,6 @@
 <template>
     <div>定制兔年头像</div>
+    <el-button type="primary">测试element ui</el-button>
 </template>
 
 <script lang="ts" setup>
