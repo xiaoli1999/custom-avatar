@@ -1,6 +1,5 @@
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
-import Components from 'unplugin-vue-components/vite'
 import viteCompression from 'vite-plugin-compression' // 解决构建压缩
 import eslintPlugin from 'vite-plugin-eslint'
 import path from 'path'
@@ -28,9 +27,6 @@ export default defineConfig(env => {
                 threshold: 1, // 体积大于阈值会被压缩，单位是b
                 algorithm: 'gzip', // 压缩算法
                 ext: '.gz'// 生成的压缩包后缀
-            }),
-            Components({
-                dirs: ['src/components/global'] // 自动注册全局组件目录
             })
         ],
         build: {

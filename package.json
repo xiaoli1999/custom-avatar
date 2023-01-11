@@ -19,11 +19,8 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "axios": "^0.27.2",
     "nprogress": "^0.2.0",
-    "pinia": "^2.0.20",
-    "vue": "^3.2.41",
-    "vue-router": "^4.1.4"
+    "vue": "^3.2.41"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.2.0",
@@ -48,7 +45,6 @@
     "stylelint-less": "^1.0.6",
     "stylelint-order": "^5.0.0",
     "typescript": "^4.8.4",
-    "unplugin-vue-components": "^0.22.7",
     "vite": "^3.2.3",
     "vite-plugin-compression": "^0.5.1",
     "vite-plugin-eslint": "^1.8.1",

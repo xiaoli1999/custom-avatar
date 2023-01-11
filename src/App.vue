@@ -1,25 +1,17 @@
 <template>
-    <router-view />
+    <div>定制兔年头像</div>
 </template>
 
 <script lang="ts" setup>
-const a = 's'
+import { onMounted } from 'vue'
+import progress from './tools/config/progress'
+import './styles/normalize.less'
 
-console.log(a)
+progress.start()
+
+onMounted(() => progress.close())
 </script>
 
-<style scoped>
-.logo {
-    padding: 1.5em;
-    height: 6em;
-    will-change: filter;
-}
+<!--<style lang="less" scoped>-->
 
-.logo:hover {
-    filter: drop-shadow(0 0 2em #646cffaa);
-}
-
-.logo.vue:hover {
-    filter: drop-shadow(0 0 2em #42b883aa);
-}
-</style>
+<!--</style>-->
