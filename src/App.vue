@@ -3,6 +3,9 @@
     <el-button type="primary">测试element ui</el-button>
     <input type="file" accept=".jpg,.png" @change="uploadFile" />
     <img :src="imgUrl" alt="">
+    <div>
+        <img src="./assets/a.png" alt="">
+    </div>
     <div style="width: 400px;height: 400px;border: 1px dashed #dedede;border-radius: 50%;">
         <canvas id="test" style="width: 400px;height: 400px;"></canvas>
     </div>
