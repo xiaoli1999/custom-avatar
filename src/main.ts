@@ -1,7 +1,9 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import ElementPlus from 'element-plus'
+import './styles/index.less'
 import 'element-plus/dist/index.css'
+
 
 const app = createApp(App)
 

@@ -38,6 +38,7 @@ export default defineConfig(env => {
         resolve: {
             alias: {
                 '@': path.resolve(__dirname, 'src'),
+                '@img': path.resolve(__dirname, 'src/assets/img'),
                 '@c': path.resolve(__dirname, 'src/components'),
                 '@views': path.resolve(__dirname, 'src/views')
             }

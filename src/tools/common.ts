@@ -24,7 +24,16 @@ export const JudgePC = () => {
     }
     return true
 }
+/**
+ * @function getStaticUrl 获取本子资源url
+ * @param { String } location 本地资源绝对地址
+ * @return { string } url 返回本地资源链接
+ */
+export const getStaticUrl = (location: string) => {
+    if (!location) return ''
 
+    return new URL(location, import.meta.url).href
+}
 /**
  * @function getCreatedUrl 判断是当前浏览器信息是否为pc
  * @param { Object } file input的file对象

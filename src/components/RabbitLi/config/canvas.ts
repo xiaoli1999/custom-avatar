@@ -17,6 +17,6 @@ export interface canvasType {
  * @param { Object } canvasSize 画布尺寸 { width, height }
  */
 export const canvasSize: canvasType = {
-    width: JudgePC() ? 600 : 300,
-    height: JudgePC() ? 600 : 300
+    width: JudgePC() ? 400 : 200,
+    height: JudgePC() ? 400 : 200
 }
