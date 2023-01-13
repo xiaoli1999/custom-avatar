@@ -6,8 +6,8 @@
  * @createDate 2022-07-25 14:20
  */
 import { fabric } from 'fabric'
-import { calcOffsetToCanvas, addOrReplaceLayer } from '../common'
-import {LayerType} from '../../types'
+import { addOrReplaceLayer } from '../common'
+import { LayerType } from '../../types'
 
 /**
  * @function drawImgLayer 绘制图片图层
@@ -19,7 +19,24 @@ export const drawImgLayer = (Canvas: any, layer: LayerType) => {
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve: any) => {
         /* todo 绘制图片 */
-        return resolve()
+        const { uuid, url, x, y } = layer
+        if (!url) return resolve()
+
+        const imgLayer: any = await drawImg(url)
+        console.log(imgLayer, imgLayer.width, imgLayer.height)
+        imgLayer.set({
+            originX: 'center',
+            originY: 'center',
+            left: (x === 0 && y === 0 ) ? Canvas.width / 2 : x,
+            top:  (x === 0 && y === 0 ) ? Canvas.height / 2 : y,
+            scaleX: Canvas.width / imgLayer.width,
+            scaleY: Canvas.width / imgLayer.height
+        })
+
+        addOrReplaceLayer(Canvas, imgLayer)
+        imgLayer.name = uuid
+
+        return resolve(imgLayer)
     })
 }
 

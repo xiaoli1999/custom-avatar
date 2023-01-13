@@ -6,27 +6,22 @@
  * @createDate 2023-01-12 14:54
  */
 
-export interface SkuInfoType {
-    [propName: string]: any
+export interface BgInfoType {
+    url: string
+    w: number
+    h: number
 }
 
 export interface LayerType {
     uuid: string,
     type: string,
     url: string,
-    width: number,
-    height: number,
-    top: number,
-    left: number,
+    w: number,
+    h: number,
+    x: number,
+    y: number,
     scale: number,
     angle: number
-    [propName: string]: any
-}
-
-export interface BgInfoType {
-    bgUrl: string
-    bgW?: number
-    bgH?: number
     [propName: string]: any
 }
 

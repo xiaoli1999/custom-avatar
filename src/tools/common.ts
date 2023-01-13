@@ -7,10 +7,10 @@
  */
 
 /**
- * @function JudgePC 判断是当前浏览器信息是否为pc
+ * @function judgePC 判断是当前浏览器信息是否为pc
  * @return { Boolean } 返回是否是pc
  */
-export const JudgePC = () => {
+export const judgePC = () => {
     let userAgent
     if (window && window.navigator) {
         userAgent = window.navigator.userAgent
@@ -24,6 +24,7 @@ export const JudgePC = () => {
     }
     return true
 }
+
 /**
  * @function getStaticUrl 获取本子资源url
  * @param { String } location 本地资源绝对地址
@@ -34,8 +35,9 @@ export const getStaticUrl = (location: string) => {
 
     return new URL(location, import.meta.url).href
 }
+
 /**
- * @function getCreatedUrl 判断是当前浏览器信息是否为pc
+ * @function getCreatedUrl 创建本地链接
  * @param { Object } file input的file对象
  * @return { string } url 返回本地图片链接
  */
@@ -47,4 +49,31 @@ export const getCreatedUrl = (file: any) => {
         url = window.webkitURL.createObjectURL(file)
     }
     return url
+}
+
+/**
+ * @function getImgInfo 获取图片信息
+ * @param { String } url 图片链接
+ * @return { Object } img 返回图片对象信息
+ */
+export const getImgInfo = (url: string) => {
+    // eslint-disable-next-line no-async-promise-executor
+    return new Promise(async (resolve: any) => {
+        const img = new Image()
+        img.onload = () => resolve(img)
+        img.src = url
+    })
+}
+
+/**
+ * @function downloadImg 下载图片
+ * @param { String } url 图片链接
+ */
+export const downloadImg = (url: string) => {
+    const a = document.createElement('a')
+    const event = new MouseEvent('click', { bubbles: true, cancelable: true, view: window })
+    a.download = '小黎兔年春节图片'
+    a.href = url
+    a.dispatchEvent(event)
+    a.remove()
 }

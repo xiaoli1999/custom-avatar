@@ -8,10 +8,10 @@
 import { hiddenLayerNameArr } from '../config/name'
 
 /**
- * @function JudgePC 判断是当前浏览器信息是否为pc
+ * @function judgePC 判断是当前浏览器信息是否为pc
  * @return { Boolean } 返回是否是pc
  */
-export const JudgePC = () => {
+export const judgePC = () => {
     let userAgent
     if (window && window.navigator) {
         userAgent = window.navigator.userAgent

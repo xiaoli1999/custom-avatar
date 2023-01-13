@@ -5,7 +5,7 @@
  * @copyright 黎<https://www.xiaoli.vip>
  * @createDate 2023-01-12 14:36
  */
-import {JudgePC} from '@c/RabbitLi/modules/common'
+import { judgePC } from '@c/RabbitLi/modules/common'
 
 export interface canvasType {
     width: number,
@@ -17,6 +17,6 @@ export interface canvasType {
  * @param { Object } canvasSize 画布尺寸 { width, height }
  */
 export const canvasSize: canvasType = {
-    width: JudgePC() ? 400 : 200,
-    height: JudgePC() ? 400 : 200
+    width: judgePC() ? 400 : 200,
+    height: judgePC() ? 400 : 200
 }

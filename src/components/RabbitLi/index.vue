@@ -1,7 +1,7 @@
 <template>
-    <div class="draw" :style="{ transform: `translate(-50%, -50%) scale(${CanvasScale})` }">
+    <div class="draw" :style="{ transform: `translate(-50%, -50%)` }">
         <canvas :id="CanvasId"></canvas>
-        <canvas :id="'Production-' + CanvasId" style="display: none;"></canvas>
+        <canvas :id="'Production-' + CanvasId" style="top: 0;left: 0;z-index: -1;display: none;"></canvas>
         <div v-show="Loading" class="draw-loading">
             <img src="./icons/loading.gif" alt="">
         </div>
@@ -14,7 +14,7 @@ import { canvasSize } from './config/canvas'
 import { control, hiddenControl } from './config/control'
 import { fixedLayerNameArr } from './config/name'
 import { BgInfoType, LayerType } from './types'
-import { initCanvas, initVisibleArea } from './modules/init'
+import { initCanvas } from './modules/init'
 import { drawBackground } from './modules/background'
 import { drawLayer } from './modules/layer'
 import { findCanvasItem, createUuid } from './modules/common'
@@ -23,17 +23,12 @@ const props = defineProps({
     bgInfo: {
         type: Object as PropType<BgInfoType>,
         require: true,
-        default: () => ({})
+        default: () => ({ url: '', w: 0, h: 0 })
     },
     layerList: {
         type: Array as PropType<LayerType[]>,
         require: true,
         default: () => []
-    },
-    scale: {
-        type: Number,
-        require: false,
-        default: () => 0.3
     }
 })
 
@@ -94,16 +89,16 @@ const canvasMouseUp = (e: any) => {
 
     if (type === 'drag') {
         const { x, y } = location
-        LayerList[layerIndex].location.x = x
-        LayerList[layerIndex].location.y = y
+        LayerList[layerIndex].x = x
+        LayerList[layerIndex].y = y
     } else if (type === 'scale') {
         if (target.flipX || target.flipY) {
             target.flipX = false
             target.flipY = false
         }
-        LayerList[layerIndex].location.scale = (target.scaleX || target.scaleY)
+        LayerList[layerIndex].scale = (target.scaleX || target.scaleY)
     } else if (type === 'rotate') {
-        LayerList[layerIndex].location.angle = target.angle
+        LayerList[layerIndex].angle = target.angle
     } else { /* empty */ }
 
     // 更新图层
@@ -244,9 +239,11 @@ const getLayerList = (): Array<any> => [...LayerList].reverse()
 const save = async (): Promise<string> => {
     /* todo 预览 */
     Loading.value = true
-    ProductionCanvas.clear()
-    ProductionCanvas = initCanvas(ProductionCanvas.value, canvasSize, false)
-    await drawBackground(`Production-${ CanvasId.value }`, props.bgInfo)
+    if (ProductionCanvas) ProductionCanvas.clear()
+
+    ProductionCanvas = initCanvas(`Production-${ CanvasId.value }`, canvasSize, false)
+    await drawBackground(ProductionCanvas, props.bgInfo)
+    console.log(LayerList)
     await drawAll(Canvas, LayerList)
 
     Loading.value = false
@@ -269,8 +266,8 @@ watch(() => props.layerList, async (layerList, oldLayerList) => {
     if (JSON.stringify(layerList) === JSON.stringify(oldLayerList)) return
 
     Loading.value = true
-    LayerList = JSON.parse(JSON.stringify(layerList)).reverse()
-    Loading.value = true
+    LayerList = JSON.parse(JSON.stringify(layerList))
+
     if (Canvas && Canvas.getObjects().length) {
         Canvas.getObjects().filter((i: any) => !fixedLayerNameArr.includes(i.name)).map((layer: any) => {
             const [index, item] = findCanvasItem(Canvas, layer.name)
@@ -280,6 +277,7 @@ watch(() => props.layerList, async (layerList, oldLayerList) => {
 
     await drawAll(Canvas, LayerList)
     drawComplete()
+    Loading.value = false
 })
 
 onMounted(async () => {
@@ -289,9 +287,6 @@ onMounted(async () => {
 
     /* todo 初始化画布 */
     Canvas = initCanvas(CanvasId.value, canvasSize, false)
-
-    /* todo 初始化可视区域（原形） */
-    await initVisibleArea(Canvas)
 
     Loading.value = false
     drawComplete()

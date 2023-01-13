@@ -5,7 +5,6 @@
  * @copyright 黎<https://www.xiaoli.vip>
  * @createDate 2023-01-12 14:42
  */
-import { JudgePC } from '../modules/common'
 
 /**
  * @desc 操纵控件
@@ -61,4 +60,4 @@ export const controlPc: any = {
  */
 export const hiddenControl: Array<string> = ['ml', 'mb', 'mr', 'mt']
 
-export const control = JudgePC() ? controlPc : controlMobile
+export const control = controlMobile

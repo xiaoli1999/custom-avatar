@@ -1,4 +1,14 @@
-@import "./normalize.less";
+@import url("./normalize.less");
+
+* {
+    user-select: none; /* 火狐 */
+    user-select: none; /* webkit浏览器 */
+    user-select: none; /* IE10 */
+    user-select: none;
+    -webkit-margin-before: 0;
+    -webkit-margin-after: 0;
+    line-height: 1;
+}
 
 html,
 body {
@@ -6,12 +16,46 @@ body {
 }
 
 body {
-    height: 100vh;
     overflow-x: hidden;
+    height: 100vh;
+}
+
+img {
+    display: block;
+}
+
+.scroll {
+    &::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+        width: 6px;
+        background-color: #f2f4f8;
+        border-radius: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        min-height: 28px;
+        background-color: #c0c2c480;
+        background-clip: padding-box;
+        border-radius: 6px;
+
+        &:hover {
+            background: #c0c2c4;
+        }
+    }
 }
 
 #app {
-    max-width: 1440px;
+    overflow-x: hidden;
+    overflow-y: auto;
     margin: 0 auto;
+    width: 100%;
+    max-width: 1440px;
+    height: 100vh;
     //color: #fff;
+
+    .scroll;
 }
