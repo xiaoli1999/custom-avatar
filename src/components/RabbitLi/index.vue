@@ -74,8 +74,6 @@ const initFabricControl = () => {
 const canvasMouseDown = (e: any) => {
     if (!e.target) return (Uuid.value = '')
     Uuid.value = fixedLayerNameArr.includes(e.target.name) ? '' : e.target.name
-
-    if (!Uuid.value) updateLayer('select', null)
 }
 
 // 鼠标抬起
@@ -100,9 +98,6 @@ const canvasMouseUp = (e: any) => {
     } else if (type === 'rotate') {
         LayerList[layerIndex].angle = target.angle
     } else { /* empty */ }
-
-    // 更新图层
-    updateLayer(type, LayerList[layerIndex])
 }
 
 // 元素缩放时
@@ -124,120 +119,13 @@ const drawAll = async (canvas: any, layerList: LayerType[]) => {
     }
 }
 
-/**
- * @function editLayer 修改图层
- * @param { String } type 操作图层类型 add、edit、remove（暂未实现）
- * @param { Object | String } layer 图层对象 remove（暂未实现），type为remove 时layer为uuid
- */
-const editLayer = async (type: string, layer: any) => {
-    Loading.value = true
-    const layerIndex = LayerList.findIndex(i => i.uuid === (layer.uuid ?? layer))
-
-    const layerObj: any = await drawLayer(Canvas, layer)
-    Loading.value = false
-    if (!layerObj) return
-
-    if (layerIndex === -1) {
-        LayerList.push(layer)
-        selectLayer(layer.uuid)
-    } else {
-        LayerList[layerIndex] = layer
-
-        // 修改后需要更新图层
-        updateLayer('edit', LayerList[layerIndex])
-        // 新增或修改时默认选中
-        if (!Canvas.getActiveObject() || Canvas.getActiveObject().name !== LayerList[layerIndex].uuid) selectLayer(LayerList[layerIndex].uuid)
-    }
-}
-
 // 绘制完成emit
-const drawComplete = () => {
-    if (Uuid.value) selectLayer(Uuid.value)
-    emit('drawComplete')
-}
-
-/**
- * @function updateLayer 更新单个图层
- * @param { String } type 操作类型 type<delete | clone | edit | drag | scale | rotate | select | ...>
- * @param { Object } layer 更新后的图层
- * @return { Function } emit => [type, layer]
- */
-const updateLayer = (type: string, layer: any) => emit('updateLayer', [type, layer])
-
-/**
- * @function setLayerLevel 设置图层层级
- * @param { String } name 图层uuid
- * @param { Number } level 0-上一层 1-下一层
- */
-const setLayerLevel = (name: string, level = 0) => {
-    const layer: any = name ? findCanvasItem(Canvas, name)[1] : Canvas.getActiveObject()
-    if (!layer) return
-
-    const layerIndex: number = LayerList.findIndex(i => i.uuid === layer.name)
-    if (layerIndex === -1) return
-
-    const arr = [...LayerList]
-
-    if (level === 0) {
-        layer.bringForward()
-        arr[layerIndex] = LayerList[layerIndex + 1]
-        arr[layerIndex + 1] = LayerList[layerIndex]
-    } else if (level === 1) {
-        layer.sendBackwards()
-        arr[layerIndex] = LayerList[layerIndex - 1]
-        arr[layerIndex - 1] = LayerList[layerIndex]
-    } else { /* empty */ }
-    Canvas.renderAll()
-
-    LayerList = arr
-}
-
-/**
- * @function setLayerVisible 设置图层是否可见
- * @param { String } name 图层uuid 不传为默认选中对象
- * @param { Boolean } visible 可见的, 不传时取反
- */
-const setLayerVisible = (name: string, visible: boolean) => {
-    const layer: any = name ? findCanvasItem(Canvas, name)[1] : Canvas.getActiveObject()
-    if (!layer || !layer.name) return
-
-    layer.visible = visible ?? !layer.visible
-    Canvas.renderAll()
-
-    const layerIndex: number = LayerList.findIndex(i => i.uuid === layer.name)
-    if (layerIndex === -1) return
-    LayerList[layerIndex].visible = visible ?? !LayerList[layerIndex].visible
-
-    updateLayer('visible', LayerList[layerIndex])
-}
-
-/**
- * @function selectLayer 设置当前图层被选中
- * @param { String | null } uuid 图层当前的uuid
- */
-const selectLayer = (uuid: string) => {
-    Uuid.value = uuid ?? ''
-    if (uuid) {
-        const layer = findCanvasItem(Canvas, uuid)[1]
-        if (!layer) return
-        Canvas.setActiveObject(layer).renderAll()
-    } else {
-        Canvas.discardActiveObject().renderAll()
-    }
-}
-
-/**
- * @function getLayerList 获取当前所有图层
- * @return { Array } 图层列表
- */
-const getLayerList = (): Array<any> => [...LayerList].reverse()
-
+const drawComplete = () => emit('drawComplete')
 /**
  * @function save 保存作品图及效果图
  * @return { String } result base64 保存/预览时返回
  */
 const save = async (): Promise<string> => {
-    /* todo 预览 */
     Loading.value = true
     if (ProductionCanvas) ProductionCanvas.clear()
 
@@ -281,16 +169,16 @@ watch(() => props.layerList, async (layerList, oldLayerList) => {
 
 onMounted(async () => {
     Loading.value = true
-    /* todo 初始化控件 */
+    /* 初始化控件 */
     initFabricControl()
 
-    /* todo 初始化画布 */
+    /* 初始化画布 */
     Canvas = initCanvas(CanvasId.value, canvasSize, false)
 
     Loading.value = false
     drawComplete()
 
-    /* todo 绑定交互事件 */
+    /* 绑定交互事件 */
     // 鼠标按下事件
     Canvas.on('mouse:down', canvasMouseDown)
     // 鼠标抬起事件
@@ -300,7 +188,7 @@ onMounted(async () => {
 })
 
 // 暴露给父组件可使用的方法
-defineExpose({ drawAll, editLayer, setLayerLevel, setLayerVisible, selectLayer, getLayerList, save })
+defineExpose({ drawAll, save })
 </script>
 
 <style lang="less" scoped>
@@ -332,7 +220,7 @@ defineExpose({ drawAll, editLayer, setLayerLevel, setLayerVisible, selectLayer, 
     }
 
     /* 修复最新 fabric 生成canvas对象时外层包裹父级类 canvas-container */
-    /deep/ .canvas-container:nth-child(2) {
+    :deep(.canvas-container:nth-child(2))  {
         display: none;
     }
 }

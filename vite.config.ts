@@ -32,7 +32,7 @@ export default defineConfig(env => {
         ],
         base: './',
         build: {
-            chunkSizeWarningLimit: 500,
+            chunkSizeWarningLimit: 1200,
             minify: 'esbuild',
             cssCodeSplit: true, // 如果设置为false，整个项目中的所有 CSS 将被提取到一个 CSS 文件中
             reportCompressedSize: false, // 启用/禁用 gzip 压缩大小报告。压缩大型输出文件可能会很慢，因此禁用该功能可能会提高大型项目的构建性能。

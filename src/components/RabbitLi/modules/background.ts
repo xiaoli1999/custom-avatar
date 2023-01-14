@@ -12,7 +12,7 @@ import { BgInfoType } from '../types/index'
  * @param { Object } Canvas 画布实例
  * @param { bgInfo } bgInfo 背景信息 背景图片链接、url等
  */
-export const drawBackground = async (Canvas: any, bgInfo: BgInfoType) => {
+export const drawBackground = async (Canvas, bgInfo: BgInfoType) => {
     return new Promise((resolve: any) => {
         if (!bgInfo.url) return resolve()
 

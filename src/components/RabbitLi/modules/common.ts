@@ -60,7 +60,7 @@ export const getUrlBase64 = (url:string, type: string): object => {
             canvas.width = img.width
             canvas.height = img.height
             ctx.drawImage(img, 0, 0, img.width, img.height)
-            const dataURL = canvas.toDataURL('image/' + type)
+            const dataURL = canvas.toDataURL(`image/${type}`)
             canvas = null
             const data: imgToBase64ObjType = {
                 url: dataURL,
