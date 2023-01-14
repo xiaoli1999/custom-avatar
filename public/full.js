@@ -92,4 +92,4 @@ const start = () => setInterval(() => {
 
 $(document).ready(() => start())
 
-console.log('%c 🐇年春节全屏动画效果🌈 | 黎 | https://github.com/xiaoli1999 ', 'color: #f4f4f4;background: #444; padding:5px 0;border-radius:2px;')
+console.log('%c 🐇年春节全屏动画效果🌈 | 黎 | https://github.com/xiaoli1999/fullScreen-animation ', 'color: #f4f4f4;background: #444; padding:5px 0;border-radius:2px;')
