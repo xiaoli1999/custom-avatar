@@ -1,7 +1,7 @@
 <template>
     <div class="draw" :style="{ transform: `translate(-50%, -50%)` }">
         <canvas :id="CanvasId"></canvas>
-        <canvas :id="'Production-' + CanvasId" style="top: 0;left: 0;z-index: -1;display: none;"></canvas>
+        <canvas :id="'Production-' + CanvasId" style="position: fixed; top: -9999px;left: 0;z-index: -1;display: none;"></canvas>
         <div v-show="Loading" class="draw-loading">
             <img src="./icons/loading.gif" alt="">
         </div>
@@ -28,7 +28,7 @@ const props = defineProps({
     layerList: {
         type: Array as PropType<LayerType[]>,
         require: true,
-        default: () => []
+        default: () => ([])
     }
 })
 
@@ -243,8 +243,7 @@ const save = async (): Promise<string> => {
 
     ProductionCanvas = initCanvas(`Production-${ CanvasId.value }`, canvasSize, false)
     await drawBackground(ProductionCanvas, props.bgInfo)
-    console.log(LayerList)
-    await drawAll(Canvas, LayerList)
+    await drawAll(ProductionCanvas, LayerList)
 
     Loading.value = false
     drawComplete()
@@ -330,6 +329,11 @@ defineExpose({ drawAll, editLayer, setLayerLevel, setLayerVisible, selectLayer, 
             width: 68%;
             object-fit: contain;
         }
+    }
+
+    /* 修复最新 fabric 生成canvas对象时外层包裹父级类 canvas-container */
+    /deep/ .canvas-container:nth-child(2) {
+        display: none;
     }
 }
 </style>

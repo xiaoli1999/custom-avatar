@@ -3,3 +3,4 @@ declare module '*.vue' {
   const component: DefineComponent<{string, unknown}, {string, unknown}, any>
   export default component
 }
+

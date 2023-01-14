@@ -68,11 +68,12 @@ export const getImgInfo = (url: string) => {
 /**
  * @function downloadImg 下载图片
  * @param { String } url 图片链接
+ * @param { String } name 图片名称
  */
-export const downloadImg = (url: string) => {
+export const downloadImg = (url: string, name: string) => {
     const a = document.createElement('a')
     const event = new MouseEvent('click', { bubbles: true, cancelable: true, view: window })
-    a.download = '小黎兔年春节图片'
+    a.download = `黎·春节头像-${ name }`
     a.href = url
     a.dispatchEvent(event)
     a.remove()

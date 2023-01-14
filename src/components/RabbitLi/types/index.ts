@@ -9,7 +9,8 @@
 export interface BgInfoType {
     url: string
     w: number
-    h: number
+    h: number,
+    name: string
 }
 
 export interface LayerType {

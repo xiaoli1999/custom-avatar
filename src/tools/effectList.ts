@@ -5,7 +5,9 @@
  * @copyright 黎<https://www.xiaoli.vip>
  * @createDate 2023-01-19 09:37
  */
-import { getStaticUrl } from './common'
+
+import liLeft from '../assets/img/li/left.png'
+import liRight from '../assets/img/li/right.png'
 
 export interface EffectType {
     imgUrl: string,
@@ -13,15 +15,11 @@ export interface EffectType {
 }
 export const effectList: EffectType[] = [
     {
-        imgUrl: getStaticUrl('../assets/img/li/left.png'),
+        imgUrl: liLeft,
         designerName: '小黎-左'
     },
     {
-        imgUrl: getStaticUrl('../assets/img/li/right.png'),
+        imgUrl: liRight,
         designerName: '小黎-右'
-    },
-    {
-        imgUrl: 'https://img1.baidu.com/it/u=1746898407,3753163068&fm=253&fmt=auto&app=138&f=JPEG?w=500&h=500',
-        designerName: '小黎-测试'
     }
 ]

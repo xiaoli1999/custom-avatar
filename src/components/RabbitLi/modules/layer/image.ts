@@ -19,18 +19,18 @@ export const drawImgLayer = (Canvas: any, layer: LayerType) => {
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve: any) => {
         /* todo 绘制图片 */
-        const { uuid, url, x, y } = layer
+        const { uuid, url, x, y, scale, angle } = layer
         if (!url) return resolve()
 
         const imgLayer: any = await drawImg(url)
-        console.log(imgLayer, imgLayer.width, imgLayer.height)
         imgLayer.set({
             originX: 'center',
             originY: 'center',
             left: (x === 0 && y === 0 ) ? Canvas.width / 2 : x,
             top:  (x === 0 && y === 0 ) ? Canvas.height / 2 : y,
-            scaleX: Canvas.width / imgLayer.width,
-            scaleY: Canvas.width / imgLayer.height
+            scaleX: scale || Canvas.width / imgLayer.width,
+            scaleY: scale || Canvas.width / imgLayer.height,
+            angle
         })
 
         addOrReplaceLayer(Canvas, imgLayer)

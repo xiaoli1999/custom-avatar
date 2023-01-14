@@ -16,8 +16,8 @@ body {
 }
 
 body {
-    overflow-x: hidden;
     height: 100vh;
+    overflow: hidden;
 }
 
 img {
@@ -58,4 +58,14 @@ img {
     //color: #fff;
 
     .scroll;
+}
+
+
+@media only screen and (max-width: 768px) {
+    #app {
+        &::-webkit-scrollbar {
+            width: 0;
+            display: none;
+        }
+    }
 }

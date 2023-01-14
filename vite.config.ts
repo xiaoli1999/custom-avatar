@@ -16,24 +16,33 @@ export default defineConfig(env => {
                 cache: false, // 取消检查缓存
                 exclude: [ // 忽略的文件&目录
                     '**/node_modules/**',
-                    '**/dist/**'
+                    '**/dist/**',
+                    '**/public/**'
                 ]
             }),
             viteCompression({
                 // 生成压缩包gz
                 verbose: true, // 输出压缩成功
-                disable: false, // 是否禁用
+                disable: true, // 是否禁用
                 // filter // 默认为  /\.(js|mjs|json|css|html)$/i
                 threshold: 1, // 体积大于阈值会被压缩，单位是b
                 algorithm: 'gzip', // 压缩算法
                 ext: '.gz'// 生成的压缩包后缀
             })
         ],
+        base: './',
         build: {
             chunkSizeWarningLimit: 500,
             minify: 'esbuild',
             cssCodeSplit: true, // 如果设置为false，整个项目中的所有 CSS 将被提取到一个 CSS 文件中
-            reportCompressedSize: false // 启用/禁用 gzip 压缩大小报告。压缩大型输出文件可能会很慢，因此禁用该功能可能会提高大型项目的构建性能。
+            reportCompressedSize: false, // 启用/禁用 gzip 压缩大小报告。压缩大型输出文件可能会很慢，因此禁用该功能可能会提高大型项目的构建性能。
+            rollupOptions: {
+                output: {
+                    chunkFileNames: 'static/js/[name]-[hash].js',
+                    entryFileNames: 'static/js/[name]-[hash].js',
+                    assetFileNames: 'static/[ext]/[name]-[hash].[ext]'
+                }
+            }
         },
         resolve: {
             alias: {
