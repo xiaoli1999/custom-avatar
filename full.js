@@ -1,5 +1,5 @@
 /**
- * @file full.js 设置日期
+ * @file full.js 全名动画
  * @description 全屏动画js
  * @author xiao li
  * @copyright 黎<https://www.xiaoli.vip>
@@ -45,7 +45,7 @@ const createEmoteElement = () => {
     const fs = fsRange[0] + Math.round(Math.random() * fsRange[1])
     const left = Math.round(Math.random() * ((innerW - (fs / 2)) - (fs / 2)))
     const top = -fs - 10
-    const opacity = ((Math.random() * 16 + 84) / 100).toFixed(2) - 0
+    const opacity = ((Math.random() * 10 + 90) / 100).toFixed(2) - 0
     const transitionDuration = 2000 + Math.round(Math.random() * 2000)
 
     const emoteEl = $('<div></div>').css({
@@ -56,7 +56,7 @@ const createEmoteElement = () => {
         fontSize: `${fs }px`,
         opacity: opacity,
         zIndex: 9999,
-        textShadow: `0 0 ${ 10 + fs / 2 }px #ffffffcc`,
+        textShadow: `0 0 ${ isPc ? (6 + fs / 3) : (4 + fs / 3.5) }px #ffffffaa`,
         transition: `transform ${ transitionDuration }ms linear`
     }).html(emoteList[Math.round(Math.random() * (emoteList.length - 1))])
 
@@ -88,8 +88,8 @@ const start = () => setInterval(() => {
     }
     num += 1
     setEmoteAnimate()
-}, isPc ? 320 : 560)
+}, isPc ? 640 : 860)
 
 $(document).ready(() => start())
 
-console.log('%c 🐇年春节全屏动画效果🌈 | 黎 | https://github.com/xiaoli1999/fullScreen-animation ', 'color: #f4f4f4;background: #444; padding:5px 0;border-radius:2px;')
+console.log('%c 🐇年春节全屏动画效果🌈 | 黎 | https://github.com/xiaoli1999 ', 'color: #f4f4f4;background: #444; padding:5px 0;border-radius:2px;')
