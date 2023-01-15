@@ -5,46 +5,43 @@
     user-select: none; /* webkit浏览器 */
     user-select: none; /* IE10 */
     user-select: none;
+
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
     line-height: 1;
+
+    .scroll-hide;
 }
 
 html,
 body {
     width: 100%;
+    overflow: hidden;
 }
 
 body {
+    position: relative;
     height: 100vh;
-    overflow: hidden;
+    font-family: 黑体, serif;
 }
 
 img {
     display: block;
 }
 
-.scroll {
+a:hover,
+a:visited,
+a:link,
+a:active {
+    color: inherit;
+    text-decoration: none;
+}
+
+
+.scroll-hide {
     &::-webkit-scrollbar {
-        width: 6px;
-        height: 6px;
-    }
-
-    &::-webkit-scrollbar-track {
-        width: 6px;
-        background-color: #f2f4f8;
-        border-radius: 6px;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        min-height: 28px;
-        background-color: #c0c2c480;
-        background-clip: padding-box;
-        border-radius: 6px;
-
-        &:hover {
-            background: #c0c2c4;
-        }
+        width: 0;
+        display: none;
     }
 }
 
@@ -53,19 +50,14 @@ img {
     overflow-y: auto;
     margin: 0 auto;
     width: 100%;
-    max-width: 1440px;
+    max-width: 1200px;
     height: 100vh;
-    //color: #fff;
-
-    .scroll;
+    color: #f4f4f4;
 }
 
 
 @media only screen and (max-width: 768px) {
     #app {
-        &::-webkit-scrollbar {
-            width: 0;
-            display: none;
-        }
+        //.scroll-hide;
     }
 }

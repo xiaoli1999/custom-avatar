@@ -1,15 +1,42 @@
 <template>
     <div class="bg"></div>
     <header>定制兔年春节头像</header>
-    <el-row :gutter="isPc ? 20 : 8">
+    <div class="desc">
+        <div class="desc-title">简述</div>
+        <p>辞暮尔尔，烟火年年！你好，我是黎（小黎）。在这寒冬之际，满城尽烟花，小黎为大家带来<b>『定制兔年春节头像』</b>小工具，希望各位喜欢。
+            愿诸位抱着平安，拥着健康，揣着幸福，搂着温馨，携着快乐，牵着财运，拽着吉祥，迈入新年！
+        </p>
+    </div>
+    <div class="desc">
+        <div class="desc-title">教程</div>
+        <p>
+            1. 选择头像形状（微信为方形、qq、抖音等平台为圆形）。<br />
+            2. 上传头像，尽量为宽高比1:1的头像（不支持动图）。<br />
+            3. 选择喜欢的效果图（目前效果图可适配大部分头像）。<br />
+            4. 完成上述步骤后，对效果图大小或位置不满意；可在左侧白框区域拖动、缩放效果图。<br />
+            5. 点击预览可展示方形、圆形的成品头像（支持预览大图）。<br />
+            6. 点击保存图片。
+        </p>
+    </div>
+    <div class="desc">
+        <div class="desc-title">开源</div>
+        <p>目前代码已开源，<i><a href="https://github.com/xiaoli1999/custom-rabbitImage" target="_blank">github链接~</a></i>
+            如果你喜欢这个项目或使用过它，请点个star⭐，谢谢🙏🙏🙏！ <br />
+            目前效果图属于个人购买，数量有限；希望有志同道合的设计师为爱发电，提供一些效果图。我会在效果图下展示设计师的名称及个人网站等链接，
+            并在春节会收到小黎的春节红包🧧。<br />
+            若有喜欢的效果图或想要提供一些效果图，小黎不胜感激🙏。这个项目有您的参与变的更有意义🤝！<br />
+            联系方式~ <b>QQ: 22708206</b>，<i><a href="https://github.com/xiaoli1999/custom-rabbitImage/issues">issues链接~</a></i>。
+        </p>
+    </div>
+    <el-row :gutter="isPc ? 20 : 0" style="margin-bottom: 12px">
         <el-col :xs="24" :sm="14" :md="10">
             <div :class="`custom ${ showType }`" :style="{ width: isPc ? '400px' : '320px', height: isPc ? '400px' : '320px' }">
                 <RabbitLi ref="rabbitLi" :bg-info="avatarInfo" :layer-list="layerList" @drawComplete="drawComplete" />
             </div>
         </el-col>
-        <el-col :xs="24" :sm="10" :md="12">
+        <el-col :xs="24" :sm="10" :md="14">
             <el-form class="form" :loading="loading" label-width="90px" label-position="right" :size="isPc ? 'default' : 'small'">
-                <el-form-item label="画布形状" prop="type">
+                <el-form-item label="头像形状" prop="type">
                     <el-radio-group v-model="showType">
                         <el-radio label="" border>方形</el-radio>
                         <el-radio label="circle" border>圆形</el-radio>
@@ -50,7 +77,16 @@
             </div>
         </div>
     </el-dialog>
-
+    <div class="desc">
+        <div class="desc-title">捐赠</div>
+        <p>
+            若您愿聊表心意，小黎不胜感激🙏！
+            <span>
+                <img src="./assets/img/pay/wx.jpg" alt="微信">
+                <img src="./assets/img/pay/zfb.jpg" alt="支付宝">
+            </span>
+        </p>
+    </div>
 </template>
 
 <script lang="ts" setup>
@@ -145,6 +181,17 @@ onMounted(() => progress.close())
 </script>
 
 <style lang="less" scoped>
+@defaultColor: #d5d5d5;
+@colorActive: #fff;
+
+.title-size {
+    font-family: 楷体, serif;
+    letter-spacing: 1px;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    -webkit-text-stroke: 1px #fff;
+}
+
 .transition {
     transition: all 0.4s linear;
 }
@@ -153,28 +200,67 @@ onMounted(() => progress.close())
     position: fixed;
     top: 0;
     left: 0;
-    //background: url("./assets/img/bg.jpg") center no-repeat;
-    //background-size: cover;
-    //filter: blur(2px);
+    background: url("./assets/img/bg.png") center no-repeat;
+    background-size: cover;
     z-index: -1;
     width: 100%;
     height: 100vh;
-    //opacity: .6;
 }
 
 header {
-    line-height: 60px;
-    font-size: 24px;
+    line-height: 64px;
+    font-size: 28px;
     text-align: center;
+
+    .title-size;
+}
+
+.desc {
+    padding: 0 12px;
+    margin: 0 auto 20px;
+
+    //color: #f4f4f4;
+
+    .desc-title {
+        padding-bottom: 12px;
+        font-size: 20px;
+
+        .title-size;
+    }
+
+    > p {
+        line-height: 1.2;
+        font-size: 14px;
+
+        .transition;
+
+        a:hover {
+            font-weight: bold;
+            color: #409eff;
+        }
+
+        > span {
+            width: 280px;
+            display: flex;
+            justify-content: space-between;
+            margin: 12px auto;
+
+            > img {
+                width: 120px;
+                object-fit: contain;
+            }
+        }
+    }
 }
 
 .custom {
     position: relative;
     overflow: hidden;
     margin: 0 auto;
-    background: #efefefaa;
+    //border: 2px dashed #efefefaa;
     border-radius: 8px;
-    box-shadow: 0 0 8px 1px rgb(0 0 0 / 14%);
+    box-shadow: inset 0 0 12px 1px #ffffffaa;
+
     .transition;
 
     &.circle {
@@ -183,6 +269,13 @@ header {
 }
 
 .form {
+    padding: 12px 0;
+    //border-radius: 8px;
+
+    :deep(.el-form-item__label) {
+        color: #d5d5d5;
+    }
+
     .avatar {
         position: relative;
         display: flex;
@@ -193,7 +286,7 @@ header {
         height: 60px;
         font-size: 24px;
         color: #eee;
-        border: 1px dashed #eee;
+        border: 1px dashed #cecece;
         border-radius: 50%;
         cursor: pointer;
         .transition;
@@ -207,7 +300,7 @@ header {
 
         &:hover {
             color: #409eff;
-            border-color: #409eff;
+            border-color: #fff;
         }
 
         > input {
@@ -222,7 +315,7 @@ header {
     .avatar-tip {
         padding: 4px 0 4px 16px;
         font-size: 14px;
-        color: #9e9e9e;
+        color: #eee;
     }
 
     .effect {
@@ -299,7 +392,10 @@ header {
 }
 
 /* 兼容移动端 */
-//@media only screen and (max-width: 768px) {
-//
-//}
+@media only screen and (max-width: 768px) {
+    .bg {
+        background: url("./assets/img/bg-mobile.png") center no-repeat;
+        background-size: cover;
+    }
+}
 </style>
