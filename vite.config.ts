@@ -17,6 +17,7 @@ export default defineConfig(env => {
                 exclude: [ // 忽略的文件&目录
                     '**/node_modules/**',
                     '**/dist/**',
+                    '**/rabbit/**',
                     '**/public/**'
                 ]
             }),
@@ -32,6 +33,7 @@ export default defineConfig(env => {
         ],
         base: './',
         build: {
+            outDir: 'rabbit',
             chunkSizeWarningLimit: 1200,
             minify: 'esbuild',
             cssCodeSplit: true, // 如果设置为false，整个项目中的所有 CSS 将被提取到一个 CSS 文件中

@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "author": {
-    "name": "xiaoli",
+    "name": "黎",
     "email": "22708206@qq.com",
     "url": "https://xiaoli.vip/"
   },
@@ -18,7 +18,7 @@
     "lint": "eslint src/**/*.{js,jsx,vue,ts,tsx} --fix",
     "lint:css": "stylelint **/*.{vue,css,sass,scss,less} --fix",
     "prepare": "husky install",
-    "deploy": "gh-pages -d dist"
+    "deploy": "gh-pages -d rabbit"
   },
   "dependencies": {
     "element-plus": "^2.2.28",
