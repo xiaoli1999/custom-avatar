@@ -85,6 +85,14 @@
             </span>
         </p>
     </div>
+    <div class="stats">
+        <p>本站访问人数:<span id="busuanzi_value_site_uv"></span></p>
+        <p>本站访问总量:<span id="busuanzi_value_site_pv"></span></p>
+        <a class="github" href="https://github.com/xiaoli1999/custom-rabbitImage" target="_blank">
+            <img src="./assets/img/github.png" alt="github">
+            <span>github</span>
+        </a>
+    </div>
     <footer>© 2023 All rights reserved. Powered by 黎</footer>
 </template>
 
@@ -421,6 +429,46 @@ header {
     }
 }
 
+.stats {
+    margin: 20px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    > p,
+    > a {
+        margin: 0 4px;
+        padding: 4px 8px;
+        font-size: 14px;
+        color: #363439;
+        font-weight: 600;
+        background: #ffffff9a;
+        border-radius: 2px;
+        box-shadow: inset 0 0 8px 1px #f4f4f480;
+
+        > span {
+            padding-left: 4px;
+        }
+
+
+        > img {
+            width: 18px;
+            height: 18px;
+            margin-right: 2px;
+        }
+    }
+
+    > a {
+        display: flex;
+        align-items: center;
+        cursor: pointer;
+
+        &:hover {
+            box-shadow: inset 0 0 8px 1px #ffffff, 1px 1px 6px .5px #00000060;
+        }
+    }
+}
+
 footer {
     line-height: 24px;
     font-size: 14px;
@@ -493,6 +541,24 @@ footer {
                         font-size: 12px;
                     }
                 }
+            }
+        }
+    }
+
+    .stats {
+        margin: 8px auto;
+
+        > p,
+        > a {
+            margin: 0 4px 0 0;
+            padding: 4px 8px;
+            font-size: 12px;
+            border-radius: 2px;
+            box-shadow: inset 0 0 8px 1px #f4f4f480;
+
+            > img {
+                width: 14px;
+                height: 14px;
             }
         }
     }
