@@ -88,7 +88,7 @@ const start = () => setInterval(() => {
     }
     num += 1
     setEmoteAnimate()
-}, isPc ? 640 : 860)
+}, isPc ? 480 : 1200)
 
 $(document).ready(() => start())
 
