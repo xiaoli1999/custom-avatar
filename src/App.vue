@@ -28,7 +28,7 @@
             联系方式~ <b>QQ: 22708206</b>，<i><a href="https://github.com/xiaoli1999/custom-rabbitImage/issues">issues链接~</a></i>。
         </p>
     </div>
-    <el-row :gutter="isPc ? 20 : 0" style="margin-bottom: 12px">
+    <el-row class="main" :gutter="isPc ? 20 : 0">
         <el-col :xs="24" :sm="14" :md="10">
             <div :class="`custom ${ showType }`" :style="{ width: isPc ? '400px' : '320px', height: isPc ? '400px' : '320px' }">
                 <RabbitLi ref="rabbitLi" :bg-info="avatarInfo" :layer-list="layerList" @drawComplete="drawComplete" />
@@ -37,10 +37,8 @@
         <el-col :xs="24" :sm="10" :md="14">
             <el-form class="form" :loading="loading" label-width="90px" label-position="right" :size="isPc ? 'default' : 'small'">
                 <el-form-item label="头像形状" prop="type">
-                    <el-radio-group v-model="showType">
-                        <el-radio label="" border>方形</el-radio>
-                        <el-radio label="circle" border>圆形</el-radio>
-                    </el-radio-group>
+                    <div :class="`type-btn ${ showType ? '' : 'active' }`" @click="showType = ''">方形</div>
+                    <div :class="`type-btn ${ showType ? 'active' : '' }`" @click="showType = 'circle'">圆形</div>
                 </el-form-item>
                 <el-form-item label="上传原头像" prop="type">
                     <div class="avatar">
@@ -77,7 +75,7 @@
             </div>
         </div>
     </el-dialog>
-    <div class="desc">
+    <div class="desc" style="text-align: center;">
         <div class="desc-title">捐赠</div>
         <p>
             若您愿聊表心意，小黎不胜感激🙏！
@@ -87,6 +85,7 @@
             </span>
         </p>
     </div>
+    <footer>© 2023 All rights reserved. Powered by 黎</footer>
 </template>
 
 <script lang="ts" setup>
@@ -181,8 +180,8 @@ onMounted(() => progress.close())
 </script>
 
 <style lang="less" scoped>
-@defaultColor: #d5d5d5;
-@colorActive: #fff;
+@defaultColor: #c8c8c8;
+@activeColor: #fff;
 
 .title-size {
     font-family: 楷体, serif;
@@ -205,6 +204,8 @@ onMounted(() => progress.close())
     z-index: -1;
     width: 100%;
     height: 100vh;
+
+    .transition;
 }
 
 header {
@@ -240,124 +241,153 @@ header {
         }
 
         > span {
-            width: 280px;
+            width: 240px;
             display: flex;
             justify-content: space-between;
             margin: 12px auto;
 
             > img {
-                width: 120px;
+                width: 100px;
                 object-fit: contain;
+                border-radius: 4px;
+                overflow: hidden;
             }
         }
     }
 }
 
-.custom {
-    position: relative;
-    overflow: hidden;
-    margin: 0 auto;
-    //border: 2px dashed #efefefaa;
-    border-radius: 8px;
-    box-shadow: inset 0 0 12px 1px #ffffffaa;
+.main {
+    margin-bottom: 20px;
 
-    .transition;
-
-    &.circle {
-        border-radius: 50%;
-    }
-}
-
-.form {
-    padding: 12px 0;
-    //border-radius: 8px;
-
-    :deep(.el-form-item__label) {
-        color: #d5d5d5;
-    }
-
-    .avatar {
+    .custom {
         position: relative;
-        display: flex;
-        justify-content: center;
-        align-items: center;
         overflow: hidden;
-        width: 60px;
-        height: 60px;
-        font-size: 24px;
-        color: #eee;
-        border: 1px dashed #cecece;
-        border-radius: 50%;
-        cursor: pointer;
+        margin: 0 auto;
+        border-radius: 8px;
+        box-shadow: inset 0 0 16px 1px #ffffffcc;
+
         .transition;
 
-        > img {
-            display: block;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-        }
-
-        &:hover {
-            color: #409eff;
-            border-color: #fff;
-        }
-
-        > input {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-            opacity: 0;
+        &.circle {
+            border-radius: 50%;
         }
     }
 
-    .avatar-tip {
-        padding: 4px 0 4px 16px;
-        font-size: 14px;
-        color: #eee;
-    }
+    .form {
+        padding: 12px 0;
+        //border-radius: 8px;
 
-    .effect {
-        display: flex;
-        align-items: center;
-        overflow-x: hidden;
-        overflow-y: auto;
-        width: 100%;
-        height: auto;
-        max-height: 240px;
-        flex-wrap: wrap;
-        padding: 4px;
+        :deep(.el-form-item__label) {
+            color: #d5d5d5;
+        }
 
-        .effect-item {
-            padding: 4px 8px 0;
-            margin: 0 8px 8px 0;
-            border: 1px dashed #eee;
+        .type-btn {
+            padding: 6px 12px;
+            margin-right: 20px;
+            font-size: 16px;
+            color: @defaultColor;
+            border: 1px solid @defaultColor;
             border-radius: 4px;
+            cursor: pointer;
+
             .transition;
-
-            > img {
-                width: 80px;
-                height: 80px;
-                cursor: pointer;
-            }
-
-            > div {
-                padding: 4px;
-                font-size: 14px;
-                text-align: center;
-                color: #79bbff;
-                cursor: pointer;
-                .transition;
-            }
 
             &:hover,
             &.active {
-                border: 1px solid #409eff;
-                box-shadow: 0 0 4px 1px #409eff80;
+                color: @activeColor;
+                border-color: @activeColor;
+                box-shadow: inset 0 0 6px 1px #ffffffcc;
+            }
+        }
+
+        .avatar {
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            width: 60px;
+            height: 60px;
+            font-size: 24px;
+            color: @defaultColor;
+            border: 1px dashed @defaultColor;
+            border-radius: 50%;
+            cursor: pointer;
+            .transition;
+
+            > img {
+                display: block;
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+            }
+
+            &:hover {
+                color: @activeColor;
+                border-color: @activeColor;
+            }
+
+            > input {
+                position: absolute;
+                width: 100%;
+                height: 100%;
+                cursor: pointer;
+                opacity: 0;
+            }
+        }
+
+        .avatar-tip {
+            padding: 4px 0 4px 16px;
+            font-size: 14px;
+            color: @defaultColor;
+        }
+
+        .effect {
+            display: flex;
+            align-items: center;
+            overflow-x: hidden;
+            overflow-y: auto;
+            width: 100%;
+            height: auto;
+            max-height: 240px;
+            flex-wrap: wrap;
+            padding: 4px;
+
+            .effect-item {
+                padding: 8px 8px 0;
+                margin: 0 8px 8px 0;
+                border: 1px dashed @defaultColor;
+                border-radius: 4px;
+
+                .transition;
+
+                > img {
+                    width: 80px;
+                    height: 80px;
+                    cursor: pointer;
+                    border-radius: 2px;
+                    background: #f4f4f480;
+                    overflow: hidden;
+                }
 
                 > div {
-                    color: #409eff;
+                    padding: 4px;
+                    font-size: 14px;
+                    text-align: center;
+                    color: @defaultColor;
+                    cursor: pointer;
+                    .transition;
+                }
+
+                &:hover,
+                &.active {
+                    border: 1px solid @activeColor;
+                    //box-shadow: 0 0 4px 1px #409eff80;
+                    box-shadow: inset 0 0 6px 1px #ffffffcc;
+
+                    > div {
+                        color: @activeColor;
+                    }
                 }
             }
         }
@@ -391,11 +421,85 @@ header {
     }
 }
 
+footer {
+    line-height: 24px;
+    font-size: 14px;
+    text-align: center;
+}
+
 /* 兼容移动端 */
 @media only screen and (max-width: 768px) {
     .bg {
         background: url("./assets/img/bg-mobile.png") center no-repeat;
         background-size: cover;
+    }
+
+    header {
+        line-height: 36px;
+        font-size: 18px;
+    }
+
+    .desc {
+        padding: 0 8px;
+        margin: 0 auto 8px;
+
+        //color: #f4f4f4;
+
+        .desc-title {
+            padding-bottom: 8px;
+            font-size: 14px;
+        }
+
+        > p {
+            font-size: 12px;
+
+            a:hover {
+                font-weight: bold;
+                color: #409eff;
+            }
+
+            > span {
+                width: 200px;
+                margin: 8px auto;
+
+                > img {
+                    width: 90px;
+                }
+            }
+        }
+    }
+
+    .main {
+        margin-bottom: 8px;
+
+        .custom {}
+
+        .form {
+            padding: 8px 0;
+
+            .effect {
+
+                .effect-item {
+                    padding: 4px 6px 0;
+                    margin: 0 6px 6px 0;
+
+                    > img {
+                        width: 64px;
+                        height: 64px;
+                    }
+
+                    > div {
+                        padding: 4px;
+                        font-size: 12px;
+                    }
+                }
+            }
+        }
+    }
+
+    footer {
+        line-height: 20px;
+        font-size: 12px;
     }
 }
 </style>
