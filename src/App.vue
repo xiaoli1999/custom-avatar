@@ -78,7 +78,7 @@
     <div class="desc" style="text-align: center;">
         <div class="desc-title">捐赠</div>
         <p>
-            若您愿聊表心意，小黎不胜感激🙏！
+            若您愿聊表心意，小黎不胜感激🙏！（捐赠时请填写备注，会统计捐赠者并公布）
             <span>
                 <img src="./assets/img/pay/wx.jpg" alt="微信">
                 <img src="./assets/img/pay/zfb.jpg" alt="支付宝">

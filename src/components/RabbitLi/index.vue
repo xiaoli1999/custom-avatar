@@ -2,9 +2,7 @@
     <div class="draw" :style="{ transform: `translate(-50%, -50%)` }">
         <canvas :id="CanvasId"></canvas>
         <canvas :id="'Production-' + CanvasId" style="position: fixed; top: -9999px;left: 0;z-index: -1;display: none;"></canvas>
-        <div v-show="Loading" class="draw-loading">
-            <img src="./icons/loading.gif" alt="">
-        </div>
+        <!--<div v-show="Loading" class="draw-loading"></div-->
     </div>
 </template>
 <script setup lang="ts">
