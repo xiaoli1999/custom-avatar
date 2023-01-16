@@ -17,7 +17,7 @@
 github✈️ [https://xiaoli1999.github.io/custom-rabbitImage](https://xiaoli1999.github.io/custom-rabbitImage)
 
 ### 效果
-![预览](./public/avatar.png)
+![预览](./public/priview.png)
 
 ### 教程
 1. 选择头像形状（微信为方形、qq、抖音等平台为圆形）。
