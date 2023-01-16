@@ -74,7 +74,7 @@ const canvasMouseDown = (e: any) => {
     Uuid.value = fixedLayerNameArr.includes(e.target.name) ? '' : e.target.name
 }
 
-// 鼠标抬起
+/* 鼠标抬起 */
 const canvasMouseUp = (e: any) => {
     const { target, transform } = e
     if (!target || !transform) return
@@ -98,7 +98,7 @@ const canvasMouseUp = (e: any) => {
     } else { /* empty */ }
 }
 
-// 元素缩放时
+/* 元素缩放时 */
 const canvasMouseScaling = (e: any) => {
     if (e.target.flipX || e.target.flipY) {
         e.target.flipX = false
@@ -117,7 +117,7 @@ const drawAll = async (canvas: any, layerList: LayerType[]) => {
     }
 }
 
-// 绘制完成emit
+/* 绘制完成emit */
 const drawComplete = () => emit('drawComplete')
 /**
  * @function save 保存作品图及效果图
@@ -143,10 +143,10 @@ const save = async (): Promise<string> => {
     })
 }
 
-// 被动更改背景
+/* 被动更改背景 */
 watch(() => props.bgInfo, async (val) => (await drawBackground(Canvas, val)))
 
-// 被动更改skuInfo 及 layerList
+/* 被动更改 及 layerList */
 watch(() => props.layerList, async (layerList, oldLayerList) => {
     if (JSON.stringify(layerList) === JSON.stringify(oldLayerList)) return
 
