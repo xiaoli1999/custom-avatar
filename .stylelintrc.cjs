@@ -30,6 +30,7 @@ module.exports = {
 		'no-descending-specificity': null, // 禁止 不允许较低特异性的选择器出现在覆盖较高特异性的选择器之后 （详情 https://stylelint.io/user-guide/rules/list/no-descending-specificity）"
 		'selector-pseudo-element-no-unknown': [true, { ignorePseudoElements: ['v-deep'] }],
 		'selector-pseudo-class-no-unknown': [true, { ignorePseudoClasses: ['deep'] }],
+		'selector-class-pattern': null, /* 选择器类模式 https://stylelint.io/user-guide/rules/selector-class-pattern/ */
 		// 指定样式的排序
 		'order/properties-order': [
 			'position',

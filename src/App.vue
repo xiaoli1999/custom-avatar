@@ -25,7 +25,7 @@
             目前效果图属于个人购买，数量有限；希望有志同道合的设计师为爱发电，提供一些效果图。我会在效果图下展示设计师的名称及个人网站等链接，
             并在春节会收到小黎的春节红包🧧。<br />
             若有喜欢的效果图或想要提供一些效果图，小黎不胜感激🙏。这个项目有您的参与变的更有意义🤝！<br />
-            联系方式~ <b>QQ: 22708206</b>，<i><a href="https://github.com/xiaoli1999/custom-rabbitImage/issues">issues链接~</a></i>。
+            联系方式~ <b>QQ: 22708206</b>，<i><a href="https://github.com/xiaoli1999/custom-rabbitImage/issues">github issues链接~</a></i>。
         </p>
     </div>
     <el-row class="main" :gutter="isPc ? 20 : 0">
@@ -98,7 +98,7 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import {judgePC, getCreatedUrl, getImgInfo, downloadImg} from '@/tools/common'
+import { judgePC, getCreatedUrl, getImgInfo, downloadImg } from '@/tools/common'
 import { effectList } from './tools/effectList'
 import progress from './tools/progress'
 import RabbitLi from './components/RabbitLi/index.vue'
@@ -192,9 +192,9 @@ onMounted(() => progress.close())
 @activeColor: #fff;
 
 .title-size {
-    font-family: 楷体, serif;
+    font-family: "楷体", serif;
     letter-spacing: 1px;
-    -webkit-background-clip: text;
+    background-clip: text;
     -webkit-text-fill-color: transparent;
     -webkit-text-stroke: 1px #fff;
 }
@@ -207,11 +207,11 @@ onMounted(() => progress.close())
     position: fixed;
     top: 0;
     left: 0;
-    background: url("./assets/img/bg.png") center no-repeat;
-    background-size: cover;
     z-index: -1;
     width: 100%;
     height: 100vh;
+    background: url("./assets/img/bg.png") center no-repeat;
+    background-size: cover;
 
     .transition;
 }
@@ -227,8 +227,6 @@ header {
 .desc {
     padding: 0 12px;
     margin: 0 auto 20px;
-
-    //color: #f4f4f4;
 
     .desc-title {
         padding-bottom: 12px;
@@ -249,16 +247,16 @@ header {
         }
 
         > span {
-            width: 240px;
             display: flex;
             justify-content: space-between;
             margin: 12px auto;
+            width: 240px;
 
             > img {
-                width: 100px;
-                object-fit: contain;
-                border-radius: 4px;
                 overflow: hidden;
+                width: 100px;
+                border-radius: 4px;
+                object-fit: contain;
             }
         }
     }
@@ -272,7 +270,7 @@ header {
         overflow: hidden;
         margin: 0 auto;
         border-radius: 8px;
-        box-shadow: inset 0 0 16px 1px #ffffffcc;
+        box-shadow: inset 0 0 16px 1px #fffc;
 
         .transition;
 
@@ -283,7 +281,6 @@ header {
 
     .form {
         padding: 12px 0;
-        //border-radius: 8px;
 
         :deep(.el-form-item__label) {
             color: #d5d5d5;
@@ -304,7 +301,7 @@ header {
             &.active {
                 color: @activeColor;
                 border-color: @activeColor;
-                box-shadow: inset 0 0 6px 1px #ffffffcc;
+                box-shadow: inset 0 0 6px 1px #fffc;
             }
         }
 
@@ -355,11 +352,11 @@ header {
             align-items: center;
             overflow-x: hidden;
             overflow-y: auto;
+            padding: 4px;
             width: 100%;
             height: auto;
             max-height: 240px;
             flex-wrap: wrap;
-            padding: 4px;
 
             .effect-item {
                 padding: 8px 8px 0;
@@ -370,12 +367,12 @@ header {
                 .transition;
 
                 > img {
+                    overflow: hidden;
                     width: 80px;
                     height: 80px;
-                    cursor: pointer;
-                    border-radius: 2px;
                     background: #f4f4f480;
-                    overflow: hidden;
+                    border-radius: 2px;
+                    cursor: pointer;
                 }
 
                 > div {
@@ -391,7 +388,7 @@ header {
                 &.active {
                     border: 1px solid @activeColor;
                     //box-shadow: 0 0 4px 1px #409eff80;
-                    box-shadow: inset 0 0 6px 1px #ffffffcc;
+                    box-shadow: inset 0 0 6px 1px #fffc;
 
                     > div {
                         color: @activeColor;
@@ -403,7 +400,6 @@ header {
 }
 
 .preview {
-
     .preview-list {
         display: flex;
         justify-content: space-around;
@@ -412,49 +408,48 @@ header {
         .preview-list-item {
             text-align: center;
 
-            :deep(.el-image)  {
-                width: 64px;
-                height: 64px;
+            :deep(.el-image) {
                 display: block;
                 margin: 0 auto 8px;
+                width: 64px;
+                height: 64px;
                 border-radius: 4px;
             }
         }
 
         .preview-list-item:last-child {
             :deep(.el-image) {
-               border-radius: 50%;
+                border-radius: 50%;
             }
         }
     }
 }
 
 .stats {
-    margin: 20px auto;
     display: flex;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    margin: 20px auto;
 
     > p,
     > a {
-        margin: 0 4px;
         padding: 4px 8px;
+        margin: 0 4px;
         font-size: 14px;
         color: #363439;
-        font-weight: 600;
         background: #ffffff9a;
         border-radius: 2px;
         box-shadow: inset 0 0 8px 1px #f4f4f480;
+        font-weight: 600;
 
         > span {
             padding-left: 4px;
         }
 
-
         > img {
+            margin-right: 2px;
             width: 18px;
             height: 18px;
-            margin-right: 2px;
         }
     }
 
@@ -464,7 +459,7 @@ header {
         cursor: pointer;
 
         &:hover {
-            box-shadow: inset 0 0 8px 1px #ffffff, 1px 1px 6px .5px #00000060;
+            box-shadow: inset 0 0 8px 1px #fff, 1px 1px 6px 0.5px #00000060;
         }
     }
 }
@@ -507,8 +502,8 @@ footer {
             }
 
             > span {
-                width: 200px;
                 margin: 8px auto;
+                width: 200px;
 
                 > img {
                     width: 90px;
@@ -520,13 +515,10 @@ footer {
     .main {
         margin-bottom: 8px;
 
-        .custom {}
-
         .form {
             padding: 8px 0;
 
             .effect {
-
                 .effect-item {
                     padding: 4px 6px 0;
                     margin: 0 6px 6px 0;
@@ -550,8 +542,8 @@ footer {
 
         > p,
         > a {
-            margin: 0 4px 0 0;
             padding: 4px 8px;
+            margin: 0 4px 0 0;
             font-size: 12px;
             border-radius: 2px;
             box-shadow: inset 0 0 8px 1px #f4f4f480;
