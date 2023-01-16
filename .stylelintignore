@@ -8,4 +8,5 @@
 *.json
 /test/
 /dist/
+/rabbit/
 /src/styles/normalize.less

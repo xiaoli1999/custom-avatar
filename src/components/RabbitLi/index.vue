@@ -220,7 +220,7 @@ defineExpose({ drawAll, save })
     }
 
     /* 修复最新 fabric 生成canvas对象时外层包裹父级类 canvas-container */
-    :deep(.canvas-container:nth-child(2))  {
+    :deep(.canvas-container:nth-child(2)) {
         display: none;
     }
 }

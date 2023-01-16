@@ -1,11 +1,8 @@
 @import url("./normalize.less");
 
-* {
-    user-select: none; /* 火狐 */
-    user-select: none; /* webkit浏览器 */
+* { /* 火狐 */ /* webkit浏览器 */
     user-select: none; /* IE10 */
     user-select: none;
-
     -webkit-margin-before: 0;
     -webkit-margin-after: 0;
     line-height: 1;
@@ -15,14 +12,14 @@
 
 html,
 body {
-    width: 100%;
     overflow: hidden;
+    width: 100%;
 }
 
 body {
     position: relative;
     height: 100vh;
-    font-family: 黑体, serif;
+    font-family: "黑体", serif;
 }
 
 img {
@@ -33,15 +30,14 @@ a:hover,
 a:visited,
 a:link,
 a:active {
-    color: inherit;
     text-decoration: none;
+    color: inherit;
 }
-
 
 .scroll-hide {
     &::-webkit-scrollbar {
-        width: 0;
         display: none;
+        width: 0;
     }
 }
 
@@ -54,7 +50,6 @@ a:active {
     height: 100vh;
     color: #f4f4f4;
 }
-
 
 @media only screen and (max-width: 768px) {
     #app {
