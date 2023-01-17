@@ -2,7 +2,7 @@
     <div class="bg"></div>
     <header>定制兔年春节头像</header>
     <div class="notice-btn" @click="noticeShow = true">新年寄语</div>
-    <el-dialog class="notice" v-model="noticeShow" title="新年寄语" :width="isPc ? '580px' : '320px'" align-center center style="border-radius: 8px;">
+    <el-dialog class="notice" v-model="noticeShow" title="新年寄语" :width="isPc ? '580px' : '340px'" align-center center style="border-radius: 8px;">
         <div class="desc">
             <div class="desc-title">简述</div>
             <p>辞暮尔尔，烟火年年！你好，我是黎（小黎）。在这寒冬之际，满城尽烟花，小黎为大家带来<b>『定制兔年春节头像』</b>小工具，希望各位喜欢。
