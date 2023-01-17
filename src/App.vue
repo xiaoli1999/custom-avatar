@@ -1,6 +1,6 @@
 <template>
     <div class="bg"></div>
-    <header>定制兔年春节头像</header>
+    <header>定制兔年春节头像<span>v1.2.0</span></header>
     <div class="notice-btn" @click="noticeShow = true">新年寄语</div>
     <el-dialog class="notice" v-model="noticeShow" title="新年寄语" :width="isPc ? '580px' : '340px'" align-center center style="border-radius: 8px;">
         <div class="desc">
@@ -59,6 +59,11 @@
                         </div>
                     </div>
                 </el-form-item>
+                <el-form-item label="透明度" prop="type">
+                    <div class="opacity">
+                        <el-slider v-model="opacity" :min="0.1" :max="1" :step="0.01" size="small" :disabled="!layerList[0].url" @change="opacityChange" />
+                    </div>
+                </el-form-item>
                 <el-form-item label="" prop="type">
                     <el-button type="primary" plain @click="save(false)">预览</el-button>
                     <el-button type="success" plain @click="save(true)">保存</el-button>
@@ -108,7 +113,7 @@ import RabbitLi from './components/RabbitLi/index.vue'
 import { ElMessage } from 'element-plus'
 
 
-/* todo 初始化进度条 */
+/* 初始化进度条 */
 progress.start()
 
 const isPc = ref<boolean>(judgePC())
@@ -144,30 +149,35 @@ interface LayerType {
     x: number,
     y: number,
     scale: number,
-    angle: number
+    angle: number,
+    opacity: number
     [propName: string]: any
 }
-const layerList = ref<LayerType[]>([])
+const layerList = ref<LayerType[]>([
+    {
+        uuid: 'effect',
+        type: 'img',
+        url: '',
+        w: 0,
+        h: 0,
+        x: 0,
+        y: 0,
+        scale: 0,
+        angle: 0,
+        opacity: 1
+    }
+])
 const effectIndex = ref<number | null>(null)
 const selectEffect = (index: number) => {
     if (!avatarInfo.value.url) return ElMessage.warning('请先上传原头像！')
     effectIndex.value = index
 
     loading.value = true
-    layerList.value = [
-        {
-            uuid: 'effect',
-            type: 'img',
-            url: effectList[index].imgUrl,
-            w: 0,
-            h: 0,
-            x: 0,
-            y: 0,
-            scale: 0,
-            angle: 0
-        }
-    ]
+    layerList.value[0].url = effectList[index].imgUrl
 }
+
+const opacity = ref<number>(1)
+const opacityChange = (num: number) => layerList.value[0].opacity = num
 
 const drawComplete = () => {
     loading.value = false
@@ -176,7 +186,7 @@ const drawComplete = () => {
 const previewShow = ref<boolean>(false)
 const previewUrl = ref<string>('')
 const save = async (isSave) => {
-    if (!avatarInfo.value.url || !layerList.value.length) return ElMessage.warning('请上传原头像并选择效果图！')
+    if (!avatarInfo.value.url || !layerList.value[0].url) return ElMessage.warning('请上传原头像并选择效果图！')
 
     previewShow.value = false
     const url = await rabbitLi.value.save()
@@ -227,6 +237,13 @@ header {
     text-align: center;
 
     .title-size;
+
+    > span {
+        position: relative;
+        margin-left: 8px;
+        font-size: 20px;
+        letter-spacing: 0;
+    }
 }
 
 .notice-btn {
@@ -438,6 +455,12 @@ header {
                 }
             }
         }
+
+        .opacity {
+            padding: 0 12px;
+            width: 100%;
+            box-sizing: border-box;
+        }
     }
 }
 
@@ -522,6 +545,11 @@ footer {
     header {
         line-height: 36px;
         font-size: 18px;
+
+        > span {
+            margin-left: 8px;
+            font-size: 14px;
+        }
     }
 
     .notice-btn {

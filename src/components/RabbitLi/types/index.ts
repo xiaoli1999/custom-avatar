@@ -22,7 +22,8 @@ export interface LayerType {
     x: number,
     y: number,
     scale: number,
-    angle: number
+    angle: number,
+    opacity: number
     [propName: string]: any
 }
 

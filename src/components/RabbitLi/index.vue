@@ -147,9 +147,7 @@ const save = async (): Promise<string> => {
 watch(() => props.bgInfo, async (val) => (await drawBackground(Canvas, val)))
 
 /* 被动更改 及 layerList */
-watch(() => props.layerList, async (layerList, oldLayerList) => {
-    if (JSON.stringify(layerList) === JSON.stringify(oldLayerList)) return
-
+watch(() => props.layerList, async (layerList) => {
     Loading.value = true
     LayerList = JSON.parse(JSON.stringify(layerList))
 
@@ -163,7 +161,7 @@ watch(() => props.layerList, async (layerList, oldLayerList) => {
     await drawAll(Canvas, LayerList)
     drawComplete()
     Loading.value = false
-})
+}, { deep: true })
 
 onMounted(async () => {
     Loading.value = true

@@ -18,8 +18,8 @@ import { LayerType } from '../../types'
 export const drawImgLayer = (Canvas: any, layer: LayerType) => {
     // eslint-disable-next-line no-async-promise-executor
     return new Promise(async (resolve: any) => {
-        /* todo 绘制图片 */
-        const { uuid, url, x, y, scale, angle } = layer
+        /* 绘制图片 */
+        const { uuid, url, x, y, scale, angle, opacity } = layer
         if (!url) return resolve()
 
         const imgLayer: any = await drawImg(url)
@@ -32,6 +32,8 @@ export const drawImgLayer = (Canvas: any, layer: LayerType) => {
             scaleY: scale || Canvas.width / imgLayer.height,
             angle
         })
+
+        imgLayer.opacity = opacity
 
         addOrReplaceLayer(Canvas, imgLayer)
         imgLayer.name = uuid
