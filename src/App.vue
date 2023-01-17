@@ -1,33 +1,36 @@
 <template>
     <div class="bg"></div>
     <header>定制兔年春节头像</header>
-    <div class="desc">
-        <div class="desc-title">简述</div>
-        <p>辞暮尔尔，烟火年年！你好，我是黎（小黎）。在这寒冬之际，满城尽烟花，小黎为大家带来<b>『定制兔年春节头像』</b>小工具，希望各位喜欢。
-            愿诸位抱着平安，拥着健康，揣着幸福，搂着温馨，携着快乐，牵着财运，拽着吉祥，迈入新年！
-        </p>
-    </div>
-    <div class="desc">
-        <div class="desc-title">教程</div>
-        <p>
-            1. 选择头像形状（微信为方形、qq、抖音等平台为圆形）。<br />
-            2. 上传头像，尽量为宽高比1:1的头像（不支持动图）。<br />
-            3. 选择喜欢的效果图（目前效果图可适配大部分头像）。<br />
-            4. 完成上述步骤后，对效果图大小或位置不满意；可在左侧白框区域拖动、缩放效果图。<br />
-            5. 点击预览可展示方形、圆形的成品头像（支持预览大图）。<br />
-            6. 点击保存图片。
-        </p>
-    </div>
-    <div class="desc">
-        <div class="desc-title">开源</div>
-        <p>目前代码已开源，<i><a href="https://github.com/xiaoli1999/custom-rabbitImage" target="_blank">github链接~</a></i>
-            如果你喜欢这个项目或使用过它，请点个star⭐，谢谢🙏🙏🙏！ <br />
-            目前效果图属于个人购买，数量有限；希望有志同道合的设计师为爱发电，提供一些效果图。我会在效果图下展示设计师的名称及个人网站等链接，
-            并在春节会收到小黎的春节红包🧧。<br />
-            若有喜欢的效果图或想要提供一些效果图，小黎不胜感激🙏。这个项目有您的参与变的更有意义🤝！<br />
-            联系方式~ <b>QQ: 22708206</b>，<i><a href="https://github.com/xiaoli1999/custom-rabbitImage/issues">github issues链接~</a></i>。
-        </p>
-    </div>
+    <div class="notice-btn" @click="noticeShow = true">新年寄语</div>
+    <el-dialog class="notice" v-model="noticeShow" title="新年寄语" :width="isPc ? '580px' : '320px'" align-center center style="border-radius: 8px;">
+        <div class="desc">
+            <div class="desc-title">简述</div>
+            <p>辞暮尔尔，烟火年年！你好，我是黎（小黎）。在这寒冬之际，满城尽烟花，小黎为大家带来<b>『定制兔年春节头像』</b>小工具，希望各位喜欢。
+                愿诸位抱着平安，拥着健康，揣着幸福，搂着温馨，携着快乐，牵着财运，拽着吉祥，迈入新年！
+            </p>
+        </div>
+        <div class="desc">
+            <div class="desc-title">教程</div>
+            <p>
+                1. 选择头像形状（微信为方形、qq、抖音等平台为圆形）。<br />
+                2. 上传头像，尽量为宽高比1:1的头像（不支持动图）。<br />
+                3. 选择喜欢的效果图（目前效果图可适配大部分头像）。<br />
+                4. 完成上述步骤后，对效果图大小或位置不满意；可在左侧白框区域拖动、缩放效果图。<br />
+                5. 点击预览可展示方形、圆形的成品头像（支持预览大图）。<br />
+                6. 点击保存图片。
+            </p>
+        </div>
+        <div class="desc">
+            <div class="desc-title">开源</div>
+            <p>目前代码已开源，<i><a href="https://github.com/xiaoli1999/custom-rabbitImage" target="_blank">github链接~</a></i>
+                如果你喜欢这个项目或使用过它，请点个star⭐，谢谢🙏🙏🙏！ <br />
+                目前效果图属于个人购买，数量有限；希望有志同道合的设计师为爱发电，提供一些效果图。我会在效果图下展示设计师的名称及个人网站等链接，
+                并在春节会收到小黎的春节红包🧧。<br />
+                若有喜欢的效果图或想要提供一些效果图，小黎不胜感激🙏。这个项目有您的参与变的更有意义🤝！<br />
+                联系方式~ <b>QQ: 22708206</b>，<i><a href="https://github.com/xiaoli1999/custom-rabbitImage/issues">github issues链接~</a></i>。
+            </p>
+        </div>
+    </el-dialog>
     <el-row class="main" :gutter="isPc ? 20 : 0">
         <el-col :xs="24" :sm="14" :md="10">
             <div :class="`custom ${ showType }`" :style="{ width: isPc ? '400px' : '320px', height: isPc ? '400px' : '320px' }">
@@ -75,7 +78,7 @@
             </div>
         </div>
     </el-dialog>
-    <div class="desc" style="text-align: center;">
+    <div class="desc donate" style="text-align: center;">
         <div class="desc-title">捐赠</div>
         <p>
             若您愿聊表心意，小黎不胜感激🙏！（捐赠时请填写备注，会统计捐赠者并公布）
@@ -110,6 +113,8 @@ progress.start()
 
 const isPc = ref<boolean>(judgePC())
 const loading = ref<boolean>(false)
+const noticeShow = ref<boolean>(false)
+
 
 const rabbitLi = ref()
 
@@ -143,9 +148,7 @@ interface LayerType {
     [propName: string]: any
 }
 const layerList = ref<LayerType[]>([])
-
 const effectIndex = ref<number | null>(null)
-
 const selectEffect = (index: number) => {
     if (!avatarInfo.value.url) return ElMessage.warning('请先上传原头像！')
     effectIndex.value = index
@@ -172,7 +175,6 @@ const drawComplete = () => {
 
 const previewShow = ref<boolean>(false)
 const previewUrl = ref<string>('')
-
 const save = async (isSave) => {
     if (!avatarInfo.value.url || !layerList.value.length) return ElMessage.warning('请上传原头像并选择效果图！')
 
@@ -184,11 +186,14 @@ const save = async (isSave) => {
     previewUrl.value= url
 }
 
-onMounted(() => progress.close())
+onMounted(() => {
+    progress.close()
+    noticeShow.value = true
+})
 </script>
 
 <style lang="less" scoped>
-@defaultColor: #c8c8c8;
+@defaultColor: #ebebeb;
 @activeColor: #fff;
 
 .title-size {
@@ -217,11 +222,33 @@ onMounted(() => progress.close())
 }
 
 header {
-    line-height: 64px;
+    line-height: 80px;
     font-size: 28px;
     text-align: center;
 
     .title-size;
+}
+
+.notice-btn {
+    margin: 0 auto 32px;
+    width: 90px;
+    font-size: 14px;
+    text-align: center;
+    color: #363636;
+    background: #ffffff80;
+    border-radius: 4px;
+    box-shadow: inset 0 0 8px 1px #f4f4f468;
+    line-height: 32px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    cursor: pointer;
+
+    .transition;
+
+    &:hover {
+        color: #000;
+        box-shadow: inset 0 0 8px 1px #f4f4f4cc;
+    }
 }
 
 .desc {
@@ -230,20 +257,23 @@ header {
 
     .desc-title {
         padding-bottom: 12px;
-        font-size: 20px;
-
-        .title-size;
+        font-size: 26px;
+        font-family: "楷体", serif;
+        letter-spacing: 1px;
+        color: #000;
+        font-weight: 600;
     }
 
     > p {
-        line-height: 1.2;
+        line-height: 1.25;
         font-size: 14px;
+        color: #323232;
 
         .transition;
 
         a:hover {
             font-weight: bold;
-            color: #409eff;
+            color: #000;
         }
 
         > span {
@@ -259,6 +289,18 @@ header {
                 object-fit: contain;
             }
         }
+    }
+}
+
+.donate {
+    .desc-title {
+        padding: 12px 0;
+        color: #fff;
+    }
+
+    > p {
+        padding-bottom: 12px;
+        color: @defaultColor;
     }
 }
 
@@ -482,6 +524,15 @@ footer {
         font-size: 18px;
     }
 
+    .notice-btn {
+        margin: 2px auto 12px;
+        width: 68px;
+        font-size: 12px;
+        line-height: 24px;
+
+        .transition;
+    }
+
     .desc {
         padding: 0 8px;
         margin: 0 auto 8px;
@@ -490,7 +541,7 @@ footer {
 
         .desc-title {
             padding-bottom: 8px;
-            font-size: 14px;
+            font-size: 18px;
         }
 
         > p {
@@ -509,6 +560,18 @@ footer {
                     width: 90px;
                 }
             }
+        }
+    }
+
+    .donate {
+        .desc-title {
+            padding: 8px 0;
+            color: #fff;
+        }
+
+        > p {
+            padding-bottom: 12px;
+            color: @defaultColor;
         }
     }
 
