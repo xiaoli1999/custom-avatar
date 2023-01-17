@@ -2,7 +2,7 @@
     <div class="bg"></div>
     <header>定制兔年春节头像<span>v1.2.0</span></header>
     <div class="notice-btn" @click="noticeShow = true">新年寄语</div>
-    <el-dialog class="notice" v-model="noticeShow" title="新年寄语" :width="isPc ? '580px' : '340px'" align-center center style="border-radius: 8px;">
+    <el-dialog class="notice" v-model="noticeShow" title="新年寄语" :width="isPc ? '600px' : '340px'" align-center center style="border-radius: 8px;">
         <div class="desc">
             <div class="desc-title">简述</div>
             <p>辞暮尔尔，烟火年年！你好，我是黎（小黎）。在这寒冬之际，满城尽烟花，小黎为大家带来<b>『定制兔年春节头像』</b>小工具，希望各位喜欢。
@@ -10,7 +10,10 @@
             </p>
         </div>
         <div class="desc">
-            <div class="desc-title">教程</div>
+            <div class="desc-title">
+                教程
+                <span>请在浏览器中打开（体验更好）</span>
+            </div>
             <p>
                 1. 选择头像形状（微信为方形、qq、抖音等平台为圆形）。<br />
                 2. 上传头像，尽量为宽高比1:1的头像（不支持动图）。<br />
@@ -273,12 +276,20 @@ header {
     margin: 0 auto 20px;
 
     .desc-title {
+        display: flex;
+        align-items: center;
         padding-bottom: 12px;
         font-size: 26px;
         font-family: "楷体", serif;
         letter-spacing: 1px;
         color: #000;
         font-weight: 600;
+
+        > span {
+            padding-left: 8px;
+            font-size: 16px;
+            color: #F56C6C;
+        }
     }
 
     > p {
@@ -311,6 +322,7 @@ header {
 
 .donate {
     .desc-title {
+        justify-content: center;
         padding: 12px 0;
         color: #fff;
     }
@@ -457,7 +469,7 @@ header {
         }
 
         .opacity {
-            padding: 0 12px;
+            padding: 0 32px 0 12px;
             width: 100%;
             box-sizing: border-box;
         }
@@ -570,6 +582,12 @@ footer {
         .desc-title {
             padding-bottom: 8px;
             font-size: 18px;
+
+            > span {
+                padding-left: 4px;
+                font-size: 12px;
+                color: #F56C6C;
+            }
         }
 
         > p {

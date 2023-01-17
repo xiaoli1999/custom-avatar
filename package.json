@@ -1,11 +1,11 @@
 {
-  "name": "blog",
+  "name": "custom-rabbit-image",
   "private": true,
-  "version": "1.2.0",
+  "version": "1.2.1",
   "author": {
     "name": "黎",
     "email": "22708206@qq.com",
-    "url": "https://xiaoli.vip/"
+    "url": "https://www.xiaoli.vip/rabbit"
   },
   "type": "module",
   "homepage": " https://xiaoli1999.github.io/custom-rabbitImage",
