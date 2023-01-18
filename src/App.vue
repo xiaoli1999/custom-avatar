@@ -1,7 +1,25 @@
 <template>
     <div class="bg"></div>
-    <header>定制兔年春节头像<span>v1.2.0</span></header>
+    <header>定制兔年春节头像<span @click="versionShow = true"><i>v1.2.2</i></span></header>
     <div class="notice-btn" @click="noticeShow = true">新年寄语</div>
+    <el-dialog class="notice" v-model="versionShow" title="版本更新（v1.2.2）" :width="isPc ? '600px' : '340px'" align-center center style="border-radius: 8px;">
+        <div class="desc">
+            <div class="desc-title">v1.2.2</div>
+            <p>新增版本迭代信息弹窗</p>
+        </div>
+        <div class="desc">
+            <div class="desc-title">v1.2.1</div>
+            <p>优化透明度功能滑块区域（太靠右侧易误触），优化页面交互。</p>
+        </div>
+        <div class="desc">
+            <div class="desc-title">v1.2.0</div>
+            <p>重构页面布局，新增设置效果图透明度功能，优化页面展示。</p>
+        </div>
+        <div class="desc">
+            <div class="desc-title">v1.0.0</div>
+            <p>初版</p>
+        </div>
+    </el-dialog>
     <el-dialog class="notice" v-model="noticeShow" title="新年寄语" :width="isPc ? '600px' : '340px'" align-center center style="border-radius: 8px;">
         <div class="desc">
             <div class="desc-title">简述</div>
@@ -122,6 +140,7 @@ progress.start()
 const isPc = ref<boolean>(judgePC())
 const loading = ref<boolean>(false)
 const noticeShow = ref<boolean>(false)
+const versionShow = ref<boolean>(false)
 
 
 const rabbitLi = ref()
@@ -201,7 +220,9 @@ const save = async (isSave) => {
 
 onMounted(() => {
     progress.close()
-    noticeShow.value = true
+    versionShow.value = true
+    setTimeout(() => noticeShow.value = true)
+
 })
 </script>
 
@@ -246,6 +267,7 @@ header {
         margin-left: 8px;
         font-size: 20px;
         letter-spacing: 0;
+        cursor: pointer;
     }
 }
 
@@ -288,7 +310,7 @@ header {
         > span {
             padding-left: 8px;
             font-size: 16px;
-            color: #F56C6C;
+            color: #f56c6c;
         }
     }
 
@@ -586,7 +608,7 @@ footer {
             > span {
                 padding-left: 4px;
                 font-size: 12px;
-                color: #F56C6C;
+                color: #f56c6c;
             }
         }
 

@@ -51,7 +51,7 @@ a:active {
 }
 
 .el-dialog__title {
-    font-size: 26px;
+    font-size: 26px !important;
     font-family: "楷体", serif;
     letter-spacing: 1px;
     color: #000;
@@ -65,5 +65,13 @@ a:active {
 @media only screen and (max-width: 768px) {
     #app {
         //.scroll-hide;
+    }
+
+    .el-dialog__title {
+        font-size: 20px !important;
+        font-family: "楷体", serif;
+        letter-spacing: 1px;
+        color: #000;
+        font-weight: 600;
     }
 }
