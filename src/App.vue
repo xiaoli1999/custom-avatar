@@ -1,8 +1,12 @@
 <template>
     <div class="bg"></div>
-    <header>定制兔年春节头像<span @click="versionShow = true"><i>v1.3.0</i></span></header>
+    <header>定制兔年春节头像<span @click="versionShow = true"><i>v1.3.1</i></span></header>
     <div class="notice-btn" @click="noticeShow = true">新年寄语</div>
-    <el-dialog class="notice" v-model="versionShow" title="版本更新（v1.3.0）" :width="isPc ? '600px' : '340px'" align-center center style="border-radius: 8px;">
+    <el-dialog class="notice" v-model="versionShow" title="版本更新（v1.3.1）" :width="isPc ? '600px' : '340px'" align-center center style="border-radius: 8px;">
+        <div class="desc">
+            <div class="desc-title">v1.3.1</div>
+            <p>优化新年寄语-教程描述及展示。</p>
+        </div>
         <div class="desc">
             <div class="desc-title">v1.3.0</div>
             <p>一大批新年效果图来袭~（设计师温言）🔥🔥🔥</p>
@@ -34,15 +38,16 @@
         <div class="desc">
             <div class="desc-title">
                 教程
-                <span>请在浏览器中打开（体验更好）</span>
+                <span>推荐qq、内置浏览器（暂不支持wx、uc浏览器）</span>
             </div>
             <p>
-                1. 选择头像形状（微信为方形、qq、抖音等平台为圆形）。<br />
+                1. 选择头像形状（方形或圆形）。<br />
                 2. 上传头像，尽量为宽高比1:1的头像（不支持动图）。<br />
-                3. 选择喜欢的效果图（目前效果图可适配大部分头像）。<br />
-                4. 完成上述步骤后，对效果图大小或位置不满意；可在左侧白框区域拖动、缩放效果图。<br />
-                5. 点击预览可展示方形、圆形的成品头像（支持预览大图）。<br />
-                6. 点击保存图片。
+                3. 选择效果图（目前效果图可适配大部分头像）。<br />
+                4. 若要微调，可在白框点击效果图进行<b>缩放、移动、旋转</b>等。<br />
+                5. 拖动透明度进度条调整效果图透明度。<br />
+                6. 点击预览确认方形、圆形头像（支持预览大图）。<br />
+                7. 点击保存图片。
             </p>
         </div>
         <div class="desc">
@@ -126,6 +131,7 @@
             <span>github</span>
         </a>
     </div>
+    <div class="state">部分素材来源于网络，非商业用途，如有侵权请联系删除。</div>
     <footer>© 2023 All rights reserved. Powered by 黎</footer>
 </template>
 
@@ -567,7 +573,8 @@ header {
     }
 }
 
-footer {
+footer,
+.state {
     line-height: 24px;
     font-size: 14px;
     text-align: center;
@@ -635,6 +642,15 @@ footer {
         }
     }
 
+    .notice {
+        .desc {
+            .desc-title {
+                font-size: 16px;
+                letter-spacing: 0;
+            }
+        }
+    }
+
     .donate {
         .desc-title {
             padding: 8px 0;
@@ -690,7 +706,8 @@ footer {
         }
     }
 
-    footer {
+    footer,
+    .state {
         line-height: 20px;
         font-size: 12px;
     }
