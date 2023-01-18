@@ -2,7 +2,11 @@
     <div class="bg"></div>
     <header>定制兔年春节头像<span @click="versionShow = true"><i>v1.3.1</i></span></header>
     <div class="notice-btn" @click="noticeShow = true">新年寄语</div>
-    <el-dialog class="notice" v-model="versionShow" title="版本更新（v1.3.1）" :width="isPc ? '600px' : '340px'" align-center center style="border-radius: 8px;">
+    <el-dialog class="notice" v-model="versionShow" title="版本更新（v1.3.2）" :width="isPc ? '600px' : '340px'" align-center center style="border-radius: 8px;">
+        <div class="desc">
+            <div class="desc-title">v1.3.2</div>
+            <p>压缩静态资源，优化网站加载速度。</p>
+        </div>
         <div class="desc">
             <div class="desc-title">v1.3.1</div>
             <p>优化新年寄语-教程描述及展示。</p>

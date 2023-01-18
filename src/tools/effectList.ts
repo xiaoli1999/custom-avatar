@@ -23,6 +23,11 @@ import wy7 from '../assets/img/effect/wenyan/7.png'
 import wy8 from '../assets/img/effect/wenyan/8.png'
 import wy9 from '../assets/img/effect/wenyan/9.png'
 import wy10 from '../assets/img/effect/wenyan/10.png'
+import wy11 from '../assets/img/effect/wenyan/11.png'
+import wy12 from '../assets/img/effect/wenyan/12.png'
+import wy13 from '../assets/img/effect/wenyan/13.png'
+import wy14 from '../assets/img/effect/wenyan/14.png'
+import wy15 from '../assets/img/effect/wenyan/15.png'
 
 export interface EffectType {
     url: string,
@@ -39,6 +44,11 @@ export const effectList: EffectType[] = [
     { url: wy8, name: '温言'},
     { url: wy9, name: '温言'},
     { url: wy10, name: '温言'},
+    { url: wy11, name: '温言'},
+    { url: wy12, name: '温言'},
+    { url: wy13, name: '温言'},
+    { url: wy14, name: '温言'},
+    { url: wy15, name: '温言'},
 
     { url: li1, name: '黎'},
     { url: li2, name: '黎'},
