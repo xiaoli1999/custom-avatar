@@ -1,8 +1,12 @@
 <template>
     <div class="bg"></div>
-    <header>定制兔年春节头像<span @click="versionShow = true"><i>v1.2.2</i></span></header>
+    <header>定制兔年春节头像<span @click="versionShow = true"><i>v1.3.0</i></span></header>
     <div class="notice-btn" @click="noticeShow = true">新年寄语</div>
-    <el-dialog class="notice" v-model="versionShow" title="版本更新（v1.2.2）" :width="isPc ? '600px' : '340px'" align-center center style="border-radius: 8px;">
+    <el-dialog class="notice" v-model="versionShow" title="版本更新（v1.3.0）" :width="isPc ? '600px' : '340px'" align-center center style="border-radius: 8px;">
+        <div class="desc">
+            <div class="desc-title">v1.3.0</div>
+            <p>一大批新年效果图来袭~（设计师温言）🔥🔥🔥</p>
+        </div>
         <div class="desc">
             <div class="desc-title">v1.2.2</div>
             <p>新增版本迭代信息弹窗</p>
@@ -75,8 +79,8 @@
                 <el-form-item label="选择效果图" prop="type">
                     <div class="effect">
                         <div v-for="(item, index) in effectList" :key="index" :class="`effect-item ${ effectIndex === index ? 'active' : '' }`" @click="selectEffect(index)">
-                            <img :src="item.imgUrl" alt="">
-                            <div>{{ item.designerName }}</div>
+                            <img :src="item.url" alt="">
+                            <div>{{ item.name }}</div>
                         </div>
                     </div>
                 </el-form-item>
@@ -195,7 +199,7 @@ const selectEffect = (index: number) => {
     effectIndex.value = index
 
     loading.value = true
-    layerList.value[0].url = effectList[index].imgUrl
+    layerList.value[0].url = effectList[index].url
 }
 
 const opacity = ref<number>(1)
