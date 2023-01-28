@@ -1,8 +1,12 @@
 <template>
     <div class="bg"></div>
-    <header>定制兔年春节头像<span @click="versionShow = true"><i>v1.3.3</i></span></header>
+    <header>定制兔年春节头像<span @click="versionShow = true"><i>v1.4.0</i></span></header>
     <div class="notice-btn" @click="noticeShow = true">新年寄语</div>
-    <el-dialog class="notice" v-model="versionShow" title="版本更新（v1.3.3）" :width="isPc ? '600px' : '340px'" align-center center style="border-radius: 8px;">
+    <el-dialog class="notice" v-model="versionShow" title="版本更新（v1.4.0）" :width="isPc ? '600px' : '340px'" align-center center style="border-radius: 8px;">
+        <div class="desc">
+            <div class="desc-title">v1.4.0</div>
+            <p>解决保存图片模糊问题</p>
+        </div>
         <div class="desc">
             <div class="desc-title">v1.3.3</div>
             <p>调整PC版版本迭代、效果图区域，优化页面展示。</p>
@@ -376,6 +380,7 @@ header {
 .notice {
     .desc {
         margin: 0 auto 12px;
+
         .desc-title {
             font-size: 20px;
             letter-spacing: 0;

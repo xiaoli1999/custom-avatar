@@ -131,6 +131,10 @@ const save = async (): Promise<string> => {
     await drawBackground(ProductionCanvas, props.bgInfo)
     await drawAll(ProductionCanvas, LayerList)
 
+    const size = 1200
+    const ratio = size / ProductionCanvas.width
+    if (ratio !== 1) ProductionCanvas.setZoom(ratio)
+
     Loading.value = false
     drawComplete()
 
@@ -138,8 +142,8 @@ const save = async (): Promise<string> => {
         format: 'png',
         left: 0,
         top: 0,
-        width: ProductionCanvas.width,
-        height: ProductionCanvas.height
+        width: size,
+        height: size
     })
 }
 

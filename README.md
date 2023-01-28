@@ -38,8 +38,8 @@ github✈️ [https://xiaoli1999.github.io/custom-rabbitImage](https://xiaoli199
 [CSDN](https://blog.csdn.net/weixin_53673959/article/details/128708172)
 
 ### 版本更新
-* v1.4.0 
-  * [ ] 解决导出图片模糊问题
+* **v1.4.0** 
+  * 解决保存图片模糊问题
 * **v1.3.3**
   * 调整PC版版本迭代
   * 调整效果图区域
