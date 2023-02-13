@@ -34,10 +34,19 @@ github✈️ [https://xiaoli1999.github.io/custom-rabbitImage](https://xiaoli199
 联系方式~**QQ: 22708206**
 
 ### 文章链接
-[掘金](https://juejin.cn/post/7189198252460212283) <br />
+[**掘金**](https://juejin.cn/post/7189198252460212283) <br />
 [CSDN](https://blog.csdn.net/weixin_53673959/article/details/128708172)
 
+## 捐赠
+若您愿聊表心意，小黎不胜感激🙏！（捐赠时请填写备注，会统计捐赠者并公布）
+<img align="center" width="360" src="./public/pay/wx.jpg"/>
+<img align="center" width="360" src="./public/pay/zfb.jpg"/>
+
 ### 版本更新
+* **v2.0.0（下期迭代）**
+  - [ ] 合成图片多风格（春节、情人节、端午节、中秋节、国庆节等）
+  - [ ] 更名仓库名为 custom-image （暂定）
+  - [ ] 重构页面布局风格（通用化）
 * **v1.4.0** 
   * 解决保存图片模糊问题
 * **v1.3.3**
