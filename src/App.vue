@@ -1,7 +1,6 @@
 <template>
     <div class="bg"></div>
     <header>定制兔年春节头像<span @click="versionShow = true"><i>v1.4.0</i></span></header>
-    <div class="notice-btn" @click="noticeShow = true">新年寄语</div>
     <el-dialog class="notice" v-model="versionShow" title="版本更新（v1.4.0）" :width="isPc ? '600px' : '340px'" align-center center style="border-radius: 8px;">
         <div class="desc">
             <div class="desc-title">v1.4.0</div>
@@ -38,39 +37,6 @@
         <div class="desc">
             <div class="desc-title">v1.0.0</div>
             <p>初版</p>
-        </div>
-    </el-dialog>
-    <el-dialog class="notice" v-model="noticeShow" title="新年寄语" :width="isPc ? '600px' : '340px'" align-center center style="border-radius: 8px;">
-        <div class="desc">
-            <div class="desc-title">简述</div>
-            <p>辞暮尔尔，烟火年年！你好，我是黎（小黎）。在这寒冬之际，满城尽烟花，小黎为大家带来<b>『定制兔年春节头像』</b>小工具，希望各位喜欢。
-                愿诸位抱着平安，拥着健康，揣着幸福，搂着温馨，携着快乐，牵着财运，拽着吉祥，迈入新年！
-            </p>
-        </div>
-        <div class="desc">
-            <div class="desc-title">
-                教程
-                <span>推荐qq、内置浏览器（暂不支持wx、uc浏览器）</span>
-            </div>
-            <p>
-                1. 选择头像形状（方形或圆形）。<br />
-                2. 上传头像，尽量为宽高比1:1的头像（不支持动图）。<br />
-                3. 选择效果图（目前效果图可适配大部分头像）。<br />
-                4. 若要微调，可在白框点击效果图进行<b>缩放、移动、旋转</b>等。<br />
-                5. 拖动透明度进度条调整效果图透明度。<br />
-                6. 点击预览确认方形、圆形头像（支持预览大图）。<br />
-                7. 点击保存图片。
-            </p>
-        </div>
-        <div class="desc">
-            <div class="desc-title">开源</div>
-            <p>目前代码已开源，<i><a href="https://github.com/xiaoli1999/custom-rabbitImage" target="_blank">github链接~</a></i>
-                如果你喜欢这个项目或使用过它，请点个star⭐，谢谢🙏🙏🙏！ <br />
-                目前效果图属于个人购买，数量有限；希望有志同道合的设计师为爱发电，提供一些效果图。我会在效果图下展示设计师的名称及个人网站等链接，
-                并在春节会收到小黎的春节红包🧧。<br />
-                若有喜欢的效果图或想要提供一些效果图，小黎不胜感激🙏。这个项目有您的参与变的更有意义🤝！<br />
-                联系方式~ <b>QQ: 22708206</b>，<i><a href="https://github.com/xiaoli1999/custom-rabbitImage/issues">github issues链接~</a></i>。
-            </p>
         </div>
     </el-dialog>
     <el-row class="main" :gutter="isPc ? 20 : 0">
@@ -161,7 +127,6 @@ progress.start()
 
 const isPc = ref<boolean>(judgePC())
 const loading = ref<boolean>(false)
-const noticeShow = ref<boolean>(false)
 const versionShow = ref<boolean>(false)
 
 
@@ -243,8 +208,6 @@ const save = async (isSave) => {
 onMounted(() => {
     progress.close()
     versionShow.value = true
-    setTimeout(() => noticeShow.value = true)
-
 })
 </script>
 
