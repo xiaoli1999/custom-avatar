@@ -2,6 +2,9 @@ import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import viteCompression from 'vite-plugin-compression' // 解决构建压缩
 import eslintPlugin from 'vite-plugin-eslint'
+import AutoImport from 'unplugin-auto-import/vite'
+import Components from 'unplugin-vue-components/vite'
+import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import path from 'path'
 
 
@@ -29,6 +32,13 @@ export default defineConfig(env => {
                 threshold: 1, // 体积大于阈值会被压缩，单位是b
                 algorithm: 'gzip', // 压缩算法
                 ext: '.gz'// 生成的压缩包后缀
+            }),
+            /* 按需引入 */
+            AutoImport({
+                resolvers: [ElementPlusResolver()]
+            }),
+            Components({
+                resolvers: [ElementPlusResolver()]
             })
         ],
         base: './',
