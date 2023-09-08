@@ -15,7 +15,7 @@
     "build:production": "vue-tsc --noEmit && vite build --mode production",
     "build": "vue-tsc && vite build",
     "preview": "vite preview",
-    "lint": "eslint src/**/*.{js,jsx,vue,ts,tsx} --fix",
+    "lint": "eslint \"src/**/*.{js,jsx,vue,ts,tsx}\" --fix",
     "lint:css": "stylelint **/*.{vue,css,sass,scss,less} --fix",
     "prepare": "husky install",
     "deploy": "gh-pages -d rabbit"
