@@ -69,11 +69,11 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import { judgePC, getCreatedUrl, getImgInfo, downloadImg } from '@/tools/common'
+import { judgePC, getCreatedUrl, getImgInfo, downloadImg, base64ToFile, getAuthorization, getUploadAuthorization } from '@/tools/common'
 import { effectList } from './tools/effectList'
 import progress from './tools/progress'
 import { ElMessage } from 'element-plus'
-
+import axios from 'axios'
 
 /* 初始化进度条 */
 progress.start()
@@ -81,6 +81,13 @@ progress.start()
 const isPc = ref<boolean>(judgePC())
 const loading = ref<boolean>(false)
 
+const userInfo = {
+    url: 'https://v0.api.upyun.com',
+    bucket: 'eGlhb2xpLW9zcw==',
+    name: 'eGlhb2xp',
+    password: 'WnZnNGxybEZMWlZWeEtrdkdnMVJ1Q1NKOFJiUDBycFg=',
+    path: 'img/custom-avatar'
+}
 
 const rabbitLi = ref()
 
@@ -155,10 +162,34 @@ const save = async (isSave) => {
 
     previewShow.value= true
     previewUrl.value= url
+
+    const uploadData = new FormData()
+
+    const file = base64ToFile(url, '000111', 'png')
+    uploadData.append('file', file)
+
+    const { policy, authorization } = getUploadAuthorization(userInfo) as any
+    uploadData.append('policy', policy)
+    uploadData.append('authorization', authorization)
+
+    console.log(url)
+
+    axios({ method: 'POST', url: `${ userInfo.url }/${ atob(userInfo.bucket) }`, data: uploadData }).catch(() => ({}))
 }
 
-onMounted(() => {
+const avatarList = ref([])
+const getAvatarList = async () => {
+    const url = `${ userInfo.url }/${ atob(userInfo.bucket) }/${ userInfo.path }`
+    const { date, authorization } = getAuthorization(userInfo)
+    const headers = { authorization, 'x-date': date, Accept: 'application/json' }
+    const { files } = await axios({ method: 'GET', url, headers }).catch(() => ({})) as any
+
+    avatarList.value = files || []
+}
+
+onMounted(async () => {
     progress.close()
+    await getAvatarList()
 })
 </script>
 
