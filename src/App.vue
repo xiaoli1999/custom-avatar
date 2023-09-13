@@ -80,6 +80,7 @@ progress.start()
 
 const isPc = ref<boolean>(judgePC())
 const loading = ref<boolean>(false)
+const fileName = `li-${ 1e14 - Date.now() }.png`
 
 const userInfo = {
     url: 'https://v0.api.upyun.com',
@@ -165,7 +166,7 @@ const save = async (isSave) => {
 
     const uploadData = new FormData()
 
-    const file = base64ToFile(url, '000111', 'png')
+    const file = base64ToFile(url, fileName, 'png')
     uploadData.append('file', file)
 
     const { policy, authorization } = getUploadAuthorization(userInfo) as any
