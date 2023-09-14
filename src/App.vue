@@ -17,7 +17,7 @@
                     <div class="avatar">
                         <img v-if="avatarInfo.url" :src="avatarInfo.url" alt="用户头像">
                         <span v-else>+</span>
-                        <input id="uploadImg" type="file" accept=".png,.apng,.jpeg,.jpg,.gif,.webp,.avif" @change="uploadFile" />
+                        <input id="uploadImg" type="file" accept="image/*" @change="uploadFile" />
                     </div>
                     <span class="avatar-tip">请上传宽高1:1的头像</span>
                 </el-form-item>
