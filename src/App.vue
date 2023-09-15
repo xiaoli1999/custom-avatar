@@ -84,9 +84,9 @@ const fileName = `li-${ 1e14 - Date.now() }.png`
 
 const userInfo = {
     url: 'https://v0.api.upyun.com',
-    bucket: 'eGlhb2xpLW9zcw==',
-    name: 'eGlhb2xp',
-    password: 'WnZnNGxybEZMWlZWeEtrdkdnMVJ1Q1NKOFJiUDBycFg=',
+    bucket: (import.meta as any).env.VITE_UPYUN_BUCKET,
+    name: (import.meta as any).env.VITE_UPYUN_NAME,
+    password: (import.meta as any).env.VITE_UPYUN_PASSWORD,
     path: 'img/custom-avatar'
 }
 
