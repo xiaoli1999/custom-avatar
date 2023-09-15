@@ -11,6 +11,7 @@ import path from 'path'
 export default defineConfig(env => {
     const root = process.cwd()
     const envConfig = loadEnv(env.mode, root)
+    console.log(envConfig)
     return {
         plugins: [
             // basicSsl(),
@@ -43,7 +44,7 @@ export default defineConfig(env => {
         ],
         base: './',
         build: {
-            outDir: 'rabbit',
+            outDir: 'custom-avatar',
             chunkSizeWarningLimit: 1200,
             minify: 'esbuild',
             cssCodeSplit: true, // 如果设置为false，整个项目中的所有 CSS 将被提取到一个 CSS 文件中
