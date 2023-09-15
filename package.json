@@ -5,10 +5,10 @@
   "author": {
     "name": "黎",
     "email": "22708206@qq.com",
-    "url": "https://www.xiaoli.vip/rabbit"
+    "url": "https://www.xiaoli.vip/custom-avatar"
   },
   "type": "module",
-  "homepage": " https://xiaoli1999.github.io/custom-rabbitImage",
+  "homepage": " https://xiaoli1999.github.io/custom-avatar",
   "scripts": {
     "dev": "vite",
     "build:development": "vue-tsc --noEmit && vite build --mode development",
@@ -18,7 +18,7 @@
     "lint": "eslint \"src/**/*.{js,jsx,vue,ts,tsx}\" --fix",
     "lint:css": "stylelint **/*.{vue,css,sass,scss,less} --fix",
     "prepare": "husky install",
-    "deploy": "gh-pages -d rabbit"
+    "deploy": "gh-pages -d custom-avatar"
   },
   "dependencies": {
     "axios": "^1.5.0",
