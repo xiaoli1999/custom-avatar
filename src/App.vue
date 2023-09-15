@@ -3,15 +3,17 @@
     <header>定制兔年春节头像</header>
     <el-row class="main" :gutter="isPc ? 20 : 0">
         <el-col :xs="24" :sm="14" :md="10">
-            <div :class="`custom ${ showType }`" :style="{ width: isPc ? '400px' : '320px', height: isPc ? '400px' : '320px' }">
+            <div :class="`custom ${ showRound ? '' : 'circle' }`" :style="{ width: isPc ? '400px' : '320px', height: isPc ? '400px' : '320px' }">
                 <RabbitLi ref="rabbitLi" :bg-info="avatarInfo" :layer-list="layerList" @drawComplete="drawComplete" />
             </div>
         </el-col>
         <el-col :xs="24" :sm="10" :md="14">
             <el-form class="form" :loading="loading" label-width="90px" label-position="right" :size="isPc ? 'default' : 'small'">
+                <div style="width: 100%;">
+                    <el-button v-for="(item, index) in picList" :key="index" :type="styleIndex === index ? 'primary' : 'info'" @click="styleIndex = index">{{ item.name }}</el-button>
+                </div>
                 <el-form-item label="头像形状" prop="type">
-                    <div :class="`type-btn ${ showType ? '' : 'active' }`" @click="showType = ''">方形</div>
-                    <div :class="`type-btn ${ showType ? 'active' : '' }`" @click="showType = 'circle'">圆形</div>
+                    <el-button @click="showRound = !showRound">更换形状</el-button>
                 </el-form-item>
                 <el-form-item label="上传原头像" prop="type">
                     <div class="avatar">
@@ -21,11 +23,17 @@
                     </div>
                     <span class="avatar-tip">请上传宽高1:1的头像</span>
                 </el-form-item>
-                <el-form-item label="选择效果图" prop="type">
+                <el-form-item label="头像框" prop="type">
                     <div class="effect">
-                        <div v-for="(item, index) in effectList" :key="index" :class="`effect-item ${ effectIndex === index ? 'active' : '' }`" @click="selectEffect(index)">
-                            <img :src="item.url" alt="">
-                            <div>{{ item.name }}</div>
+                        <div v-for="(item, index) in picList[styleIndex].frameList" :key="index" :class="`effect-item ${ frameIndex === index ? 'active' : '' }`" @click="selectFrame(index)">
+                            <img :src="item" alt="">
+                        </div>
+                    </div>
+                </el-form-item>
+                <el-form-item label="贴纸" prop="type">
+                    <div class="effect">
+                        <div v-for="(item, index) in picList[styleIndex].markList" :key="index" @click="selectMark(index)">
+                            <img :src="item" alt="">
                         </div>
                     </div>
                 </el-form-item>
@@ -70,18 +78,16 @@
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
 import { judgePC, getCreatedUrl, getImgInfo, downloadImg, base64ToFile, getAuthorization, getUploadAuthorization } from '@/tools/common'
-import { effectList } from './tools/effectList'
 import progress from './tools/progress'
 import { ElMessage } from 'element-plus'
 import axios from 'axios'
+import { picList } from '@/tools/picList'
 
 /* 初始化进度条 */
 progress.start()
 
+/* 基础数据 */
 const isPc = ref<boolean>(judgePC())
-const loading = ref<boolean>(false)
-const fileName = `li-${ 1e14 - Date.now() }.png`
-
 const userInfo = {
     url: 'https://v0.api.upyun.com',
     bucket: (import.meta as any).env.VITE_UPYUN_BUCKET,
@@ -89,10 +95,16 @@ const userInfo = {
     password: (import.meta as any).env.VITE_UPYUN_PASSWORD,
     path: 'img/custom-avatar'
 }
+const fileName = `li-${ 1e14 - Date.now() }.png`
+
+/* 业务 */
+const styleIndex = ref(0)
+const frameIndex = ref<number | null>(null)
+const showRound = ref<boolean>(true)
+
+const loading = ref<boolean>(false)
 
 const rabbitLi = ref()
-
-const showType = ref<string>('')
 
 const avatarInfo = ref<{ url: string, w: number, h: number, name: string }>({ url: '', w: 0, h: 0, name: '' })
 const uploadFile = async (e: any) => {
@@ -136,13 +148,21 @@ const layerList = ref<LayerType[]>([
         opacity: 1
     }
 ])
-const effectIndex = ref<number | null>(null)
-const selectEffect = (index: number) => {
+
+const selectFrame = (index: number) => {
     if (!avatarInfo.value.url) return ElMessage.warning('请先上传原头像！')
-    effectIndex.value = index
+    frameIndex.value = index
 
     loading.value = true
-    layerList.value[0].url = effectList[index].url
+    layerList.value[0].url = picList[styleIndex.value].frameList[index]
+}
+
+const selectMark = (index: number) => {
+    if (!avatarInfo.value.url) return ElMessage.warning('请先上传原头像！')
+    frameIndex.value = index
+
+    loading.value = true
+    layerList.value[0].url = picList[styleIndex.value].frameList[index]
 }
 
 const opacity = ref<number>(1)
