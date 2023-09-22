@@ -1,78 +1,53 @@
 <template>
     <div class="bg"></div>
     <header>定制兔年春节头像</header>
-    <el-row class="main" :gutter="isPc ? 20 : 0">
-        <el-col :xs="24" :sm="14" :md="10">
-            <div :class="`custom ${ showRound ? '' : 'circle' }`" :style="{ width: isPc ? '400px' : '320px', height: isPc ? '400px' : '320px' }">
-                <RabbitLi ref="rabbitLi" :bg-info="avatarInfo" :layer-list="layerList" @drawComplete="drawComplete" />
-            </div>
-        </el-col>
-        <el-col :xs="24" :sm="10" :md="14">
-            <el-form class="form" :loading="loading" label-width="90px" label-position="right" :size="isPc ? 'default' : 'small'">
-                <div style="width: 100%;">
-                    <el-button v-for="(item, index) in picList" :key="index" :type="styleIndex === index ? 'primary' : 'info'" @click="styleIndex = index">{{ item.name }}</el-button>
-                </div>
-                <el-form-item label="头像形状" prop="type">
-                    <el-button @click="showRound = !showRound">更换形状</el-button>
-                </el-form-item>
-                <el-form-item label="上传原头像" prop="type">
-                    <div class="avatar">
-                        <img v-if="avatarInfo.url" :src="avatarInfo.url" alt="用户头像">
-                        <span v-else>+</span>
-                        <input id="uploadImg" type="file" accept="image/*" @change="uploadFile" />
-                    </div>
-                    <span class="avatar-tip">请上传宽高1:1的头像</span>
-                </el-form-item>
-                <el-form-item label="头像框" prop="type">
-                    <div class="effect">
-                        <div v-for="(item, index) in picList[styleIndex].frameList" :key="index" :class="`effect-item ${ frameIndex === index ? 'active' : '' }`" @click="selectFrame(index)">
-                            <img :src="item" alt="">
-                        </div>
-                    </div>
-                </el-form-item>
-                <el-form-item label="贴纸" prop="type">
-                    <div class="effect">
-                        <div v-for="(item, index) in picList[styleIndex].markList" :key="index" @click="selectMark(index)">
-                            <img :src="item" alt="">
-                        </div>
-                    </div>
-                </el-form-item>
-                <el-form-item label="透明度" prop="type">
-                    <div class="opacity">
-                        <el-slider v-model="opacity" :min="0.1" :max="1" :step="0.01" size="small" :disabled="!layerList[0].url" @change="opacityChange" />
-                    </div>
-                </el-form-item>
-                <el-form-item label="" prop="type">
-                    <el-button type="primary" plain @click="save(false)">预览</el-button>
-                    <el-button type="success" plain @click="save(true)">保存</el-button>
-                </el-form-item>
-            </el-form>
-        </el-col>
-    </el-row>
+
+    <div style="width: 100%;">
+        <el-button v-for="(item, index) in picList" :key="index" :type="styleIndex === index ? 'primary' : 'info'" @click="styleIndex = index">{{ item.name }}</el-button>
+    </div>
+
+    <div class="avatar">
+        <img v-if="avatarInfo.url" :src="avatarInfo.url" alt="用户头像">
+        <span v-else>+</span>
+        <input id="uploadImg" type="file" accept="image/*" @change="uploadFile" />
+    </div>
+    <span class="avatar-tip">请上传宽高1:1的头像</span>
+
+
+    <div class="effect">
+        <div v-for="(item, index) in picList[styleIndex].frameList" :key="index" :class="`effect-item ${ frameIndex === index ? 'active' : '' }`" @click="selectFrame(index)">
+            <img :src="item" alt="">
+        </div>
+    </div>
+
+
+    <div class="effect">
+        <div v-for="(item, index) in picList[styleIndex].markList" :key="index" @click="selectMark(index)">
+            <img :src="item" alt="">
+        </div>
+    </div>
+
+    <div class="opacity">
+        <el-slider v-model="opacity" :min="0.1" :max="1" :step="0.01" size="small" :disabled="!layerList[0].url" @change="opacityChange" />
+    </div>
+
+    <el-button type="primary" plain @click="save(false)">预览</el-button>
+    <el-button type="success" plain @click="save(true)">保存</el-button>
+
+    <div class="opacity">
+        <el-slider v-model="opacity" :min="0.1" :max="1" :step="0.01" size="small" :disabled="!layerList[0].url" @change="opacityChange" />
+    </div>
 
     <div class="stats">
         <p>本站访问人数:<span id="busuanzi_value_site_uv"></span></p>
         <p>本站访问总量:<span id="busuanzi_value_site_pv"></span></p>
-        <a class="github" href="https://github.com/xiaoli1999/custom-rabbitImage" target="_blank">
+        <a class="github" href="https://github.com/xiaoli1999/custom-avatar" target="_blank">
             <img src="./assets/img/github.png" alt="github">
             <span>github</span>
         </a>
     </div>
     <div class="state">部分素材来源于网络，非商业用途，如有侵权请联系删除。</div>
     <footer>© 2023 All rights reserved. Powered by 黎</footer>
-
-    <el-dialog class="preview" v-model="previewShow" title="预览" width="320px"  align-center center style="border-radius: 8px;">
-        <div class="preview-list">
-            <div class="preview-list-item">
-                <el-image :src="previewUrl" fit="cover" :preview-src-list="[previewUrl]"  hide-on-click-modal/>
-                <el-tag effect="plain">微信</el-tag>
-            </div>
-            <div class="preview-list-item">
-                <el-image :src="previewUrl" fit="cover" :preview-src-list="[previewUrl]"  hide-on-click-modal/>
-                <el-tag effect="plain">qq、抖音等</el-tag>
-            </div>
-        </div>
-    </el-dialog>
 </template>
 
 <script lang="ts" setup>
@@ -215,477 +190,8 @@ onMounted(async () => {
 </script>
 
 <style lang="less" scoped>
-@defaultColor: #ebebeb;
-@activeColor: #fff;
-
-.title-size {
-    font-family: "楷体", serif;
-    letter-spacing: 1px;
-    background-clip: text;
-    -webkit-text-fill-color: transparent;
-    -webkit-text-stroke: 1px #fff;
-}
-
-.transition {
-    transition: all 0.4s linear;
-}
-
-header {
-    line-height: 80px;
-    font-size: 28px;
-    text-align: center;
-
-    .title-size;
-
-    > span {
-        position: relative;
-        margin-left: 8px;
-        font-size: 20px;
-        letter-spacing: 0;
-        cursor: pointer;
-    }
-}
-
-.notice-btn {
-    margin: 0 auto 32px;
-    width: 90px;
-    font-size: 14px;
-    text-align: center;
-    color: #363636;
-    background: #ffffff80;
-    border-radius: 4px;
-    box-shadow: inset 0 0 8px 1px #f4f4f468;
-    line-height: 32px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    cursor: pointer;
-
-    .transition;
-
-    &:hover {
-        color: #000;
-        box-shadow: inset 0 0 8px 1px #f4f4f4cc;
-    }
-}
-
-.desc {
-    padding: 0 12px;
-    margin: 0 auto 20px;
-
-    .desc-title {
-        display: flex;
-        align-items: center;
-        padding-bottom: 12px;
-        font-size: 26px;
-        font-family: "楷体", serif;
-        letter-spacing: 1px;
-        color: #000;
-        font-weight: 600;
-
-        > span {
-            padding-left: 8px;
-            font-size: 16px;
-            color: #f56c6c;
-        }
-    }
-
-    > p {
-        line-height: 1.25;
-        font-size: 14px;
-        color: #323232;
-
-        .transition;
-
-        a:hover {
-            font-weight: bold;
-            color: #000;
-        }
-
-        > span {
-            display: flex;
-            justify-content: space-between;
-            margin: 12px auto;
-            width: 240px;
-
-            > img {
-                overflow: hidden;
-                width: 100px;
-                border-radius: 4px;
-                object-fit: contain;
-            }
-        }
-    }
-}
-
-.donate {
-    .desc-title {
-        justify-content: center;
-        padding: 12px 0;
-        color: #fff;
-    }
-
-    > p {
-        padding-bottom: 12px;
-        color: @defaultColor;
-    }
-}
-
-.notice {
-    .desc {
-        margin: 0 auto 12px;
-
-        .desc-title {
-            font-size: 20px;
-            letter-spacing: 0;
-        }
-    }
-}
-
-.main {
-    margin-bottom: 20px;
-
-    .custom {
-        position: relative;
-        overflow: hidden;
-        margin: 0 auto;
-        border-radius: 8px;
-        box-shadow: inset 0 0 16px 1px #fffc;
-
-        .transition;
-
-        &.circle {
-            border-radius: 50%;
-        }
-    }
-
-    .form {
-        padding: 12px 0;
-
-        :deep(.el-form-item__label) {
-            color: #d5d5d5;
-        }
-
-        .type-btn {
-            padding: 6px 12px;
-            margin-right: 20px;
-            font-size: 16px;
-            color: @defaultColor;
-            border: 1px solid @defaultColor;
-            border-radius: 4px;
-            cursor: pointer;
-
-            .transition;
-
-            &:hover,
-            &.active {
-                color: @activeColor;
-                border-color: @activeColor;
-                box-shadow: inset 0 0 6px 1px #fffc;
-            }
-        }
-
-        .avatar {
-            position: relative;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            width: 60px;
-            height: 60px;
-            font-size: 24px;
-            color: @defaultColor;
-            border: 1px dashed @defaultColor;
-            border-radius: 50%;
-            cursor: pointer;
-            .transition;
-
-            > img {
-                display: block;
-                width: 100%;
-                height: 100%;
-                cursor: pointer;
-            }
-
-            &:hover {
-                color: @activeColor;
-                border-color: @activeColor;
-            }
-
-            > input {
-                position: absolute;
-                width: 100%;
-                height: 100%;
-                cursor: pointer;
-                opacity: 0;
-            }
-        }
-
-        .avatar-tip {
-            padding: 4px 0 4px 16px;
-            font-size: 14px;
-            color: @defaultColor;
-        }
-
-        .effect {
-            display: flex;
-            align-items: center;
-            overflow-x: hidden;
-            overflow-y: auto;
-            padding: 4px;
-            width: 100%;
-            height: auto;
-            max-height: 240px;
-            flex-wrap: wrap;
-
-            .effect-item {
-                padding: 8px 8px 0;
-                margin: 0 8px 8px 0;
-                border: 1px dashed @defaultColor;
-                border-radius: 4px;
-
-                .transition;
-
-                > img {
-                    overflow: hidden;
-                    width: 76px;
-                    height: 76px;
-                    background: #f4f4f480;
-                    border-radius: 2px;
-                    cursor: pointer;
-                }
-
-                > div {
-                    padding: 4px;
-                    font-size: 14px;
-                    text-align: center;
-                    color: @defaultColor;
-                    cursor: pointer;
-                    .transition;
-                }
-
-                &:hover,
-                &.active {
-                    border: 1px solid @activeColor;
-                    //box-shadow: 0 0 4px 1px #409eff80;
-                    box-shadow: inset 0 0 6px 1px #fffc;
-
-                    > div {
-                        color: @activeColor;
-                    }
-                }
-            }
-        }
-
-        .opacity {
-            padding: 0 32px 0 12px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-    }
-}
-
-.preview {
-    .preview-list {
-        display: flex;
-        justify-content: space-around;
-        align-items: center;
-
-        .preview-list-item {
-            text-align: center;
-
-            :deep(.el-image) {
-                display: block;
-                margin: 0 auto 8px;
-                width: 64px;
-                height: 64px;
-                border-radius: 4px;
-            }
-        }
-
-        .preview-list-item:last-child {
-            :deep(.el-image) {
-                border-radius: 50%;
-            }
-        }
-    }
-}
-
-.stats {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px auto;
-
-    > p,
-    > a {
-        padding: 4px 8px;
-        margin: 0 4px;
-        font-size: 14px;
-        color: #363439;
-        background: #ffffff9a;
-        border-radius: 2px;
-        box-shadow: inset 0 0 8px 1px #f4f4f480;
-        font-weight: 600;
-
-        > span {
-            padding-left: 4px;
-        }
-
-        > img {
-            margin-right: 2px;
-            width: 18px;
-            height: 18px;
-        }
-    }
-
-    > a {
-        display: flex;
-        align-items: center;
-        cursor: pointer;
-
-        &:hover {
-            box-shadow: inset 0 0 8px 1px #fff, 1px 1px 6px 0.5px #00000060;
-        }
-    }
-}
-
-footer,
-.state {
-    line-height: 24px;
-    font-size: 14px;
-    text-align: center;
-}
-
 /* 兼容移动端 */
 @media only screen and (max-width: 768px) {
-    .bg {
-        background: url("./assets/img/bg-mobile.png") center no-repeat;
-        background-size: cover;
-    }
-
-    header {
-        line-height: 36px;
-        font-size: 18px;
-
-        > span {
-            margin-left: 8px;
-            font-size: 14px;
-        }
-    }
-
-    .notice-btn {
-        margin: 2px auto 12px;
-        width: 68px;
-        font-size: 12px;
-        line-height: 24px;
-
-        .transition;
-    }
-
-    .desc {
-        padding: 0 8px;
-        margin: 0 auto 8px;
-
-        //color: #f4f4f4;
-
-        .desc-title {
-            padding-bottom: 8px;
-            font-size: 18px;
-
-            > span {
-                padding-left: 4px;
-                font-size: 12px;
-                color: #f56c6c;
-            }
-        }
-
-        > p {
-            font-size: 12px;
-
-            a:hover {
-                font-weight: bold;
-                color: #409eff;
-            }
-
-            > span {
-                margin: 8px auto;
-                width: 200px;
-
-                > img {
-                    width: 90px;
-                }
-            }
-        }
-    }
-
-    .notice {
-        .desc {
-            .desc-title {
-                font-size: 16px;
-                letter-spacing: 0;
-            }
-        }
-    }
-
-    .donate {
-        .desc-title {
-            padding: 8px 0;
-            color: #fff;
-        }
-
-        > p {
-            padding-bottom: 12px;
-            color: @defaultColor;
-        }
-    }
-
-    .main {
-        margin-bottom: 8px;
-
-        .form {
-            padding: 8px 0;
-
-            .effect {
-                .effect-item {
-                    padding: 4px 6px 0;
-                    margin: 0 6px 6px 0;
-
-                    > img {
-                        width: 64px;
-                        height: 64px;
-                    }
-
-                    > div {
-                        padding: 4px;
-                        font-size: 12px;
-                    }
-                }
-            }
-        }
-    }
-
-    .stats {
-        margin: 8px auto;
-
-        > p,
-        > a {
-            padding: 4px 8px;
-            margin: 0 4px 0 0;
-            font-size: 12px;
-            border-radius: 2px;
-            box-shadow: inset 0 0 8px 1px #f4f4f480;
-
-            > img {
-                width: 14px;
-                height: 14px;
-            }
-        }
-    }
-
-    footer,
-    .state {
-        line-height: 20px;
-        font-size: 12px;
-    }
+    /* 移动端 */
 }
 </style>
