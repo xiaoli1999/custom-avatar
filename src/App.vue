@@ -1,42 +1,62 @@
 <template>
-    <div class="bg"></div>
-    <header>定制兔年春节头像</header>
-
-    <div style="width: 100%;">
-        <el-button v-for="(item, index) in picList" :key="index" :type="styleIndex === index ? 'primary' : 'info'" @click="styleIndex = index">{{ item.name }}</el-button>
+    <div class="bg">
+        <img class="bg-l" src="./assets/img/bg-1.png" alt="">
+        <img class="bg-r" src="./assets/img/bg-2.png" alt="">
     </div>
 
-    <div class="avatar">
-        <img v-if="avatarInfo.url" :src="avatarInfo.url" alt="用户头像">
-        <span v-else>+</span>
-        <input id="uploadImg" type="file" accept="image/*" @change="uploadFile" />
-    </div>
-    <span class="avatar-tip">请上传宽高1:1的头像</span>
-
-
-    <div class="effect">
-        <div v-for="(item, index) in picList[styleIndex].frameList" :key="index" :class="`effect-item ${ frameIndex === index ? 'active' : '' }`" @click="selectFrame(index)">
-            <img :src="item" alt="">
+    <header>
+        <div class="header-content">
+            <div>
+                <img src="https://cdn.xiaoli.vip/project/logo.jpg" alt="">
+                采黎 • 定制头像
+            </div>
+            <!--todo 滚动播放-->
+            <div></div>
         </div>
-    </div>
-
-
-    <div class="effect">
-        <div v-for="(item, index) in picList[styleIndex].markList" :key="index" @click="selectMark(index)">
-            <img :src="item" alt="">
+    </header>
+    <div class="fasten"></div>
+    <main>
+        <div class="fasten"></div>
+        <div class="avatar-warp">
+            <img class="left" src="./assets/img/more-left.png" alt="">
+            <div class="avatar" :class="showRound ? 'circle' : ''"></div>
+            <img class="more-right" src="./assets/img/more-right.png" alt="">
         </div>
-    </div>
+        <div class="avatar-panel">
+            <el-button type="warning" plain @click="showRound  = !showRound">更换形状</el-button>
+            <el-button type="success" @click="uploadImgRef.click()">上传头像</el-button>
+        </div>
+        <div class="avatar-style">
+            <div v-for="(item, index) in picList" :key="index" :class="styleIndex === index ? 'active' : ''"  @click="styleIndex = index">{{ item.name }}</div>
+        </div>
+        <div class="avatar-option">
+            <p>头像框</p>
+            <div class="effect-list">
+                <div v-for="(item, index) in picList[styleIndex].frameList" :key="index" :class="`effect-item ${ frameIndex === index ? 'active' : '' }`" @click="selectFrame(index)">
+                    <img :src="item" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="avatar-option">
+            <p>贴纸</p>
+            <div class="effect-list">
+                <div v-for="(item, index) in picList[styleIndex].frameList" :key="index" @click="selectFrame(index)">
+                    <img :src="item" alt="">
+                </div>
+            </div>
+        </div>
+        <div class="avatar-option">
+            <p>透明度</p>
+            <div class="opacity">
+                <el-slider v-model="opacity" :min="0.1" :max="1" :step="0.01" size="small" @change="opacityChange" />
+            </div>
+        </div>
 
-    <div class="opacity">
-        <el-slider v-model="opacity" :min="0.1" :max="1" :step="0.01" size="small" :disabled="!layerList[0].url" @change="opacityChange" />
-    </div>
+        <el-button type="primary" plain @click="save(false)">预览</el-button>
+        <el-button type="success" plain @click="save(true)">保存</el-button>
+    </main>
 
-    <el-button type="primary" plain @click="save(false)">预览</el-button>
-    <el-button type="success" plain @click="save(true)">保存</el-button>
 
-    <div class="opacity">
-        <el-slider v-model="opacity" :min="0.1" :max="1" :step="0.01" size="small" :disabled="!layerList[0].url" @change="opacityChange" />
-    </div>
 
     <div class="stats">
         <p>本站访问人数:<span id="busuanzi_value_site_uv"></span></p>
@@ -48,6 +68,8 @@
     </div>
     <div class="state">部分素材来源于网络，非商业用途，如有侵权请联系删除。</div>
     <footer>© 2023 All rights reserved. Powered by 黎</footer>
+
+    <input ref="uploadImgRef" id="uploadImg" type="file" accept="image/*" @change="uploadFile" style="position: absolute;left: -9999px;" />
 </template>
 
 <script lang="ts" setup>
@@ -73,13 +95,14 @@ const userInfo = {
 const fileName = `li-${ 1e14 - Date.now() }.png`
 
 /* 业务 */
-const styleIndex = ref(0)
+const styleIndex = ref(2)
 const frameIndex = ref<number | null>(null)
-const showRound = ref<boolean>(true)
-
+const showRound = ref<boolean>(false)
+console.log(picList)
 const loading = ref<boolean>(false)
 
 const rabbitLi = ref()
+const uploadImgRef = ref()
 
 const avatarInfo = ref<{ url: string, w: number, h: number, name: string }>({ url: '', w: 0, h: 0, name: '' })
 const uploadFile = async (e: any) => {
@@ -189,7 +212,296 @@ onMounted(async () => {
 })
 </script>
 
-<style lang="less" scoped>
+<style lang="less">
+.bg {
+    position: fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: -1;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+    height: 100vh;
+
+    > img {
+        position: absolute;
+        width: 100%;
+        //height: 100%;
+    }
+
+    .bg-l {
+        left: 0;
+    }
+
+    .bg-r {
+        right: 0;
+    }
+}
+
+header {
+    position: sticky;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 1000;
+    margin: 0 auto;
+    width: 100%;
+    background: #ffffff80;
+    background-size: 4px 4px;
+    backdrop-filter: saturate(50%) blur(4px);
+    border-bottom: 2px solid #f2f4f8;
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 12px;
+        margin: 0 auto;
+        max-width: 1200px;
+        height: 54px;
+
+        > div {
+            display: flex;
+            align-items: center;
+            font-size: 18px;
+            letter-spacing: 1px;
+            //font-weight: 600;
+
+            > img {
+                margin-right: 16px;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+            }
+        }
+    }
+}
+
+.fasten {
+    height: 130px;
+}
+
+main {
+    margin: 40px auto;
+    max-width: 1000px;
+    background: #ffffff4d;
+    border: 2px solid #eee;
+    border-radius: 20px;
+    backdrop-filter: blur(4px);
+
+    .avatar-warp {
+        position: absolute;
+        top: -130px;
+        right: 0;
+        left: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 260px;
+        margin-inline: auto;
+
+        .avatar {
+            overflow: hidden;
+            width: 260px;
+            height: 260px;
+            background: #fff;
+            border-radius: 20px;
+            box-shadow: 2px 2px 12px 2px rgb(26 94 109 / 30%), 16px 16px 24px 4px rgb(151 219 233 / 40%);
+            transition: all 0.24s;
+            margin-inline: 48px;
+
+            &.circle {
+                border-radius: 50%;
+            }
+        }
+
+        > img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            box-shadow: 1px 1px 6px 1px #1a5e6d2d;
+            cursor: pointer;
+            transition: all 0.24s;
+
+            &:hover {
+                box-shadow: 1px 1px 6px 1px #1a5e6d4d;
+                transform: scale(1.1);
+            }
+        }
+    }
+
+    .avatar-panel {
+        display: flex;
+        justify-content: center;
+        margin: 20px auto 0;
+    }
+
+    .avatar-style {
+        display: flex;
+        justify-content: center;
+        margin: 10px auto;
+
+        > div {
+            position: relative;
+            padding: 10px 0;
+            margin: 0 16px;
+            font-size: 20px;
+            color: #333;
+            transition: all 0.24s;
+            letter-spacing: 1px;
+            cursor: pointer;
+
+            &:hover {
+                color: #ff8f1f;
+            }
+
+            &.active {
+                color: #ff8f1f;
+                font-weight: 600;
+            }
+
+            &.active::after {
+                position: absolute;
+                right: 0;
+                bottom: -2px;
+                left: 0;
+                display: block;
+                margin: 0 auto;
+                width: 90%;
+                height: 3px;
+                background: #ff8f1f;
+                border-radius: 2px;
+                content: "";
+            }
+        }
+    }
+
+    .avatar-option {
+        display: flex;
+        align-items: center;
+        padding: 0 20px;
+        margin-bottom: 10px;
+
+        > p {
+            margin-right: 20px;
+            width: 80px;
+            font-size: 14px;
+            text-align: right;
+            flex-shrink: 0;
+            font-weight: 600;
+        }
+
+        .effect-list {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            overflow-x: auto;
+            padding: 8px 0;
+
+            > div {
+                position: relative;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                overflow: hidden;
+                margin-right: 12px;
+                width: 68px;
+                height: 68px;
+                background: #ffffff80;
+                border-radius: 6px;
+                box-shadow: 1px 1px 2px #0000001f;
+                transition: all 0.24s;
+                flex-shrink: 0;
+                cursor: pointer;
+
+                &:hover,
+                &.active {
+                    transform: translateY(-6px);
+                    box-shadow: 1px 1px 8px 1px #0000001f;
+
+                    > img {
+                        width: 80%;
+                        height: 80%;
+                    }
+                }
+
+                > img {
+                    overflow: hidden;
+                    width: 100%;
+                    height: 100%;
+                    border-radius: 6px;
+                    transition: all 0.24s;
+                }
+            }
+
+            /* 隐藏浏览器默认滚动条 */
+            &::-webkit-scrollbar {
+                height: 6px;
+            }
+
+            /* 自定义滑块样式 */
+            &::-webkit-scrollbar-thumb {
+                background-color: #ff8f1f20;
+                border-radius: 6px;
+            }
+
+            &::-webkit-scrollbar-thumb:hover,
+            &::-webkit-scrollbar-thumb:active {
+                background-color: #ff8f1faa;
+            }
+        }
+
+        .opacity {
+            flex: 1;
+
+            .el-slider__bar {
+                background: #ff8f1f60;
+            }
+
+            .el-slider__button {
+                border-color: #ff8f1f60;
+            }
+        }
+    }
+}
+
+.stats {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 16px auto;
+
+    > p,
+    > a {
+        display: flex;
+        align-items: center;
+        padding: 0 8px;
+        margin: 0 8px 0 0;
+        height: 24px;
+        font-size: 12px;
+        background: #dfddc680;
+        border-radius: 4px;
+
+        > span {
+            padding-left: 4px;
+        }
+
+        > img {
+            margin-right: 4px;
+            width: 14px;
+            height: 14px;
+        }
+    }
+}
+
+footer,
+.state {
+    padding-bottom: 8px;
+    font-size: 13px;
+    text-align: center;
+}
+
 /* 兼容移动端 */
 @media only screen and (max-width: 768px) {
     /* 移动端 */
