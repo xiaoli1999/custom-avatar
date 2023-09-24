@@ -22,9 +22,11 @@
     <main>
         <div class="fasten"></div>
         <div class="avatar-warp">
-            <img class="left" src="./assets/img/more-left.png" alt="">
-            <div class="avatar" :class="showRound ? 'circle' : ''"></div>
-            <img class="more-right" src="./assets/img/more-right.png" alt="">
+            <img class="left" src="./assets/img/more-left.png" alt="" @click="changeFrame(false)">
+            <div class="avatar" :class="showRound ? 'circle' : ''">
+                <Draw ref="DrawRef" :bg="originAvatarUrl" />
+            </div>
+            <img class="more-right" src="./assets/img/more-right.png" alt="" @click="changeFrame(true)">
         </div>
         <div class="avatar-panel">
             <el-button type="warning" plain @click="showRound  = !showRound">更换形状</el-button>
@@ -36,7 +38,7 @@
         <div class="avatar-option">
             <p>头像框</p>
             <div class="effect-list">
-                <div v-for="(item, index) in picList[styleIndex].frameList" :key="index" :class="`effect-item ${ frameIndex === index ? 'active' : '' }`" @click="selectFrame(index)">
+                <div v-for="(item, index) in picList[styleIndex].frameList" :key="index" :class="`effect-item ${ item === frameUrl ? 'active' : '' }`" @click="selectFrame(index)">
                     <img :src="item" alt="">
                 </div>
             </div>
@@ -44,7 +46,7 @@
         <div class="avatar-option">
             <p>贴纸</p>
             <div class="effect-list">
-                <div v-for="(item, index) in picList[styleIndex].frameList" :key="index" @click="selectFrame(index)">
+                <div v-for="(item, index) in picList[styleIndex].frameList" :key="index" @click="selectMark(index)">
                     <img :src="item" alt="">
                 </div>
             </div>
@@ -80,17 +82,17 @@
 
 <script lang="ts" setup>
 import { ref, onMounted } from 'vue'
-import { judgePC, getCreatedUrl, getImgInfo, downloadImg, base64ToFile, getAuthorization, getUploadAuthorization } from '@/tools/common'
+import { getCreatedUrl, downloadImg, base64ToFile, getAuthorization, getUploadAuthorization } from '@/tools/common'
 import progress from './tools/progress'
+import Draw from './components/Draw/index.vue'
+import { picList } from '@/tools/picList'
 import { ElMessage } from 'element-plus'
 import axios from 'axios'
-import { picList } from '@/tools/picList'
 
 /* 初始化进度条 */
 progress.start()
 
 /* 基础数据 */
-const isPc = ref<boolean>(judgePC())
 const userInfo = {
     url: 'https://v0.api.upyun.com',
     bucket: (import.meta as any).env.VITE_UPYUN_BUCKET,
@@ -102,13 +104,14 @@ const fileName = `li-${ 1e14 - Date.now() }.png`
 
 /* 业务 */
 const styleIndex = ref(2)
-const frameIndex = ref<number | null>(null)
+const originAvatarUrl = ref<string>('')
+const selectFrameIndex = ref<number | null>(null)
+const frameUrl = ref<string>('')
 const showRound = ref<boolean>(false)
 console.log(picList)
-const loading = ref<boolean>(false)
 
-const rabbitLi = ref()
-const uploadImgRef = ref()
+const DrawRef = ref()
+const  uploadImgRef = ref()
 
 const avatarInfo = ref<{ url: string, w: number, h: number, name: string }>({ url: '', w: 0, h: 0, name: '' })
 const uploadFile = async (e: any) => {
@@ -117,10 +120,7 @@ const uploadFile = async (e: any) => {
     const file = e.target.files[0]
     if (!file.type.includes('image')) return ElMessage.warning('请上传正确的图片格式！')
 
-    const url = getCreatedUrl(file) ?? ''
-    const imgInfo: any = await getImgInfo(url)
-    const name = file.name.split('.').splice(0, file.name.split('.').length - 1).join('.')
-    avatarInfo.value = { url, w: imgInfo.width, h: imgInfo.height, name };
+    originAvatarUrl.value = getCreatedUrl(file) ?? '';
 
     (document.getElementById('uploadImg') as HTMLInputElement).value = ''
 }
@@ -153,28 +153,37 @@ const layerList = ref<LayerType[]>([
     }
 ])
 
-const selectFrame = (index: number) => {
-    if (!avatarInfo.value.url) return ElMessage.warning('请先上传原头像！')
-    frameIndex.value = index
+const changeFrame = (isNext) => {
+    if (!originAvatarUrl.value) return ElMessage.warning('请先上传头像！')
 
-    loading.value = true
-    layerList.value[0].url = picList[styleIndex.value].frameList[index]
+    const frameList =  picList[styleIndex.value].frameList
+    if (isNext) {
+        (selectFrameIndex.value === frameList.length - 1) ? selectFrameIndex.value = 0 : (selectFrameIndex.value as number)++
+    } else {
+        (selectFrameIndex.value === 0) ? selectFrameIndex.value = frameList.length - 1 : (selectFrameIndex.value as number)--
+    }
+    selectFrame(selectFrameIndex.value as number)
+}
+
+const selectFrame = (index: number) => {
+    if (!originAvatarUrl.value) return ElMessage.warning('请先上传头像！')
+
+    opacity.value = 1
+    selectFrameIndex.value = index
+    frameUrl.value = picList[styleIndex.value].frameList[index]
+    DrawRef.value.addFrame(frameUrl.value)
+
 }
 
 const selectMark = (index: number) => {
-    if (!avatarInfo.value.url) return ElMessage.warning('请先上传原头像！')
-    frameIndex.value = index
+    if (!originAvatarUrl.value) return ElMessage.warning('请先上传头像！')
 
-    loading.value = true
-    layerList.value[0].url = picList[styleIndex.value].frameList[index]
+    const markUrl = picList[styleIndex.value].frameList[index]
+    DrawRef.value.addMark(markUrl)
 }
 
 const opacity = ref<number>(1)
-const opacityChange = (num: number) => layerList.value[0].opacity = num
-
-const drawComplete = () => {
-    loading.value = false
-}
+const opacityChange = (num: number) => DrawRef.value.setFrameOpacity(num)
 
 const previewShow = ref<boolean>(false)
 const previewUrl = ref<string>('')
@@ -182,7 +191,7 @@ const save = async (isSave) => {
     if (!avatarInfo.value.url || !layerList.value[0].url) return ElMessage.warning('请上传原头像并选择效果图！')
 
     previewShow.value = false
-    const url = await rabbitLi.value.save()
+    const url = await DrawRef.value.save()
     if (isSave) return downloadImg(url, avatarInfo.value.name)
 
     previewShow.value= true
@@ -386,6 +395,7 @@ main {
         margin-inline: auto;
 
         .avatar {
+            position: relative;
             overflow: hidden;
             width: 260px;
             height: 260px;
