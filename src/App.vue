@@ -59,12 +59,10 @@
         </div>
 
         <div class="avatar-save">
-            <el-button type="success" plain @click="save(true)">生成头像</el-button>
-            <el-button type="primary" plain @click="save(false)">分享给朋友</el-button>
+            <el-button type="success" plain @click="createAvatar(true)">生成头像</el-button>
+            <el-button type="primary" plain @click="createAvatar(false)">分享给朋友</el-button>
         </div>
     </main>
-
-
 
     <div class="stats">
         <p>本站访问人数:<span id="busuanzi_value_site_uv"></span></p>
@@ -78,16 +76,35 @@
     <footer>© 2023 All rights reserved. Powered by 黎</footer>
 
     <input ref="uploadImgRef" id="uploadImg" type="file" accept="image/*" @change="uploadFile" style="position: absolute;top: -9999px;left: -9999px;" />
+
+    <el-dialog class="notice" v-model="saveShow" title="保存贺卡" width="340px" align-center center style="border-radius: 8px;">
+        <div class="notice-content">
+            <img :src="avatarUrl" alt="">
+            <div>
+                <el-button type="success" @click="save(true)">保存(移动端长按图片保存)</el-button>
+            </div>
+        </div>
+    </el-dialog>
+
+    <el-dialog class="notice" v-model="shareShow" title="分享贺卡" width="340px" align-center center style="border-radius: 8px;">
+        <div class="notice-content">
+            <img :src="shareUrl" alt="">
+            <div>
+                <el-button type="primary" @click="save(false)">分享(移动端长按图片转发给朋友)</el-button>
+            </div>
+        </div>
+    </el-dialog>
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted } from 'vue'
+import { ref, onMounted, nextTick } from 'vue'
 import { getCreatedUrl, downloadImg, base64ToFile, getAuthorization, getUploadAuthorization } from '@/tools/common'
 import progress from './tools/progress'
 import Draw from './components/Draw/index.vue'
 import { picList } from '@/tools/picList'
 import { ElMessage } from 'element-plus'
 import axios from 'axios'
+import html2canvas from 'html2canvas'
 
 /* 初始化进度条 */
 progress.start()
@@ -100,7 +117,9 @@ const userInfo = {
     password: (import.meta as any).env.VITE_UPYUN_PASSWORD,
     path: 'img/custom-avatar'
 }
-const fileName = `li-${ 1e14 - Date.now() }.png`
+
+// const fileName = `li-${ 1e14 - Date.now() }.png`
+let fileName = ''
 
 /* 业务 */
 const styleIndex = ref(2)
@@ -108,12 +127,11 @@ const originAvatarUrl = ref<string>('')
 const selectFrameIndex = ref<number | null>(null)
 const frameUrl = ref<string>('')
 const showRound = ref<boolean>(false)
-console.log(picList)
-
+const joinNumber = ref(0)
 const DrawRef = ref()
-const  uploadImgRef = ref()
+const uploadImgRef = ref()
+const loading = ref(false)
 
-const avatarInfo = ref<{ url: string, w: number, h: number, name: string }>({ url: '', w: 0, h: 0, name: '' })
 const uploadFile = async (e: any) => {
     if (!e.target.files || !e.target.files.length) return ElMessage.warning('上传失败！')
 
@@ -124,34 +142,6 @@ const uploadFile = async (e: any) => {
 
     (document.getElementById('uploadImg') as HTMLInputElement).value = ''
 }
-
-interface LayerType {
-    uuid: string,
-    type: string,
-    url: string,
-    w: number,
-    h: number,
-    x: number,
-    y: number,
-    scale: number,
-    angle: number,
-    opacity: number
-    [propName: string]: any
-}
-const layerList = ref<LayerType[]>([
-    {
-        uuid: 'effect',
-        type: 'img',
-        url: '',
-        w: 0,
-        h: 0,
-        x: 0,
-        y: 0,
-        scale: 0,
-        angle: 0,
-        opacity: 1
-    }
-])
 
 const changeFrame = (isNext) => {
     if (!originAvatarUrl.value) return ElMessage.warning('请先上传头像！')
@@ -185,46 +175,97 @@ const selectMark = (index: number) => {
 const opacity = ref<number>(1)
 const opacityChange = (num: number) => DrawRef.value.setFrameOpacity(num)
 
-const previewShow = ref<boolean>(false)
-const previewUrl = ref<string>('')
-const save = async (isSave) => {
-    if (!avatarInfo.value.url || !layerList.value[0].url) return ElMessage.warning('请上传原头像并选择效果图！')
 
-    previewShow.value = false
-    const url = await DrawRef.value.save()
-    if (isSave) return downloadImg(url, avatarInfo.value.name)
-
-    previewShow.value= true
-    previewUrl.value= url
-
-    const uploadData = new FormData()
-
-    const file = base64ToFile(url, fileName, 'png')
-    uploadData.append('file', file)
-
-    const { policy, authorization } = getUploadAuthorization(userInfo) as any
-    uploadData.append('policy', policy)
-    uploadData.append('authorization', authorization)
-
-    console.log(url)
-
-    axios({ method: 'POST', url: `${ userInfo.url }/${ atob(userInfo.bucket) }`, data: uploadData }).catch(() => ({}))
-}
-
-const avatarList = ref([])
+const avatarList = ref<any[]>([])
+const avatarPageUrlList = ref<string[]>([])
 const getAvatarList = async () => {
     const url = `${ userInfo.url }/${ atob(userInfo.bucket) }/${ userInfo.path }`
     const { date, authorization } = getAuthorization(userInfo)
     const headers = { authorization, 'x-date': date, Accept: 'application/json' }
-    const { files } = await axios({ method: 'GET', url, headers }).catch(() => ({})) as any
+    const { data } = await axios({ method: 'GET', url, headers }).catch(() => ({})) as any
 
-    avatarList.value = files || []
+    const files = ((data || {}).files) || []
+
+    avatarList.value = files.map(i => ({ ...i, url: `https://cdn.xiaoli.vip/img/moon-card/${ i.name }!moon` }))
+
+    loadMore()
+
+    /* 动态计算当前贺卡总数 */
+    let num = 1
+    if (files && files.length) {
+        const name = files[0].name.split('.png')[0]
+        const arr = name.split('-')
+        joinNumber.value = Number(arr[arr.length - 1] || 0)
+        num = joinNumber.value + 1
+    }
+
+    fileName = `li-${ 1e14 - Date.now() }-${ num }.png`
+}
+
+const pageNo = ref(0)
+const pageSize = ref(12)
+const loadMore = () => {
+    const arr = avatarList.value.slice(pageNo.value * pageSize.value, ((pageNo.value + 1) * pageSize.value)).map(i => i.url)
+    avatarPageUrlList.value = [...avatarPageUrlList.value, ...arr]
+    pageNo.value++
 }
 
 onMounted(async () => {
     progress.close()
     await getAvatarList()
 })
+
+const avatarUrl = ref('')
+const shareUrl = ref('')
+const saveShow = ref(false)
+const shareShow = ref<boolean>(false)
+
+const createAvatar = async (isSave) => {
+    if (!originAvatarUrl.value) return ElMessage({ duration: 3600, message: '请上传头像!', type: 'warning' })
+
+    loading.value = true
+    isSave ? saveShow.value = true : shareShow.value = true
+    avatarUrl.value = await DrawRef.value.save()
+
+    if  (isSave) {
+        saveShow.value = true
+        loading.value = false
+    } else {
+        await nextTick(() => {
+            /* 生成海报 */
+            const posterDom = document.getElementById('poster') as HTMLElement
+            html2canvas(posterDom, { useCORS: true }).then((canvas) => {
+                shareUrl.value = canvas.toDataURL('image/png')
+                console.timeEnd('sss')
+                shareShow.value = true
+                loading.value = false
+            })
+        })
+    }
+
+    /* 上传贺卡 */
+    const uploadData = new FormData()
+
+    const file = base64ToFile(avatarUrl.value, fileName, 'png')
+    uploadData.append('file', file)
+
+    const { policy, authorization } = getUploadAuthorization(userInfo) as any
+    uploadData.append('policy', policy)
+    uploadData.append('authorization', authorization)
+
+    axios({ method: 'POST', url: `${ userInfo.url }/${ atob(userInfo.bucket) }`, data: uploadData }).catch(() => ({}))
+}
+
+const save = async (isSave = true) => {
+    try {
+        /* 手动保存 */
+        const name = `黎-${ picList[styleIndex.value].name }${isSave ? '' : '分享'}-${Date.now()}`
+        downloadImg(isSave ? avatarUrl.value : shareUrl.value, name)
+        ElMessage.success(isSave ? '保存成功' : '保存成功，快去分享给亲友吧~')
+    } catch (e) {
+        /* 捕获错误 */
+    }
+}
 </script>
 
 <style lang="less">
@@ -600,6 +641,29 @@ footer,
     padding-bottom: 8px;
     font-size: 13px;
     text-align: center;
+}
+
+.notice-content {
+    > img {
+        margin: 0 auto;
+        max-width: 100%;
+        max-height: 500px;
+        border-radius: 8px;
+        box-shadow: 2px 2px 8px 1px #0000004f;
+    }
+
+    > div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 16px;
+        font-size: 14px;
+        color: crimson;
+
+        > span {
+            padding-left: 8px;
+        }
+    }
 }
 
 /* 兼容移动端 */
