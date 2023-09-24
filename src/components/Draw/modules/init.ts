@@ -34,33 +34,3 @@ export const initCanvas = (inkId: string, size: canvasType, isStatic: boolean) =
     Canvas.centeredScaling = true
     return Canvas
 }
-
-
-/**
- * @function initDrawArea 绘制可视区域
- * @desc 绘制可视区域辅助线（圆形头像）
- * @param { Object } Canvas 画布实例
- * @return { Object } circleArea 返回可视区域实例
- */
-export const initVisibleArea = async (Canvas: any) => {
-    return new Promise((resolve:any) => {
-        const circleArea = new fabric.Circle({
-            originX: 'center',
-            originY: 'center',
-            left: 0,
-            top: 0,
-            radius: Canvas.width / 2,
-            stroke: '#1E90FF80',
-            fill: undefined,
-            strokeWidth: 1,
-            strokeDashArray: [4, 4],
-            padding: 0,
-            selectable: false
-        })
-        circleArea.name = fixedLayerName.visibleArea
-
-        // 替换或新增
-        addOrReplaceLayer(Canvas, circleArea)
-        return resolve(circleArea)
-    })
-}
