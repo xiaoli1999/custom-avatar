@@ -1,7 +1,11 @@
 <template>
     <div class="bg">
-        <img class="bg-l" src="./assets/img/bg-1.png" alt="">
-        <img class="bg-r" src="./assets/img/bg-2.png" alt="">
+        <img class="bg-l-1" src="./assets/img/bg-l-1.png" alt="">
+        <img class="bg-l-2" src="./assets/img/bg-l-2.png" alt="">
+        <img class="bg-l-3" src="./assets/img/bg-l-3.png" alt="">
+        <img class="bg-r-1" src="./assets/img/bg-r-1.png" alt="">
+        <img class="bg-r-2" src="./assets/img/bg-r-2.png" alt="">
+        <img class="bg-r-3" src="./assets/img/bg-r-3.png" alt="">
     </div>
 
     <header>
@@ -52,8 +56,10 @@
             </div>
         </div>
 
-        <el-button type="primary" plain @click="save(false)">预览</el-button>
-        <el-button type="success" plain @click="save(true)">保存</el-button>
+        <div class="avatar-save">
+            <el-button type="success" plain @click="save(true)">生成头像</el-button>
+            <el-button type="primary" plain @click="save(false)">分享给朋友</el-button>
+        </div>
     </main>
 
 
@@ -69,7 +75,7 @@
     <div class="state">部分素材来源于网络，非商业用途，如有侵权请联系删除。</div>
     <footer>© 2023 All rights reserved. Powered by 黎</footer>
 
-    <input ref="uploadImgRef" id="uploadImg" type="file" accept="image/*" @change="uploadFile" style="position: absolute;left: -9999px;" />
+    <input ref="uploadImgRef" id="uploadImg" type="file" accept="image/*" @change="uploadFile" style="position: absolute;top: -9999px;left: -9999px;" />
 </template>
 
 <script lang="ts" setup>
@@ -226,16 +232,93 @@ onMounted(async () => {
 
     > img {
         position: absolute;
-        width: 100%;
-        //height: 100%;
+        opacity: 0.6;
+        transform: scale(1.5);
     }
 
-    .bg-l {
-        left: 0;
+    .bg-l-1 {
+        top: -18%;
+        left: -8%;
+        width: 420px;
+        animation: bg-l-1 8s linear infinite;
     }
 
-    .bg-r {
-        right: 0;
+    @keyframes bg-l-1 {
+        50% {
+            transform: translate(20%, -10%);
+            opacity: 1;
+        }
+    }
+
+    .bg-l-2 {
+        top: 5%;
+        left: -15%;
+        width: 345px;
+        opacity: 0.2;
+        animation: bg-l-2 10s linear infinite;
+    }
+
+    @keyframes bg-l-2 {
+        50% {
+            transform: translate(40%, 28%) rotate(40deg);
+            opacity: 0.4;
+        }
+    }
+
+    .bg-l-3 {
+        bottom: -30%;
+        left: -20%;
+        width: 588px;
+        animation: bg-l-3 10s linear infinite;
+    }
+
+    @keyframes bg-l-3 {
+        50% {
+            transform: translate(10%, -30%) rotate(60deg);
+            opacity: 1;
+        }
+    }
+
+    .bg-r-1 {
+        top: -24%;
+        right: -15%;
+        width: 588px;
+        animation: bg-r-1 8s linear infinite;
+    }
+
+    @keyframes bg-r-1 {
+        50% {
+            transform: translate(-10%, 20%) rotate(60deg);
+            opacity: 1;
+        }
+    }
+
+    .bg-r-2 {
+        top: 10%;
+        right: -20%;
+        width: 588px;
+        animation: bg-r-2 8s linear infinite;
+    }
+
+    @keyframes bg-r-2 {
+        50% {
+            transform: translate(-15%, -20%) rotate(60deg);
+            opacity: 1;
+        }
+    }
+
+    .bg-r-3 {
+        right: -10%;
+        bottom: -15%;
+        width: 346px;
+        animation: bg-r-3 8s linear infinite;
+    }
+
+    @keyframes bg-r-3 {
+        50% {
+            transform: translate(-20%, -30%) rotate(60deg);
+            opacity: 1;
+        }
     }
 }
 
@@ -250,7 +333,7 @@ header {
     background: #ffffff80;
     background-size: 4px 4px;
     backdrop-filter: saturate(50%) blur(4px);
-    border-bottom: 2px solid #f2f4f8;
+    border-bottom: 1px solid #f2f4f8;
 
     .header-content {
         display: flex;
@@ -259,7 +342,7 @@ header {
         padding: 0 12px;
         margin: 0 auto;
         max-width: 1200px;
-        height: 54px;
+        height: 50px;
 
         > div {
             display: flex;
@@ -283,12 +366,13 @@ header {
 }
 
 main {
-    margin: 40px auto;
+    margin: 36px auto;
     max-width: 1000px;
     background: #ffffff4d;
-    border: 2px solid #eee;
+    border: 1px solid #fff;
     border-radius: 20px;
-    backdrop-filter: blur(4px);
+    box-shadow: 1px 1px 4px 1px #eee;
+    backdrop-filter: blur(6px);
 
     .avatar-warp {
         position: absolute;
@@ -306,7 +390,7 @@ main {
             width: 260px;
             height: 260px;
             background: #fff;
-            border-radius: 20px;
+            border-radius: 16px;
             box-shadow: 2px 2px 12px 2px rgb(26 94 109 / 30%), 16px 16px 24px 4px rgb(151 219 233 / 40%);
             transition: all 0.24s;
             margin-inline: 48px;
@@ -463,6 +547,12 @@ main {
                 border-color: #ff8f1f60;
             }
         }
+    }
+
+    .avatar-save {
+        display: flex;
+        justify-content: center;
+        padding-bottom: 20px;
     }
 }
 
