@@ -46,7 +46,7 @@
         <div class="avatar-option">
             <p>贴纸</p>
             <div class="effect-list">
-                <div v-for="(item, index) in picList[styleIndex].frameList" :key="index" @click="selectMark(index)">
+                <div v-for="(item, index) in picList[styleIndex].markList" :key="index" @click="selectMark(index)">
                     <img :src="item" alt="">
                 </div>
             </div>
@@ -131,7 +131,7 @@ const userInfo = {
 let fileName = ''
 
 /* 业务 */
-const styleIndex = ref(2)
+const styleIndex = ref(1)
 const originAvatarUrl = ref<string>('')
 const selectFrameIndex = ref<number | null>(null)
 const frameUrl = ref<string>('')
@@ -147,7 +147,14 @@ const uploadFile = async (e: any) => {
     const file = e.target.files[0]
     if (!file.type.includes('image')) return ElMessage.warning('请上传正确的图片格式！')
 
-    originAvatarUrl.value = getCreatedUrl(file) ?? '';
+    const url = getCreatedUrl(file) ?? ''
+    /* 用户初次上传头像默认选中第一个头像框 */
+    if (!originAvatarUrl.value) {
+        originAvatarUrl.value = url
+        selectFrame(0)
+    } else {
+        selectFrame(0)
+    }
 
     (document.getElementById('uploadImg') as HTMLInputElement).value = ''
 }
@@ -171,13 +178,12 @@ const selectFrame = (index: number) => {
     selectFrameIndex.value = index
     frameUrl.value = picList[styleIndex.value].frameList[index]
     DrawRef.value.addFrame(frameUrl.value)
-
 }
 
 const selectMark = (index: number) => {
     if (!originAvatarUrl.value) return ElMessage.warning('请先上传头像！')
 
-    const markUrl = picList[styleIndex.value].frameList[index]
+    const markUrl = picList[styleIndex.value].markList[index]
     DrawRef.value.addMark(markUrl)
 }
 
@@ -525,7 +531,6 @@ main {
         display: flex;
         align-items: center;
         padding: 0 20px;
-        margin-bottom: 10px;
 
         > p {
             margin-right: 20px;
@@ -562,20 +567,12 @@ main {
                 &:hover,
                 &.active {
                     transform: translateY(-6px);
-                    box-shadow: 1px 1px 8px 1px #0000001f;
-
-                    > img {
-                        width: 80%;
-                        height: 80%;
-                    }
+                    box-shadow: 2px 2px 8px 1px #0000001f;
                 }
 
                 > img {
-                    overflow: hidden;
                     width: 100%;
-                    height: 100%;
-                    border-radius: 6px;
-                    transition: all 0.24s;
+                    object-fit: cover;
                 }
             }
 
