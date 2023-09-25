@@ -1,5 +1,5 @@
 <template>
-    <div class="draw" :style="{ transform: `translate(-50%, -50%) scale(0.26)` }">
+    <div class="draw" :style="{ transform: `translate(-50%, -50%) scale(0.4)` }">
         <canvas :id="CanvasId" />
     </div>
 </template>
