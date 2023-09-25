@@ -8,7 +8,7 @@
         <img class="bg-r-3" src="./assets/img/bg-r-3.png" alt="">
     </div>
 
-    <header>
+    <header class="header">
         <div class="header-content">
             <div>
                 <img src="https://cdn.xiaoli.vip/project/logo.jpg" alt="">
@@ -76,6 +76,15 @@
     <footer>© 2023 All rights reserved. Powered by 黎</footer>
 
     <input ref="uploadImgRef" id="uploadImg" type="file" accept="image/*" @change="uploadFile" style="position: absolute;top: -9999px;left: -9999px;" />
+
+    <!-- 生成海报 -->
+    <div id="poster" class="poster">
+        <img class="poster-img" :src="avatarUrl" alt="">
+        <div class="poster-desc">
+            <span>长按识别右侧二维码，定制中秋贺卡！</span>
+            <img src="https://cdn.xiaoli.vip/project/moon-card/code.png" alt="">
+        </div>
+    </div>
 
     <el-dialog class="notice" v-model="saveShow" title="保存贺卡" width="340px" align-center center style="border-radius: 8px;">
         <div class="notice-content">
@@ -372,7 +381,7 @@ const save = async (isSave = true) => {
     }
 }
 
-header {
+.header {
     position: sticky;
     top: 0;
     right: 0;
@@ -641,6 +650,38 @@ footer,
     padding-bottom: 8px;
     font-size: 13px;
     text-align: center;
+}
+
+.poster {
+    position: absolute;
+    top: -500%;
+    left: -500%;
+    width: 600px;
+    height: 1180px;
+
+    .poster-img {
+        width: 600px;
+        height: 1080px;
+    }
+
+    .poster-desc {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        height: 100px;
+        font-size: 24px;
+        color: #363636;
+        background: #fff;
+        font-weight: 600;
+        letter-spacing: 1px;
+
+        > img {
+            width: 80px;
+            height: 80px;
+            border-radius: 8px;
+        }
+    }
 }
 
 .notice-content {
