@@ -118,10 +118,9 @@ const frameName = 'frame'
  * @param { String } url 头像框链接
  */
 const addFrame = async (url = '') => {
-    console.log(15616)
     if (!url) return
 
-    const frameLayer: any = await drawImg(url)
+    const frameLayer: any = await drawImg(`${ url }!frame`)
     frameLayer.set({
         left: Canvas.width / 2,
         top: Canvas.height / 2

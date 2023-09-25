@@ -39,7 +39,7 @@
             <p>头像框</p>
             <div class="effect-list">
                 <div v-for="(item, index) in picList[styleIndex].frameList" :key="index" :class="`effect-item ${ item === frameUrl ? 'active' : '' }`" @click="selectFrame(index)">
-                    <img :src="item" alt="">
+                    <img :src="item + '!avatar'" alt="">
                 </div>
             </div>
         </div>
@@ -241,6 +241,7 @@ const createAvatar = async (isSave) => {
     loading.value = true
     isSave ? saveShow.value = true : shareShow.value = true
     avatarUrl.value = await DrawRef.value.save()
+    console.log(avatarUrl.value)
 
     if  (isSave) {
         saveShow.value = true
