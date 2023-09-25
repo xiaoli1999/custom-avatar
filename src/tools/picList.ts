@@ -25,17 +25,17 @@ export const styleList: StyleInfoType[]  = [
     {
         id: 'moon',
         name: '中秋节',
-        frameNum: 0,
+        frameNum: 4,
         frameList: [],
-        markNum: 0,
+        markNum: 7,
         markList: []
     },
     {
         id: 'national',
         name: '国庆节',
-        frameNum: 0,
+        frameNum: 8,
         frameList: [],
-        markNum: 0,
+        markNum: 3,
         markList: []
     },
     {
