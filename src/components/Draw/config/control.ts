@@ -20,14 +20,14 @@
  */
 export const controlMobile: any = {
     transparentCorners: false,
-    cornerStrokeColor: '#00BFFF',
-    cornerColor: '#00BFFF',
+    cornerStrokeColor: '#fff',
+    cornerColor: '#fff',
     cornerStyle: 'rect',
-    cornerSize: 10,
-    borderScaleFactor: 2,
-    borderColor: '#00BFFF',
-    padding: 8,
-    mtrOffsetY: -40
+    cornerSize: 28,
+    borderScaleFactor: 4,
+    borderColor: '#e8e8e8',
+    padding: 0,
+    mtrOffsetY: -60
 }
 
 /**
