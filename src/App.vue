@@ -60,6 +60,7 @@
                 <div v-for="(item, index) in picList[styleIndex].markList" :key="index" @click="selectMark(index)">
                     <img :src="item" alt="">
                 </div>
+                <p v-if="!picList[styleIndex].markList.length">敬请期待哦~</p>
             </div>
         </div>
         <div class="avatar-option">
@@ -74,6 +75,16 @@
             <el-button type="primary" plain @click="createAvatar(false)">分享给朋友</el-button>
         </div>
     </main>
+
+    <div class="wall">
+        <h2>头像墙({{ avatarList.length }})</h2>
+        <div class="wall-list">
+            <el-image v-for="(url, index) in avatarPageUrlList" :key="url" :src="url" :preview-src-list="avatarPageUrlList" :initial-index="index" />
+        </div>
+        <div v-if="pageNo * pageSize < avatarList.length" class="wall-more">
+            <el-button type="info" link @click="loadMore">查看更多</el-button>
+        </div>
+    </div>
 
     <div class="stats">
         <p>本站访问人数:<span id="busuanzi_value_site_uv"></span></p>
@@ -208,7 +219,7 @@ const opacityChange = (num: number) => DrawRef.value.setFrameOpacity(num)
 
 const avatarList = ref<any[]>([])
 const avatarPageUrlList = ref<string[]>([])
-const getAvatarList = async () => {
+const getAvatarList = async (isSet = true) => {
     const url = `${ userInfo.url }/${ atob(userInfo.bucket) }/${ userInfo.path }`
     const { date, authorization } = getAuthorization(userInfo)
     const headers = { authorization, 'x-date': date, Accept: 'application/json' }
@@ -216,6 +227,17 @@ const getAvatarList = async () => {
 
     const files = ((data || {}).files) || []
 
+    /* 动态计算当前头像总数 */
+    if (files && files.length) {
+        const name = files[0].name.split('.png')[0]
+        const arr = name.split('-')
+        avatarTotal.value = Number(arr[arr.length - 1] || 0)
+    }
+
+    if (isSet) setAvatarList(files)
+}
+
+const setAvatarList = (files: any[]) => {
     avatarList.value = files.map(i => ({
         ...i,
         id: i.name.split('-')[2],
@@ -223,13 +245,6 @@ const getAvatarList = async () => {
     }))
 
     loadMore()
-
-    /* 动态计算当前头像总数 */
-    if (files && files.length) {
-        const name = files[0].name.split('.png')[0]
-        const arr = name.split('-')
-        avatarTotal.value = Number(arr[arr.length - 1] || 0)
-    }
 }
 
 let noticeTimer: any = null
@@ -246,7 +261,7 @@ const startNotice = () => {
 }
 
 const pageNo = ref(0)
-const pageSize = ref(12)
+const pageSize = ref(16)
 const loadMore = () => {
     const arr = avatarList.value.slice(pageNo.value * pageSize.value, ((pageNo.value + 1) * pageSize.value)).map(i => i.url)
     avatarPageUrlList.value = [...avatarPageUrlList.value, ...arr]
@@ -289,6 +304,8 @@ const createAvatar = async (isSave) => {
             })
         })
     }
+
+    await getAvatarList(false)
 
     fileName = `li-${ 1e14 - Date.now() }-${ picList[styleIndex.value].id }-${ avatarTotal.value + 1 }.png`
 
@@ -626,6 +643,12 @@ main {
                 }
             }
 
+            p {
+                line-height: 68px;
+                font-size: 14px;
+                color: #606262;
+            }
+
             /* 隐藏浏览器默认滚动条 */
             &::-webkit-scrollbar {
                 height: 6px;
@@ -661,6 +684,37 @@ main {
         display: flex;
         justify-content: center;
         padding-bottom: 20px;
+    }
+}
+
+.wall {
+    margin: 36px auto;
+    max-width: 1000px;
+
+    > h2 {
+        padding-bottom: 36px;
+        font-size: 22px;
+        text-align: center;
+    }
+
+    .wall-list {
+        display: grid;
+        width: 100%;
+        gap: 8px;
+        //grid-template-rows: repeat(8, 12.5%);
+        grid-template-columns: repeat(8, minmax(0, 1fr));
+
+        > div {
+            overflow: hidden;
+            //grid-row: span 1;
+            //grid-column: span 1;
+            border-radius: 8px;
+        }
+    }
+
+    .wall-more {
+        padding-top: 16px;
+        text-align: center;
     }
 }
 
