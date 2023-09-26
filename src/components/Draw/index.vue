@@ -1,5 +1,5 @@
 <template>
-    <div class="draw" :style="{ transform: `translate(-50%, -50%) scale(0.4)` }">
+    <div class="draw">
         <canvas :id="CanvasId" />
     </div>
 </template>
@@ -191,5 +191,12 @@ defineExpose({ addFrame, addMark, setFrameOpacity, save })
     position: absolute;
     top: 50% !important;
     left: 50% !important;
+    transform: translate(-50%, -50%) scale(0.4);
+}
+
+@media only screen and (max-width: 768px) {
+    .draw {
+        transform: translate(-50%, -50%) scale(0.369);
+    }
 }
 </style>

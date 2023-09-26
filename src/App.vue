@@ -12,15 +12,15 @@
         <div class="header-content">
             <div class="logo">
                 <img src="https://cdn.xiaoli.vip/project/logo.jpg" alt="">
-                采黎 • 定制头像
+                定制头像
             </div>
             <!--滚动播放-->
             <transition name="notice" mode="out-in">
                 <div v-if="avatarList && avatarList.length" class="notice" :key="avatarList[noticeIndex].last_modified">
                     <p>
                         <span style="color: #409eff;">游客{{ (avatarList[noticeIndex].last_modified + '').slice(-5) }} </span>
-                        <span style="padding-left: 4px;">{{ calcOverTime(avatarList[noticeIndex].last_modified) }}前</span>
-                        <span>制作了</span>
+                        <span style="padding-left: 2px;">{{ calcOverTime(avatarList[noticeIndex].last_modified) }}前</span>
+                        <span style="padding-right: 2px;">制作了</span>
                         <span style="color: #f56c6c;">{{ styleEnums[avatarList[noticeIndex].id] }}头像 </span>
                         <span style="padding-left: 4px;"></span>
                     </p>
@@ -112,7 +112,7 @@
         </div>
     </div>
 
-    <el-dialog class="dialog" v-model="saveShow" title="保存贺卡" width="340px" align-center center style="border-radius: 8px;">
+    <el-dialog class="dialog" v-model="saveShow" title="保存头像" width="340px" align-center center style="border-radius: 8px;">
         <div class="dialog-content">
             <img :src="avatarUrl" alt="">
             <div>
@@ -121,7 +121,7 @@
         </div>
     </el-dialog>
 
-    <el-dialog class="dialog" v-model="shareShow" title="分享贺卡" width="340px" align-center center style="border-radius: 8px;">
+    <el-dialog class="dialog" v-model="shareShow" title="分享海报" width="340px" align-center center style="border-radius: 8px;">
         <div class="dialog-content">
             <img :src="shareUrl" alt="">
             <div>
@@ -706,15 +706,11 @@ main {
 
     .wall-list {
         display: grid;
-        width: 100%;
         gap: 8px;
         //grid-template-rows: repeat(8, 12.5%);
         grid-template-columns: repeat(8, minmax(0, 1fr));
 
         > div {
-            overflow: hidden;
-            //grid-row: span 1;
-            //grid-column: span 1;
             border-radius: 8px;
         }
     }
@@ -849,6 +845,172 @@ footer,
 
 /* 兼容移动端 */
 @media only screen and (max-width: 768px) {
-    /* 移动端 */
+    .header {
+        .header-content {
+            padding: 0 12px;
+            margin: 0 auto;
+            height: 46px;
+
+            .logo {
+                font-size: 14px;
+                letter-spacing: 0;
+
+                > img {
+                    margin-right: 8px;
+                    width: 32px;
+                    height: 32px;
+                    border-radius: 50%;
+                }
+            }
+
+            .notice {
+                > img {
+                    width: 20px;
+                    height: 20px;
+                }
+            }
+        }
+    }
+
+    .fasten {
+        height: 120px;
+    }
+
+    main {
+        margin: 24px auto 0;
+        background: transparent;
+        border: none;
+        border-radius: 12px;
+        box-shadow: none;
+        backdrop-filter: blur(0);
+
+        .avatar-warp {
+            top: -120px;
+            height: 240px;
+
+            .avatar {
+                width: 240px;
+                height: 240px;
+                margin-inline: 12px;
+                border-radius: 16px;
+                box-shadow: 2px 2px 12px 2px rgb(26 94 109 / 30%), 12px 12px 18px 2px rgb(151 219 233 / 40%);
+            }
+
+            > img {
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+            }
+        }
+
+        .avatar-style {
+            margin: 14px auto;
+
+            > div {
+                padding: 6px 0;
+                margin: 0 8px;
+                font-size: 16px;
+                letter-spacing: 0.5px;
+            }
+        }
+
+        .avatar-option {
+            display: flex;
+            align-items: center;
+            padding: 0 16px;
+
+            > p {
+                margin-right: 12px;
+                width: 46px;
+                font-size: 14px;
+                font-weight: 400;
+            }
+
+            .effect-list {
+                padding: 8px 0;
+
+                > div {
+                    margin-right: 8px;
+                    width: 48px;
+                    height: 48px;
+                }
+
+                p {
+                    line-height: 48px;
+                }
+
+                /* 隐藏浏览器默认滚动条 */
+                &::-webkit-scrollbar {
+                    height: 4px;
+                }
+
+                /* 自定义滑块样式 */
+                &::-webkit-scrollbar-thumb {
+                    background-color: #ff8f1f80;
+                    border-radius: 4px;
+                }
+            }
+
+            .opacity {
+                padding-right: 12px;
+            }
+        }
+
+        .avatar-save {
+            padding-bottom: 0;
+        }
+    }
+
+    .wall {
+        margin: 0 auto 12px;
+        max-width: 1000px;
+
+        > h2 {
+            padding: 20px 0;
+            font-size: 18px;
+            text-align: center;
+        }
+
+        .wall-list {
+            gap: 4px;
+            padding: 0 12px;
+
+            > div {
+                border-radius: 4px;
+            }
+        }
+
+        .wall-more {
+            padding-top: 16px;
+            text-align: center;
+        }
+    }
+
+    .stats {
+        margin: 10px auto;
+
+        > p,
+        > a {
+            padding: 0 6px;
+            margin: 0 6px 0 0;
+            height: 22px;
+            font-size: 12px;
+
+            > span {
+                padding-left: 4px;
+            }
+
+            > img {
+                margin-right: 1px;
+            }
+        }
+    }
+
+    footer,
+    .state {
+        padding-bottom: 6px;
+        font-size: 12px;
+        text-align: center;
+    }
 }
 </style>
