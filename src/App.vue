@@ -788,7 +788,7 @@ main {
         margin: 0 8px 0 0;
         height: 24px;
         font-size: 12px;
-        background: #dfddc680;
+        background: #ebf0f8;
         border-radius: 4px;
 
         > span {
@@ -898,6 +898,43 @@ footer,
 
 /* 兼容移动端 */
 @media only screen and (max-width: 768px) {
+    .bg {
+        > img {
+            opacity: 0.5;
+            transform: scale(0.6);
+        }
+
+        .bg-l-1 {
+            top: -14%;
+            left: -20%;
+        }
+
+        .bg-l-2 {
+            top: -4%;
+            left: -40%;
+        }
+
+        .bg-l-3 {
+            bottom: -10%;
+            left: -60%;
+        }
+
+        .bg-r-1 {
+            top: -24%;
+            right: -70%;
+        }
+
+        .bg-r-2 {
+            top: 5%;
+            right: -80%;
+        }
+
+        .bg-r-3 {
+            right: -30%;
+            bottom: 10%;
+        }
+    }
+
     .header {
         .header-content {
             padding: 0 12px;
