@@ -36,6 +36,12 @@
             <img class="left" src="./assets/img/more-left.png" alt="" @click="changeFrame(false)">
             <div class="avatar" :class="showRound ? 'circle' : ''">
                 <Draw ref="DrawRef" :bg="originAvatarUrl" />
+                <div v-if="!originAvatarUrl" class="upload-avatar" @click="uploadImgRef.click()">
+                    <svg class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M810.369481 489.052359c-0.014326 0-0.029676 0-0.042979 0l-281.56577 0.635473 0.590448-282.148032c0.021489-10.376325-8.372691-18.804275-18.747993-18.826787-0.014326 0-0.025583 0-0.039909 0-10.356882 0-18.764366 8.385994-18.785855 18.747993l-0.591471 282.311761-281.725406 0.636496c-10.376325 0.023536-18.767436 8.453533-18.744923 18.829857 0.023536 10.361999 8.429996 18.744923 18.785855 18.744923 0.014326 0 0.029676 0 0.042979 0l281.561677-0.635473-0.590448 282.152125c-0.021489 10.375302 8.372691 18.804275 18.747993 18.825764 0.014326 0 0.025583 0 0.039909 0 10.355859 0 18.764366-8.385994 18.785855-18.747993l0.590448-282.314831 281.728476-0.636496c10.376325-0.023536 18.768459-8.453533 18.744923-18.829857C829.131801 497.435283 820.726364 489.052359 810.369481 489.052359z"></path>
+                    </svg>
+                    <p>上传头像</p>
+                </div>
             </div>
             <img class="more-right" src="./assets/img/more-right.png" alt="" @click="changeFrame(true)">
         </div>
@@ -537,6 +543,47 @@ main {
 
             &.circle {
                 border-radius: 50%;
+            }
+
+            .upload-avatar {
+                position: absolute;
+                top: 0;
+                right: 0;
+                bottom: 0;
+                left: 0;
+                z-index: 9999;
+                margin: auto;
+                width: fit-content;
+                height: fit-content;
+                text-align: center;
+                color: #c0c4cc;
+                transition: all 0.24s;
+                cursor: pointer;
+
+                > svg {
+                    width: 42px;
+                    height: 42px;
+
+                    > path {
+                        fill: #c0c4cc;
+                    }
+                }
+
+                > p {
+                    padding-top: 4px;
+                    font-size: 18px;
+                    letter-spacing: 1px;
+                }
+
+                &:hover {
+                    color: #409effcc;
+
+                    > svg {
+                        > path {
+                            fill: #409effcc;
+                        }
+                    }
+                }
             }
         }
 
