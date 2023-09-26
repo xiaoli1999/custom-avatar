@@ -101,10 +101,14 @@
 
     <!-- 生成海报 -->
     <div id="poster" class="poster">
-        <img class="poster-img" :src="avatarUrl" alt="">
+        <img class="poster-img" src="./assets/img/poster.png" alt="">
+        <img class="poster-avatar" :src="avatarUrl" alt="">
         <div class="poster-desc">
-            <span>长按识别右侧二维码，定制中秋贺卡！</span>
-            <img src="https://cdn.xiaoli.vip/project/moon-card/code.png" alt="">
+            <div>
+                <p>{{ picList[styleIndex].desc }}</p>
+                <p>识别二维码，定制{{ picList[styleIndex].name }}头像！</p>
+            </div>
+            <img src="./assets/img/code.png" alt="">
         </div>
     </div>
 
@@ -287,7 +291,6 @@ const createAvatar = async (isSave) => {
     loading.value = true
     isSave ? saveShow.value = true : shareShow.value = true
     avatarUrl.value = await DrawRef.value.save()
-    console.log(avatarUrl.value)
 
     if  (isSave) {
         saveShow.value = true
@@ -298,7 +301,6 @@ const createAvatar = async (isSave) => {
             const posterDom = document.getElementById('poster') as HTMLElement
             html2canvas(posterDom, { useCORS: true }).then((canvas) => {
                 shareUrl.value = canvas.toDataURL('image/png')
-                console.timeEnd('sss')
                 shareShow.value = true
                 loading.value = false
             })
@@ -758,29 +760,61 @@ footer,
     position: absolute;
     top: -500%;
     left: -500%;
-    width: 600px;
-    height: 1180px;
+    width: 500px;
+    height: 750px;
 
     .poster-img {
-        width: 600px;
-        height: 1080px;
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 1;
+        width: 500px;
+        height: 750px;
+    }
+
+    .poster-avatar {
+        position: absolute;
+        top: 200px;
+        right: 0;
+        left: 0;
+        z-index: 10;
+        width: 230px;
+        height: 230px;
+        border-radius: 10px;
+        margin-inline: auto;
     }
 
     .poster-desc {
+        position: absolute;
+        bottom: 40px;
+        left: 0;
+        z-index: 10;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0 20px;
-        height: 100px;
-        font-size: 24px;
+        width: 100%;
+        height: 120px;
+        font-size: 20px;
         color: #363636;
-        background: #fff;
         font-weight: 600;
         letter-spacing: 1px;
 
+        > div {
+            margin-left: 40px;
+
+            > p {
+                line-height: 40px;
+            }
+
+            > p:first-child {
+                color: #e45f4d;
+            }
+        }
+
         > img {
-            width: 80px;
-            height: 80px;
+            margin-right: 40px;
+            width: 100px;
+            height: 100px;
             border-radius: 8px;
         }
     }

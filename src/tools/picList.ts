@@ -16,6 +16,7 @@ export const styleEnums  = {
 interface StyleInfoType {
     id: string,
     name: string,
+    desc: string,
     frameNum: number,
     frameList: string[],
     markNum: number,
@@ -25,6 +26,7 @@ export const styleList: StyleInfoType[]  = [
     {
         id: 'moon',
         name: '中秋节',
+        desc: '月光所至，万事胜意~',
         frameNum: 4,
         frameList: [],
         markNum: 7,
@@ -33,6 +35,7 @@ export const styleList: StyleInfoType[]  = [
     {
         id: 'national',
         name: '国庆节',
+        desc: '生在红旗下，长在春风里~',
         frameNum: 8,
         frameList: [],
         markNum: 3,
@@ -41,6 +44,7 @@ export const styleList: StyleInfoType[]  = [
     {
         id: 'spring',
         name: '春节',
+        desc: '辞暮尔尔，烟火年年~',
         frameNum: 19,
         frameList: [],
         markNum: 0,
