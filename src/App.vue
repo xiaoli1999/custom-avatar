@@ -18,11 +18,11 @@
             <transition name="notice" mode="out-in">
                 <div v-if="avatarList && avatarList.length" class="notice" :key="avatarList[noticeIndex].last_modified">
                     <p>
-                        <span style="color: #409eff;">游客{{ (avatarList[noticeIndex].last_modified + '').slice(-5) }}</span>
-                        <span>在</span>
-                        <span>{{ calcOverTime(avatarList[noticeIndex].last_modified) }}前</span>
+                        <span style="color: #409eff;">游客{{ (avatarList[noticeIndex].last_modified + '').slice(-5) }} </span>
+                        <span style="padding-left: 4px;">{{ calcOverTime(avatarList[noticeIndex].last_modified) }}前</span>
                         <span>制作了</span>
-                        <span style="color: #f56c6c;">{{ styleEnums[avatarList[noticeIndex].id] }}头像</span>
+                        <span style="color: #f56c6c;">{{ styleEnums[avatarList[noticeIndex].id] }}头像 </span>
+                        <span style="padding-left: 4px;"></span>
                     </p>
                     <img :src="avatarList[noticeIndex].url" alt="">
                 </div>
@@ -242,7 +242,7 @@ const startNotice = () => {
         } else {
             noticeIndex.value ++
         }
-    }, 2000)
+    }, 3000)
 }
 
 const pageNo = ref(0)
@@ -447,14 +447,14 @@ const save = async (isSave = true) => {
         .logo {
             display: flex;
             align-items: center;
-            font-size: 18px;
-            letter-spacing: 1px;
-            //font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.5px;
+            font-weight: 600;
 
             > img {
-                margin-right: 16px;
-                width: 40px;
-                height: 40px;
+                margin-right: 12px;
+                width: 36px;
+                height: 36px;
                 border-radius: 50%;
             }
         }
@@ -464,13 +464,13 @@ const save = async (isSave = true) => {
             align-items: center;
             overflow: hidden;
             font-size: 12px;
-            color: #606266;
+            color: #333;
 
             > img {
-                margin-left: 4px;
                 width: 24px;
                 height: 24px;
                 border-radius: 50%;
+                flex-shrink: 0;
             }
         }
     }
@@ -645,6 +645,7 @@ main {
 
         .opacity {
             flex: 1;
+            padding-bottom: 8px;
 
             .el-slider__bar {
                 background: #ff8f1f60;
