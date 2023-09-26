@@ -168,7 +168,7 @@ const uploadFile = async (e: any) => {
         originAvatarUrl.value = url
         selectFrame(0)
     } else {
-        selectFrame(0)
+        originAvatarUrl.value = url
     }
 
     (document.getElementById('uploadImg') as HTMLInputElement).value = ''
