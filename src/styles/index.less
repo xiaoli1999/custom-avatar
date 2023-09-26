@@ -44,6 +44,22 @@ a:active {
     min-height: 100vh;
 }
 
+.notice-enter-active,
+.notice-leave-active {
+    will-change: transform;
+    transition: all 0.48s linear;
+}
+
+.notice-enter-from {
+    opacity: 0;
+    transform: translateY(100%);
+}
+
+.notice-leave-to {
+    opacity: 0;
+    transform: translateY(-100%);
+}
+
 .el-dialog--center .el-dialog__body {
     padding: 0 8px 16px !important;
 }

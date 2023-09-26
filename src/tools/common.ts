@@ -200,3 +200,23 @@ export const fileUrlToBase64 = (url:string, type: string): object => {
         img.src = url
     })
 }
+
+/**
+ * @function calcOverTime 计算过去时间
+ * @param { String } time time 秒时间戳
+ * @return { String } 过去了多长时间
+ */
+export const calcOverTime = (time: number) => {
+    const  currentS = Math.floor(new Date().getTime() / 1000)
+    const diffS = currentS - time
+
+    if (diffS < 60) return diffS + '秒'
+
+    if (diffS < 3600) return Math.floor(diffS / 60) + '分钟'
+
+    if (diffS < 86400) return Math.floor(diffS / 3600) + '小时'
+
+    if (diffS < 2592000) return Math.floor(diffS / 86400) + '天'
+
+    return Math.floor(diffS / 2592000) + '月'
+}

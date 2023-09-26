@@ -10,12 +10,23 @@
 
     <header class="header">
         <div class="header-content">
-            <div>
+            <div class="logo">
                 <img src="https://cdn.xiaoli.vip/project/logo.jpg" alt="">
                 采黎 • 定制头像
             </div>
             <!--todo 滚动播放-->
-            <div></div>
+            <transition name="notice" mode="out-in">
+                <div v-if="avatarList && avatarList.length" class="notice" :key="avatarList[noticeIndex].last_modified">
+                    <p>
+                        <span style="color: #409eff;">游客{{ (avatarList[noticeIndex].last_modified + '').slice(-5) }}</span>
+                        <span>在</span>
+                        <span>{{ calcOverTime(avatarList[noticeIndex].last_modified) }}前</span>
+                        <span>制作了</span>
+                        <span style="color: #f56c6c;">{{ styleEnums[avatarList[noticeIndex].id] }}头像</span>
+                    </p>
+                    <img :src="avatarList[noticeIndex].url" alt="">
+                </div>
+            </transition>
         </div>
     </header>
     <div class="fasten"></div>
@@ -86,8 +97,8 @@
         </div>
     </div>
 
-    <el-dialog class="notice" v-model="saveShow" title="保存贺卡" width="340px" align-center center style="border-radius: 8px;">
-        <div class="notice-content">
+    <el-dialog class="dialog" v-model="saveShow" title="保存贺卡" width="340px" align-center center style="border-radius: 8px;">
+        <div class="dialog-content">
             <img :src="avatarUrl" alt="">
             <div>
                 <el-button type="success" @click="save(true)">保存(移动端长按图片保存)</el-button>
@@ -95,8 +106,8 @@
         </div>
     </el-dialog>
 
-    <el-dialog class="notice" v-model="shareShow" title="分享贺卡" width="340px" align-center center style="border-radius: 8px;">
-        <div class="notice-content">
+    <el-dialog class="dialog" v-model="shareShow" title="分享贺卡" width="340px" align-center center style="border-radius: 8px;">
+        <div class="dialog-content">
             <img :src="shareUrl" alt="">
             <div>
                 <el-button type="primary" @click="save(false)">分享(移动端长按图片转发给朋友)</el-button>
@@ -106,11 +117,18 @@
 </template>
 
 <script lang="ts" setup>
-import { ref, onMounted, nextTick } from 'vue'
-import { getCreatedUrl, downloadImg, base64ToFile, getAuthorization, getUploadAuthorization } from '@/tools/common'
+import { ref, onMounted, nextTick, onBeforeUnmount } from 'vue'
+import {
+    getCreatedUrl,
+    downloadImg,
+    base64ToFile,
+    getAuthorization,
+    getUploadAuthorization,
+    calcOverTime
+} from '@/tools/common'
 import progress from './tools/progress'
 import Draw from './components/Draw/index.vue'
-import { picList } from '@/tools/picList'
+import {picList, styleEnums} from '@/tools/picList'
 import { ElMessage } from 'element-plus'
 import axios from 'axios'
 import html2canvas from 'html2canvas'
@@ -127,10 +145,6 @@ const userInfo = {
     path: 'img/custom-avatar'
 }
 
-// const fileName = `li-${ 1e14 - Date.now() }.png`
-let fileName = ''
-
-/* 业务 */
 const styleIndex = ref(1)
 const originAvatarUrl = ref<string>('')
 const selectFrameIndex = ref<number | null>(null)
@@ -139,6 +153,7 @@ const showRound = ref<boolean>(false)
 const avatarTotal = ref(0)
 const DrawRef = ref()
 const uploadImgRef = ref()
+let fileName = ''
 const loading = ref(false)
 
 const uploadFile = async (e: any) => {
@@ -203,8 +218,8 @@ const getAvatarList = async () => {
 
     avatarList.value = files.map(i => ({
         ...i,
-        url: `https://cdn.xiaoli.vip/img/moon-card/${ i.name }!avatar`,
-        id: i.name.split('-')[1]
+        id: i.name.split('-')[2],
+        url: `https://cdn.xiaoli.vip/img/custom-avatar/${ i.name }!avatar`
     }))
 
     loadMore()
@@ -215,6 +230,19 @@ const getAvatarList = async () => {
         const arr = name.split('-')
         avatarTotal.value = Number(arr[arr.length - 1] || 0)
     }
+}
+
+let noticeTimer: any = null
+const noticeIndex = ref(0)
+const startNotice = () => {
+    clearInterval(noticeTimer)
+    noticeTimer = setInterval(() => {
+        if (noticeIndex.value === avatarTotal.value - 1) {
+            noticeIndex.value = 0
+        } else {
+            noticeIndex.value ++
+        }
+    }, 2000)
 }
 
 const pageNo = ref(0)
@@ -228,7 +256,10 @@ const loadMore = () => {
 onMounted(async () => {
     progress.close()
     await getAvatarList()
+    startNotice()
 })
+
+onBeforeUnmount(() => clearInterval(noticeTimer))
 
 const avatarUrl = ref('')
 const shareUrl = ref('')
@@ -259,7 +290,7 @@ const createAvatar = async (isSave) => {
         })
     }
 
-    fileName = `li-${ picList[styleIndex.value].id }li-${ 1e14 - Date.now() }-${ avatarTotal.value + 1 }.png`
+    fileName = `li-${ 1e14 - Date.now() }-${ picList[styleIndex.value].id }-${ avatarTotal.value + 1 }.png`
 
     /* 上传头像 */
     const uploadData = new FormData()
@@ -396,6 +427,7 @@ const save = async (isSave = true) => {
     right: 0;
     left: 0;
     z-index: 1000;
+    overflow: hidden;
     margin: 0 auto;
     width: 100%;
     background: #ffffff80;
@@ -412,7 +444,7 @@ const save = async (isSave = true) => {
         max-width: 1200px;
         height: 50px;
 
-        > div {
+        .logo {
             display: flex;
             align-items: center;
             font-size: 18px;
@@ -423,6 +455,21 @@ const save = async (isSave = true) => {
                 margin-right: 16px;
                 width: 40px;
                 height: 40px;
+                border-radius: 50%;
+            }
+        }
+
+        .notice {
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+            font-size: 12px;
+            color: #606266;
+
+            > img {
+                margin-left: 4px;
+                width: 24px;
+                height: 24px;
                 border-radius: 50%;
             }
         }
@@ -684,7 +731,7 @@ footer,
     }
 }
 
-.notice-content {
+.dialog-content {
     > img {
         margin: 0 auto;
         max-width: 100%;
