@@ -14,7 +14,7 @@
                 <img src="https://cdn.xiaoli.vip/project/logo.jpg" alt="">
                 采黎 • 定制头像
             </div>
-            <!--todo 滚动播放-->
+            <!--滚动播放-->
             <transition name="notice" mode="out-in">
                 <div v-if="avatarList && avatarList.length" class="notice" :key="avatarList[noticeIndex].last_modified">
                     <p>
@@ -71,7 +71,7 @@
         </div>
 
         <div class="avatar-save">
-            <el-button type="success" plain @click="createAvatar(true)">生成头像</el-button>
+            <el-button type="success" plain @click="createAvatar(true)">保存头像</el-button>
             <el-button type="primary" plain @click="createAvatar(false)">分享给朋友</el-button>
         </div>
     </main>
@@ -788,9 +788,8 @@ footer,
 
 .dialog-content {
     > img {
-        margin: 0 auto;
-        max-width: 100%;
-        max-height: 500px;
+        margin: 12px auto 20px;
+        width: 300px;
         border-radius: 8px;
         box-shadow: 2px 2px 8px 1px #0000004f;
     }

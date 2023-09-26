@@ -88,10 +88,10 @@ const initFabricControl = () => {
 
 /* 元素缩放时 */
 const canvasMouseScaling = (e: any) => {
-    if (e.target.flipX || e.target.flipY) {
-        e.target.flipX = false
-        e.target.flipY = false
-    }
+    // if (e.target.flipX || e.target.flipY) {
+    //     e.target.flipX = false
+    //     e.target.flipY = false
+    // }
 }
 
 /* 初始化画布 */
