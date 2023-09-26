@@ -136,7 +136,7 @@ const originAvatarUrl = ref<string>('')
 const selectFrameIndex = ref<number | null>(null)
 const frameUrl = ref<string>('')
 const showRound = ref<boolean>(false)
-const joinNumber = ref(0)
+const avatarTotal = ref(0)
 const DrawRef = ref()
 const uploadImgRef = ref()
 const loading = ref(false)
@@ -201,20 +201,20 @@ const getAvatarList = async () => {
 
     const files = ((data || {}).files) || []
 
-    avatarList.value = files.map(i => ({ ...i, url: `https://cdn.xiaoli.vip/img/moon-card/${ i.name }!moon` }))
+    avatarList.value = files.map(i => ({
+        ...i,
+        url: `https://cdn.xiaoli.vip/img/moon-card/${ i.name }!avatar`,
+        id: i.name.split('-')[1]
+    }))
 
     loadMore()
 
-    /* 动态计算当前贺卡总数 */
-    let num = 1
+    /* 动态计算当前头像总数 */
     if (files && files.length) {
         const name = files[0].name.split('.png')[0]
         const arr = name.split('-')
-        joinNumber.value = Number(arr[arr.length - 1] || 0)
-        num = joinNumber.value + 1
+        avatarTotal.value = Number(arr[arr.length - 1] || 0)
     }
-
-    fileName = `li-${ 1e14 - Date.now() }-${ num }.png`
 }
 
 const pageNo = ref(0)
@@ -259,7 +259,9 @@ const createAvatar = async (isSave) => {
         })
     }
 
-    /* 上传贺卡 */
+    fileName = `li-${ picList[styleIndex.value].id }li-${ 1e14 - Date.now() }-${ avatarTotal.value + 1 }.png`
+
+    /* 上传头像 */
     const uploadData = new FormData()
 
     const file = base64ToFile(avatarUrl.value, fileName, 'png')
