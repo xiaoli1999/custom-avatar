@@ -168,7 +168,6 @@ const showRound = ref<boolean>(false)
 const avatarTotal = ref(0)
 const DrawRef = ref()
 const uploadImgRef = ref()
-let fileName = ''
 const loading = ref(false)
 
 const uploadFile = async (e: any) => {
@@ -284,6 +283,7 @@ const avatarUrl = ref('')
 const shareUrl = ref('')
 const saveShow = ref(false)
 const shareShow = ref<boolean>(false)
+const fileNameObj = {}
 
 const createAvatar = async (isSave) => {
     if (!originAvatarUrl.value) return ElMessage({ duration: 3600, message: '请上传头像!', type: 'warning' })
@@ -307,9 +307,14 @@ const createAvatar = async (isSave) => {
         })
     }
 
-    await getAvatarList(false)
 
-    fileName = `li-${ 1e14 - Date.now() }-${ picList[styleIndex.value].id }-${ avatarTotal.value + 1 }.png`
+
+    if (!fileNameObj[styleIndex.value]) {
+        await getAvatarList(false)
+        fileNameObj[styleIndex.value] = `li-${ 1e14 - Date.now() }-${ picList[styleIndex.value].id }-${ avatarTotal.value + 1 }.png`
+    }
+
+    const fileName = fileNameObj[styleIndex.value]
 
     /* 上传头像 */
     const uploadData = new FormData()
