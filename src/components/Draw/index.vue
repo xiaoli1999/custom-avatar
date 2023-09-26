@@ -56,7 +56,7 @@ const initFabricControl = () => {
     const delImgElement = document.createElement('img')
     delImgElement.src = new URL('./icons/delete.png', import.meta.url).href
 
-    const size = 42
+    const size = 52
 
     const deleteControlHandel = (e, transform:any) => {
         const target = transform.target
@@ -76,8 +76,8 @@ const initFabricControl = () => {
         x: 0.5,
         y: -0.5,
         cornerSize: size,
-        offsetY: -40,
-        offsetX: 40,
+        offsetY: -48,
+        offsetX: 48,
         cursorStyle: 'pointer',
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
