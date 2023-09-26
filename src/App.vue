@@ -85,7 +85,7 @@
     <div class="wall">
         <h2>头像墙({{ avatarList.length }})</h2>
         <div class="wall-list">
-            <el-image v-for="(url, index) in avatarPageUrlList" :key="url" :src="url" :preview-src-list="avatarPageUrlList" :initial-index="index" />
+            <el-image v-for="(url, index) in avatarPageUrlList" :key="url" :src="url" :preview-src-list="avatarPageUrlList" :initial-index="index" :style="{ gridColumn: `span ${ avatarList[index].span}`, gridRow: `span ${ avatarList[index].span }` }" />
         </div>
         <div v-if="pageNo * pageSize < avatarList.length" class="wall-more">
             <el-button type="info" link @click="loadMore">查看更多</el-button>
@@ -225,7 +225,6 @@ const selectMark = (index: number) => {
 const opacity = ref<number>(1)
 const opacityChange = (num: number) => DrawRef.value.setFrameOpacity(num)
 
-
 const avatarList = ref<any[]>([])
 const avatarPageUrlList = ref<string[]>([])
 const getAvatarList = async (isSet = true) => {
@@ -250,10 +249,16 @@ const setAvatarList = (files: any[]) => {
     avatarList.value = files.map(i => ({
         ...i,
         id: i.name.split('-')[2],
-        url: `https://cdn.xiaoli.vip/img/custom-avatar/${ i.name }!avatar`
+        url: `https://cdn.xiaoli.vip/img/custom-avatar/${ i.name }!avatar`,
+        span: createGridSpan()
     }))
 
     loadMore()
+}
+
+const createGridSpan = () => {
+    const arr = [1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1]
+    return arr[Math.floor(Math.random() * arr.length)]
 }
 
 let noticeTimer: any = null
@@ -756,6 +761,7 @@ main {
         gap: 8px;
         //grid-template-rows: repeat(8, 12.5%);
         grid-template-columns: repeat(8, minmax(0, 1fr));
+        grid-auto-flow: dense;
 
         > div {
             border-radius: 8px;
@@ -1058,6 +1064,18 @@ footer,
         padding-bottom: 6px;
         font-size: 12px;
         text-align: center;
+    }
+}
+
+/* pc端不使用瀑布流 */
+@media only screen and (min-width: 769px) {
+    .wall {
+        .wall-list {
+            > div {
+                grid-row: span 1 !important;
+                grid-column: span 1 !important;
+            }
+        }
     }
 }
 </style>
