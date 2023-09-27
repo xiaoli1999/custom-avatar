@@ -33,7 +33,13 @@ github✈️ [https://xiaoli1999.github.io/custom-avatar](https://xiaoli1999.git
 联系方式~**QQ: 22708206**
 
 ### 文章链接
-[**掘金**](https://juejin.cn/post/7189198252460212283) <br />
+#### 2.0版本
+[**掘金**](https://juejin.cn/post/7283018190594572328)
+
+[CSDN](https://blog.csdn.net/weixin_53673959/article/details/133343181)
+#### 1.0.版本
+[**掘金**](https://juejin.cn/post/7189198252460212283)
+
 [CSDN](https://blog.csdn.net/weixin_53673959/article/details/128708172)
 
 ### 版本更新
