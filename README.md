@@ -1,22 +1,24 @@
-## 定制头像2.0🌈
+## 定制头像🌈
+![预览](perview.png)
 
 ### 前言
-**『定制头像2.0』** 推出多主题风格——中秋节、国庆节、春节头像定制，其他中国传统节日陆续接入中。**喜欢的话点个⭐吧，fork请先star🙏。**
+在娱乐的同时弘扬中国传统节日文化！
+大家定制了精美的头像，在使用过程中会被更多的人们看到，吸引大家都来定制自己专属的中国传统节日头像，潜移默化的加深人们对于传统节日的印象！
 
 
 ### 项目描述
-定制国庆头像、红旗头像、国旗渐变头像，为祖国庆生！选择国庆、红旗、中秋节、春节等多个主题，超多头像样式和贴纸供您选择，为您的特殊时刻创造独特的头像。立即尝试我们的头像定制工具！
+该项目是基于vue3、typescript、Element UI、fabric.js的一款定制头像工具。
+当前版本为2.0，在1.0（定制春节头像）上迭代。
+推出定制中秋节、国庆节、春节等多风格头像定制， 内置诸多精美贴纸可供选择。
+用户上传头像即可快速得出专属头像，支持保存、以海报的形式分享。开设头像墙区域，用户定制过的头像都会保留在头详墙上。
 
 ### 特点
 操作简单，用户可定制，灵活性高。
 
 ### 预览
-黎小站✈️ [https://www.xiaoli.vip/custom-avatar](https://www.xiaoli.vip/custom-avatar)
+主站✈️ [https://www.xiaoli.vip/custom-avatar](https://www.xiaoli.vip/custom-avatar)
 
-github✈️ [https://xiaoli1999.github.io/custom-avatar](https://xiaoli1999.github.io/custom-avatar)
-
-### 效果
-![预览](perview.png)
+github pages✈️ [https://xiaoli1999.github.io/custom-avatar](https://xiaoli1999.github.io/custom-avatar)
 
 ### 教程
 1. 选择头像形状（微信为方形、qq、抖音等平台为圆形）。
