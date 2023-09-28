@@ -206,20 +206,33 @@ const changeFrame = (isNext) => {
     selectFrame(selectFrameIndex.value as number)
 }
 
+let frameTimer: any = null
 const selectFrame = (index: number) => {
-    if (!originAvatarUrl.value) return ElMessage.warning('请先上传头像！')
+    if (frameTimer) clearTimeout(frameTimer)
 
-    opacity.value = 1
-    selectFrameIndex.value = index
-    frameUrl.value = picList[styleIndex.value].frameList[index]
-    DrawRef.value.addFrame(frameUrl.value)
+    frameTimer = setTimeout(() => {
+        console.log(1111)
+        if (!originAvatarUrl.value) return ElMessage.warning('请先上传头像！')
+
+        opacity.value = 1
+        selectFrameIndex.value = index
+        frameUrl.value = picList[styleIndex.value].frameList[index]
+        DrawRef.value.addFrame(frameUrl.value)
+    }, 200)
 }
 
+let markTimer: any = null
 const selectMark = (index: number) => {
-    if (!originAvatarUrl.value) return ElMessage.warning('请先上传头像！')
+    if (markTimer) clearTimeout(markTimer)
 
-    const markUrl = picList[styleIndex.value].markList[index]
-    DrawRef.value.addMark(markUrl)
+    markTimer = setTimeout(() => {
+        console.log(2222)
+        if (!originAvatarUrl.value) return ElMessage.warning('请先上传头像！')
+
+        const markUrl = picList[styleIndex.value].markList[index]
+        DrawRef.value.addMark(markUrl)
+    }, 400)
+
 }
 
 const opacity = ref<number>(1)
