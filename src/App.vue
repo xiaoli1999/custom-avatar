@@ -211,14 +211,13 @@ const selectFrame = (index: number) => {
     if (frameTimer) clearTimeout(frameTimer)
 
     frameTimer = setTimeout(() => {
-        console.log(1111)
         if (!originAvatarUrl.value) return ElMessage.warning('请先上传头像！')
 
         opacity.value = 1
         selectFrameIndex.value = index
         frameUrl.value = picList[styleIndex.value].frameList[index]
         DrawRef.value.addFrame(frameUrl.value)
-    }, 200)
+    }, 100)
 }
 
 let markTimer: any = null
@@ -226,12 +225,11 @@ const selectMark = (index: number) => {
     if (markTimer) clearTimeout(markTimer)
 
     markTimer = setTimeout(() => {
-        console.log(2222)
         if (!originAvatarUrl.value) return ElMessage.warning('请先上传头像！')
 
         const markUrl = picList[styleIndex.value].markList[index]
         DrawRef.value.addMark(markUrl)
-    }, 400)
+    }, 200)
 
 }
 
