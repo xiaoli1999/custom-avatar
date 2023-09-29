@@ -27,7 +27,7 @@ export const styleList: StyleInfoType[]  = [
         id: 'moon',
         name: '中秋节',
         desc: '月光所至，万事胜意~',
-        frameNum: 4,
+        frameNum: 7,
         frameList: [],
         markNum: 14,
         markList: []
@@ -36,9 +36,9 @@ export const styleList: StyleInfoType[]  = [
         id: 'national',
         name: '国庆节',
         desc: '生在红旗下，长在春风里~',
-        frameNum: 16,
+        frameNum: 18,
         frameList: [],
-        markNum: 5,
+        markNum: 7,
         markList: []
     },
     {
