@@ -56,7 +56,7 @@
             <p>头像框</p>
             <div class="effect-list">
                 <div v-for="(item, index) in picList[styleIndex].frameList" :key="index" :class="`effect-item ${ item === frameUrl ? 'active' : '' }`" @click="selectFrame(index)">
-                    <img :src="item + '!avatar'" alt="">
+                    <img :src="`${ item }!avatar?${ dayjs().format('YYYY-MM-DD') }-${ dayjs().format('HH') < 12 ? 'last' : 'next' }`" alt="">
                 </div>
             </div>
         </div>
@@ -150,7 +150,7 @@ import {
 import progress from './tools/progress'
 import Draw from './components/Draw/index.vue'
 import {picList, styleEnums} from '@/tools/picList'
-import { ElMessage } from 'element-plus'
+import {dayjs, ElMessage} from 'element-plus'
 import axios from 'axios'
 import html2canvas from 'html2canvas'
 
