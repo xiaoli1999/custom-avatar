@@ -15,10 +15,15 @@
 ### 特点
 操作简单，用户可定制，灵活性高。
 
-### 预览
-主站✈️ [https://www.xiaoli.vip/custom-avatar](https://www.xiaoli.vip/custom-avatar)
+### 地址
+[github✈️ https://github.com/xiaoli1999/custom-avatar](https://github.com/xiaoli1999/custom-avatar)
 
-github pages✈️ [https://xiaoli1999.github.io/custom-avatar](https://xiaoli1999.github.io/custom-avatar)
+[gitee✈️ https://gitee.com/cui-zhe/custom-avatar](https://gitee.com/cui-zhe/custom-avatar)
+
+### 预览
+[主站✈️ https://www.xiaoli.vip/custom-avatar](https://www.xiaoli.vip/custom-avatar)
+
+[github pages✈️ https://xiaoli1999.github.io/custom-avatar](https://xiaoli1999.github.io/custom-avatar)
 
 ### 教程
 1. 选择头像形状（微信为方形、qq、抖音等平台为圆形）。
