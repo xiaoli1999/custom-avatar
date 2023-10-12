@@ -911,7 +911,7 @@ footer,
 @media only screen and (max-width: 768px) {
     .bg {
         > img {
-            opacity: 0.5;
+            opacity: 0.4;
             transform: scale(0.6);
         }
 
