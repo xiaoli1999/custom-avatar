@@ -527,6 +527,7 @@ const save = async (isSave = true) => {
 }
 
 main {
+    position: relative;
     margin: 36px auto;
     max-width: 1000px;
     background: #ffffff4d;
