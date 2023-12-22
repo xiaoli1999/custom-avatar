@@ -29,6 +29,23 @@
             </transition>
         </div>
     </header>
+
+    <!--掘金宣传-->
+    <div class="ad">
+        <el-image class="ad-img" src="https://cdn.xiaoli.vip/project/custom-avatar/img/juejin.jpg" :preview-src-list="['https://cdn.xiaoli.vip/project/custom-avatar/img/juejin.jpg']" />
+        <div style="padding-left: 20px;">
+            <el-link class="ad-big" type="primary" href="https://activity.juejin.cn/rank/2023/writer/4438109753182343?utm_campaign=annual_2023&utm_medium=self_web_share&utm_source=%E9%87%87%E9%BB%8E" target="_blank">
+                掘金2023年度人气创作者打榜中，大佬们帮忙投个票～ 🙏🙏🙏
+            </el-link>
+            <el-link class="ad-big" type="primary" href="https://activity.juejin.cn/rank/2023/writer/4438109753182343?utm_campaign=annual_2023&utm_medium=self_web_share&utm_source=%E9%87%87%E9%BB%8E" target="_blank">
+                每天可投两次票，投票后可参与抽奖哦，快冲鸭～ 💖💖💖
+            </el-link>
+            <el-link class="ad-small" type="info" href="https://juejin.cn/post/7283018190594572328" target="_blank">
+                手把手带你实现定制头像（掘金文章）
+            </el-link>
+        </div>
+    </div>
+
     <div class="fasten"></div>
     <main>
         <div class="fasten"></div>
@@ -908,6 +925,57 @@ footer,
     }
 }
 
+.ad {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 16px;
+    margin: 10px auto 0;
+    width: 100%;
+    max-width: 1000px;
+    border: 2px solid #0000002c;
+    border-radius: 12px;
+    animation: border 2.4s infinite backwards;
+
+    .ad-img {
+        overflow: hidden;
+        padding: 0;
+        height: 120px;
+        border-radius: 8px;
+        flex-shrink: 0;
+    }
+
+    > div {
+        padding-left: 20px;
+
+        .ad-big {
+            display: block;
+            padding-bottom: 16px;
+            font-size: 20px !important;
+            font-weight: 600;
+            line-height: 24px;
+        }
+
+        .ad-small {
+            font-size: 12px !important;
+        }
+    }
+}
+
+@keyframes border {
+    25% {
+        border-color: #409eff;
+    }
+
+    50% {
+        border-color: #67c23a;
+    }
+
+    75% {
+        border-color: #c45656;
+    }
+}
+
 /* 兼容移动端 */
 @media only screen and (max-width: 768px) {
     .bg {
@@ -1113,6 +1181,44 @@ footer,
         padding-bottom: 6px;
         font-size: 12px;
         text-align: center;
+    }
+
+    .ad {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 8px;
+        margin: 8px;
+        width: calc(100% - 16px);
+        max-width: none;
+        border: 1px solid #0000002c;
+        border-radius: 8px;
+        box-sizing: border-box;
+        animation: border 2.4s infinite backwards;
+
+        .ad-img {
+            overflow: hidden;
+            padding: 0 !important;
+            height: 100px;
+            border-radius: 8px;
+            flex-shrink: 0;
+        }
+
+        > div {
+            padding-left: 8px !important;
+
+            .ad-big {
+                display: block;
+                padding-bottom: 8px;
+                font-size: 14px !important;
+                font-weight: 600;
+                line-height: 18px;
+            }
+
+            .ad-small {
+                font-size: 12px !important;
+            }
+        }
     }
 }
 
